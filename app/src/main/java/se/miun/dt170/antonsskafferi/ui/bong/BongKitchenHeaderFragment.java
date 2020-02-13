@@ -1,4 +1,4 @@
-package se.miun.dt170.myapplication.ui.bong;
+package se.miun.dt170.antonsskafferi.ui.bong;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -12,26 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import se.miun.dt170.myapplication.R;
+import se.miun.dt170.antonsskafferi.R;
 
-public class BongFragment extends Fragment {
+public class BongKitchenHeaderFragment extends Fragment {
 
-    private BongViewModel mViewModel;
+    private BongKitchenHeaderViewModel mViewModel;
 
-    public static BongFragment newInstance() {
-        return new BongFragment();
+    public static BongKitchenHeaderFragment newInstance() {
+        return new BongKitchenHeaderFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.bong_fragment, container, false);
+        return inflater.inflate(R.layout.bong_kitchen_header_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(BongViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(BongKitchenHeaderViewModel.class);
         // TODO: Use the ViewModel
     }
 

@@ -1,4 +1,4 @@
-package se.miun.dt170.myapplication;
+package se.miun.dt170.antonsskafferi;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("se.miun.dt170.myapplication", appContext.getPackageName());
+        assertEquals("se.miun.dt170.antonsskafferi", appContext.getPackageName());
     }
 }

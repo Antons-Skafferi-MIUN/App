@@ -1,4 +1,4 @@
-package se.miun.dt170.myapplication.ui.bong;
+package se.miun.dt170.antonsskafferi.ui.bong;
 
 import androidx.lifecycle.ViewModel;
 

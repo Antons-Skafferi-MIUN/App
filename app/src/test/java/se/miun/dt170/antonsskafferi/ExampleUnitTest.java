@@ -1,4 +1,4 @@
-package se.miun.dt170.myapplication;
+package se.miun.dt170.antonsskafferi;
 
 import org.junit.Test;
 
