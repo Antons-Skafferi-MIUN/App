@@ -6,11 +6,77 @@
     android:layout_height="match_parent"
     tools:context=".activity.KitchenActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kitchen"
-        tools:layout_editor_absoluteX="394dp"
-        tools:layout_editor_absoluteY="516dp" />
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <fragment
+            android:id="@+id/fragment10"
+            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenHeaderFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/bong_kitchen_header_fragment" />
+
+        <fragment
+            android:id="@+id/fragment11"
+            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/bong_list_fragment" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout4">
+
+        <fragment
+            android:id="@+id/fragment13"
+            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenHeaderFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/bong_kitchen_header_fragment" />
+
+        <fragment
+            android:id="@+id/fragment12"
+            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/bong_list_fragment" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout5">
+
+        <fragment
+            android:id="@+id/fragment15"
+            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenHeaderFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/bong_kitchen_header_fragment" />
+
+        <fragment
+            android:id="@+id/fragment14"
+            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/bong_list_fragment" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
