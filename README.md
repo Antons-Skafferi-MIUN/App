@@ -4,6 +4,8 @@
 2. `$ cd App`
 3. `$ ./install_script.sh`
 
+# API level 22(lollipop) for tablet Nexus 9
+
 ## Git policy
 Run the git-hook install script after cloning: `$./install_script.sh`. This will install a pre-push hook that will restrict push access and give hints on how to follow policy. 
 
