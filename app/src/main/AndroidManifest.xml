@@ -11,10 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.WaiterActivity"></activity>
-        <activity android:name=".activity.KitchenActivity" />
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
-
+        <activity android:name=".activity.WaiterActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name=".activity.KitchenActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".MainActivity" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
