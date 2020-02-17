@@ -14,24 +14,24 @@ import android.view.ViewGroup;
 
 import se.miun.dt170.antonsskafferi.R;
 
-public class BongFragment extends Fragment {
+public class BongItemFragment extends Fragment {
 
-    private BongViewModel mViewModel;
+    private BongItemViewModel mViewModel;
 
-    public static BongFragment newInstance() {
-        return new BongFragment();
+    public static BongItemFragment newInstance() {
+        return new BongItemFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.bong_fragment, container, false);
+        return inflater.inflate(R.layout.bong_item_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(BongViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(BongItemViewModel.class);
         // TODO: Use the ViewModel
     }
 
