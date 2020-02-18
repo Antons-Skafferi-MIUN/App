@@ -10,17 +10,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="261dp"
-            android:layout_marginTop="252dp"
-            android:layout_marginBottom="140dp"
-            android:text="Vi kom rätt"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <fragment
+            android:id="@+id/navbarFragment"
+            android:name="se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.OrderOverviewNavbarFragment"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout="@layout/order_overview_navbar_fragment" />
+
+        <fragment
+            android:id="@+id/coursesFragment"
+            android:name="se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_courses.OrderOverviewCoursesFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/bongContainerFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/navbarFragment"
+            tools:layout="@layout/order_overview_courses_fragment" />
+
+        <fragment
+            android:id="@+id/bongContainerFragment"
+            android:name="se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderOverviewBongFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/navbarFragment"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout="@layout/order_overview_bong_fragment" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
