@@ -34,3 +34,12 @@ It's crucial we all use the same environment
 
 * Android Studio  
 * Android 5.0 (API level 21), required for native vector graphics
+
+# How to get huge performance increase!!
+1. Open AVD manager in android studio.
+2. Click "Create Virtual Device".
+3. Click "New Hardware Profile".
+4. Set screen size to 8.86 inches, RAM to 1024 unclick all camera support and sensors. Then click
+finish.
+5. Select your newly created hardware profile, it should appear under the "Tablet" category
+6. Install it and use it!
