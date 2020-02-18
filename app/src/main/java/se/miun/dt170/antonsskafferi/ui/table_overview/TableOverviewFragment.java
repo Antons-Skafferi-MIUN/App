@@ -29,8 +29,6 @@ public class TableOverviewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Button orderButton = container.findViewById(R.id.tableButton1);
-        orderButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.orderOverviewFragment3, null));
         return inflater.inflate(R.layout.table_overview_fragment, container, false);
     }
 
@@ -38,6 +36,16 @@ public class TableOverviewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(TableOverviewViewModel.class);
+
+        // Example of one button navigation
+        Button orderButton = getActivity().findViewById(R.id.tableButton1);
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToOrderOverviewFragment3();
+                Navigation.findNavController(getView()).navigate(action);
+            }
+        });
         // TODO: Use the ViewModel
     }
 
