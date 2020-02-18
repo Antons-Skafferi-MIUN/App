@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox waiterCheckBox;
     private CheckBox kitchenCheckBox;
     private Button enterButton;
-    private TextView waiterTextView;
-    private TextView kitchenTextView;
     private EditText inputEditText;
 
     @Override
@@ -32,19 +31,22 @@ public class MainActivity extends AppCompatActivity {
         enterButton = findViewById(R.id.enterButton);
         waiterCheckBox = findViewById(R.id.waiterCheckBox);
         kitchenCheckBox = findViewById(R.id.kitchenCheckBox);
-        waiterTextView = findViewById(R.id.waiterTextView);
-        kitchenTextView = findViewById(R.id.kitchenTextView);
         inputEditText = findViewById(R.id.inputBox);
+        waiterCheckBox.setChecked(true);
+        waiterCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
+        waiterCheckBox.setPaintFlags(waiterCheckBox.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
 
         waiterCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!waiterCheckBox.isChecked()){
-                    waiterTextView.setTextColor(Color.parseColor("#FFFFFF"));
-
+                    waiterCheckBox.setTextColor(Color.parseColor("#a9a9a9"));
+                    waiterCheckBox.setPaintFlags(0);
                 }
                 else {
-                    waiterTextView.setTextColor(Color.parseColor("#00FF00"));
+                    waiterCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
+                    waiterCheckBox.setPaintFlags(waiterCheckBox.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+                    inputEditText.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -53,11 +55,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!kitchenCheckBox.isChecked()){
-                    kitchenTextView.setTextColor(Color.parseColor("#FFFFFF"));
-
+                    kitchenCheckBox.setTextColor(Color.parseColor("#a9a9a9"));
+                    kitchenCheckBox.setPaintFlags(0);
                 }
                 else {
-                    kitchenTextView.setTextColor(Color.parseColor("#00FF00"));
+                    kitchenCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
+                    kitchenCheckBox.setPaintFlags(waiterCheckBox.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+                    inputEditText.setVisibility(View.GONE);
+
                 }
             }
         });
@@ -67,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(waiterCheckBox.isChecked() && !kitchenCheckBox.isChecked()){
                     waiterCheckBox.setChecked(false);
-                    waiterTextView.setTextColor(Color.parseColor("#FFFFFF"));
+                    waiterCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
                     Intent intent = new Intent(self, WaiterActivity.class);
                     intent.putExtra("DISPLAY_NAME", "Asd"); // NEEDS TO BE ASYNC
 
@@ -76,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(kitchenCheckBox.isChecked() && !waiterCheckBox.isChecked()){
                     kitchenCheckBox.setChecked(false);
-                    kitchenTextView.setTextColor(Color.parseColor("#FFFFFF"));
+                    kitchenCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
                     startActivity(new Intent(self , KitchenActivity.class));
 
                 }
