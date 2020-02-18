@@ -1,38 +1,31 @@
 package se.miun.dt170.antonsskafferi.ui.dialog;
 
-import androidx.lifecycle.ViewModelProviders;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import se.miun.dt170.antonsskafferi.R;
 
-public class TableNavigation extends Fragment {
-
-    private TableNavigationViewModel mViewModel;
-
-    public static TableNavigation newInstance() {
-        return new TableNavigation();
-    }
-
+public class TableNavigation extends DialogFragment {
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.table_navigation_fragment, container, false);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("dialog_fire_missiles")
+                .setPositiveButton("Fire", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // FIRE ZE MISSILES!
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        return builder.create();
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(TableNavigationViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }
