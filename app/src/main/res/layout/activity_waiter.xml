@@ -6,83 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".activity.WaiterActivity">
 
-    <Button
-        android:id="@+id/tableButton1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/tableButton5"
-        app:layout_constraintEnd_toStartOf="@+id/tableButton2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/tableButton2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="Button"
-        app:layout_constraintEnd_toStartOf="@+id/tableButton3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tableButton1"
-        app:layout_constraintTop_toTopOf="@+id/tableButton1" />
-
-    <Button
-        android:id="@+id/tableButton3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="Button"
-        app:layout_constraintEnd_toStartOf="@+id/tableButton4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tableButton2"
-        app:layout_constraintTop_toTopOf="@+id/tableButton2" />
-
-    <Button
-        android:id="@+id/tableButton4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tableButton3"
-        app:layout_constraintTop_toTopOf="@+id/tableButton3" />
-
-    <Button
-        android:id="@+id/tableButton5"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="Button"
+    <fragment
+        android:id="@+id/fullscreenWaiterFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tableButton6"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableButton1" />
-
-    <Button
-        android:id="@+id/tableButton6"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="Button"
-        app:layout_constraintEnd_toStartOf="@+id/tableButton7"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tableButton5"
-        app:layout_constraintTop_toTopOf="@+id/tableButton5" />
-
-    <Button
-        android:id="@+id/tableButton7"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tableButton6"
-        app:layout_constraintTop_toTopOf="@+id/tableButton6" />
-
-    <TextView
-        android:id="@+id/displayName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/waiter_nav_graph"
+        tools:layout="@layout/table_overview_fragment" />
 </androidx.constraintlayout.widget.ConstraintLayout>
