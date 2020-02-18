@@ -32,7 +32,10 @@ public class BongItemFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(BongItemViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
+        mViewModel.getItems().observe(getViewLifecycleOwner(), items -> {
+            // Update UI on item changes
+            
+        });
+    }
 }
