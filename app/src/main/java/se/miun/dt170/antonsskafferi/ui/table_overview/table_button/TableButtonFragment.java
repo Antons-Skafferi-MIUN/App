@@ -48,7 +48,7 @@ public class TableButtonFragment extends Fragment {
         // Example of one button navigation
         Button orderButton = fragmentView.findViewById(R.id.tableButton);
         orderButton.setOnClickListener(v -> {
-            NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToOrderOverviewFragment3();
+            NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToTableDialogFragment();
             Navigation.findNavController(getView()).navigate(action);
         });
     }
