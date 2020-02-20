@@ -14,12 +14,14 @@
             android:id="@+id/waiterBongHeader"
             android:name="se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderOverviewBongHeaderFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:layout="@layout/order_overview_bong_header_fragment" />
 
         <fragment
             android:id="@+id/bongList"
             android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:layout="@layout/bong_list_fragment" />
     </LinearLayout>
 </FrameLayout>
