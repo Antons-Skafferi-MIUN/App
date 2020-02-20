@@ -10,76 +10,83 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/tableButton1"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Button"
-            app:layout_constraintBottom_toTopOf="@+id/tableButton5"
-            app:layout_constraintEnd_toStartOf="@+id/tableButton2"
+        <fragment
+            android:id="@+id/buttonFragment1"
+            android:name="se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/buttonFragment5"
+            app:layout_constraintEnd_toStartOf="@+id/buttonFragment2"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout="@layout/table_button_fragment" />
 
-        <Button
-            android:id="@+id/tableButton2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Button"
-            app:layout_constraintEnd_toStartOf="@+id/tableButton3"
+        <fragment
+            android:id="@+id/buttonFragment2"
+            android:name="se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/buttonFragment3"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tableButton1"
-            app:layout_constraintTop_toTopOf="@+id/tableButton1" />
+            app:layout_constraintStart_toEndOf="@+id/buttonFragment1"
+            app:layout_constraintTop_toTopOf="@+id/buttonFragment1"
+            tools:layout="@layout/table_button_fragment" />
 
-        <Button
-            android:id="@+id/tableButton3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Button"
-            app:layout_constraintEnd_toStartOf="@+id/tableButton4"
+        <fragment
+            android:id="@+id/buttonFragment3"
+            android:name="se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/buttonFragment4"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tableButton2"
-            app:layout_constraintTop_toTopOf="@+id/tableButton2" />
+            app:layout_constraintStart_toEndOf="@+id/buttonFragment2"
+            app:layout_constraintTop_toTopOf="@+id/buttonFragment2"
+            tools:layout="@layout/table_button_fragment" />
 
-        <Button
-            android:id="@+id/tableButton4"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Button"
+        <fragment
+            android:id="@+id/buttonFragment4"
+            android:name="se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tableButton3"
-            app:layout_constraintTop_toTopOf="@+id/tableButton3" />
+            app:layout_constraintStart_toEndOf="@+id/buttonFragment3"
+            app:layout_constraintTop_toTopOf="@+id/buttonFragment3"
+            tools:layout="@layout/table_button_fragment" />
 
-        <Button
-            android:id="@+id/tableButton5"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Button"
+        <fragment
+            android:id="@+id/buttonFragment5"
+            android:name="se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tableButton6"
+            app:layout_constraintEnd_toStartOf="@+id/buttonFragment6"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tableButton1" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonFragment1"
+            tools:layout="@layout/table_button_fragment" />
 
-        <Button
-            android:id="@+id/tableButton6"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Button"
-            app:layout_constraintEnd_toStartOf="@+id/tableButton7"
+        <fragment
+            android:id="@+id/buttonFragment6"
+            android:name="se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/buttonFragment7"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tableButton5"
-            app:layout_constraintTop_toTopOf="@+id/tableButton5" />
+            app:layout_constraintStart_toEndOf="@+id/buttonFragment5"
+            app:layout_constraintTop_toTopOf="@+id/buttonFragment5"
+            tools:layout="@layout/table_button_fragment" />
 
-        <Button
-            android:id="@+id/tableButton7"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Button"
+        <fragment
+            android:id="@+id/buttonFragment7"
+            android:name="se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tableButton6"
-            app:layout_constraintTop_toTopOf="@+id/tableButton6" />
+            app:layout_constraintStart_toEndOf="@+id/buttonFragment6"
+            app:layout_constraintTop_toTopOf="@+id/buttonFragment6"
+            tools:layout="@layout/table_button_fragment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
