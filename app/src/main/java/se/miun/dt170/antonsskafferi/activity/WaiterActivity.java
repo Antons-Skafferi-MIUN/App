@@ -11,7 +11,7 @@ import se.miun.dt170.antonsskafferi.R;
 public class WaiterActivity extends AppCompatActivity {
     private TextView name;
     private Intent intent;
-    private String test = "mufffinbman";
+§    private String test = "mufffinbman";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

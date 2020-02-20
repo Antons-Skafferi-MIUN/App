@@ -1,18 +1,13 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar;
 
-import androidx.annotation.NavigationRes;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +15,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.activity.WaiterActivity;
-import se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragmentDirections;
-import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragmentDirections;
 
 public class OrderOverviewNavbarFragment extends Fragment implements View.OnClickListener {
 
@@ -64,8 +55,8 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
         timeView.setText(time);
 
         //Def of header buttons
-        Button orderButton1 = getActivity().findViewById(R.id.button1);
-        Button orderButton2 = getActivity().findViewById(R.id.button2);
+        Button orderButton1 = getActivity().findViewById(R.id.laCarteButton);
+        Button orderButton2 = getActivity().findViewById(R.id.etcButton);
         orderButton1.setOnClickListener(this);
         orderButton2.setOnClickListener(this);
         // TODO: Use the ViewModel
@@ -76,12 +67,12 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
 
         switch(view.getId()){
 
-            case R.id.button1:
+            case R.id.laCarteButton:
                 //temp
                 Toast.makeText(getActivity(), "button1", Toast.LENGTH_SHORT).show();
 
 
-            case R.id.button2:
+            case R.id.etcButton:
 
                 //Temp
                 Toast.makeText(getActivity(), "button2", Toast.LENGTH_SHORT).show();
