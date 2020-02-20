@@ -1,5 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.dialog;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -19,10 +21,19 @@ public class TableDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater layoutInflater = requireActivity().getLayoutInflater();
+
         dialogView = layoutInflater.inflate(R.layout.table_dialog_fragment, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(dialogView);
-        openOrderButton = dialogView.findViewById(R.id.openOrderButton);
+
+        return builder.create();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        openOrderButton = view.findViewById(R.id.openOrderButton);
         openOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,6 +43,5 @@ public class TableDialogFragment extends DialogFragment {
             }
         });
 
-        return builder.create();
     }
 }
