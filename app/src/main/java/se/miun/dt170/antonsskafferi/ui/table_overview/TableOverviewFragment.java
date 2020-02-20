@@ -36,17 +36,6 @@ public class TableOverviewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(TableOverviewViewModel.class);
-
-        // Example of one button navigation
-        Button orderButton = getActivity().findViewById(R.id.tableButton1);
-        orderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToTableDialogFragment();
-                Navigation.findNavController(getView()).navigate(action);
-            }
-        });
         // TODO: Use the ViewModel
     }
-
 }
