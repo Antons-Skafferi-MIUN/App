@@ -4,79 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
     tools:context=".ui.order_overview.order_overview_navbar.OrderOverviewNavbarFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="1256dp"
-            android:layout_height="313dp"
-            android:src="@drawable/orderview_header"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="-157dp" />
-
-        <TextView
-            android:layout_width="967dp"
-            android:layout_height="175dp"
-            android:text="Hello"
-            android:textAlignment="center"
+            android:id="@+id/backgroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:scaleType="center"
+            android:src="@drawable/order_header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/order_header" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/laCarteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="280dp"
-            android:text="Button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:text="Button"
-            app:layout_constraintStart_toEndOf="@+id/button1"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/timeView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
-            android:text="Time"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.952"
-            app:layout_constraintStart_toEndOf="@+id/button2"
-            tools:layout_editor_absoluteY="0dp"
-            tools:text="@tools:sample/date/hhmm" />
+            android:layout_marginStart="8dp"
+            android:text="A la carte"
+            app:layout_constraintStart_toEndOf="@+id/mealImage"
+            app:layout_constraintTop_toTopOf="@+id/mealImage" />
 
         <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/icon_tables"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="96dp"
-            android:layout_marginTop="8dp"
+            android:id="@+id/mealImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="50dp"
             android:src="@drawable/icon_food"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/drinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Dryck"
+            app:layout_constraintStart_toEndOf="@+id/drinkImage"
+            app:layout_constraintTop_toTopOf="@+id/drinkImage" />
+
+        <ImageView
+            android:id="@+id/drinkImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="50dp"
+            android:src="@drawable/icon_food"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/laCarteButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/etcButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Övrigt"
+            app:layout_constraintStart_toEndOf="@+id/etcImage"
+            app:layout_constraintTop_toTopOf="@+id/etcImage" />
+
+        <ImageView
+            android:id="@+id/etcImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="50dp"
+            android:src="@drawable/icon_food"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/drinkButton"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
