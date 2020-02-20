@@ -18,7 +18,7 @@ import android.widget.Button;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragmentDirections;
 
-public class TableButtonFragment extends Fragment implements View.OnClickListener {
+public class TableButtonFragment extends Fragment {
 
     private View view;
     private TableButtonViewModel mViewModel;
@@ -42,17 +42,9 @@ public class TableButtonFragment extends Fragment implements View.OnClickListene
 
         // Example of one button navigation
         Button orderButton = view.findViewById(R.id.tableButton);
-        orderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToOrderOverviewFragment3();
-                Navigation.findNavController(getView()).navigate(action);
-            }
+        orderButton.setOnClickListener(v -> {
+            NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToOrderOverviewFragment3();
+            Navigation.findNavController(getView()).navigate(action);
         });
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }
