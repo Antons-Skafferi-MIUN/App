@@ -15,11 +15,7 @@
     <fragment
         android:id="@+id/orderOverviewFragment"
         android:name="se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment"
-        android:label="OrderOverviewFragment" >
-        <action
-            android:id="@+id/action_orderOverviewFragment_to_tableOverviewFragment"
-            app:destination="@id/tableOverviewFragment" />
-    </fragment>
+        android:label="OrderOverviewFragment" />
     <dialog
         android:id="@+id/tableDialogFragment"
         android:name="se.miun.dt170.antonsskafferi.ui.dialog.TableDialogFragment"
