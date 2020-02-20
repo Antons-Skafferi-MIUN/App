@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import se.miun.dt170.antonsskafferi.R;
 
-public class FoodEditDialog extends DialogFragment {
+public class FoodEditDialogFragment extends DialogFragment {
 
     private FoodEditDialogViewModel mViewModel;
     private View dialogView;
