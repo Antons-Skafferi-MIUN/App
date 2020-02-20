@@ -25,4 +25,9 @@
             android:id="@+id/action_tableDialogFragment_to_orderOverviewFragment"
             app:destination="@id/orderOverviewFragment" />
     </dialog>
+    <dialog
+        android:id="@+id/foodEditDialog"
+        android:name="se.miun.dt170.antonsskafferi.ui.dialog.FoodEditDialog"
+        android:label="food_edit_dialog_fragment"
+        tools:layout="@layout/food_edit_dialog_fragment" />
 </navigation>
