@@ -80,14 +80,6 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
                 //temp
                 Toast.makeText(getActivity(), "button1", Toast.LENGTH_SHORT).show();
 
-                //Navigate to previous activity
-                NavDirections action = OrderOverviewFragmentDirections.actionOrderOverviewFragment3ToTableOverviewFragment();
-                Navigation.findNavController(getView()).navigate(action);
-                //Navigation.findNavController(getView()).navigate(action);
-                //Intent intent = new Intent(getActivity(), WaiterActivity.class);
-                //startActivity(intent);
-                //getActivity().finish();  //kommer tillbaka till start loginsidan
-            break;
 
             case R.id.button2:
 
