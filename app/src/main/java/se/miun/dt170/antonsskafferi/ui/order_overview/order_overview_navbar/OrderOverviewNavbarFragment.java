@@ -41,8 +41,6 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(OrderOverviewNavbarViewModel.class);
-        timeView = getActivity().findViewById(R.id.timeView);
-
 
         //Denna borde vara global plus att dag skall vara med oxo
         //Thread based updates each sekun or minute mayebe.
@@ -52,7 +50,6 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
 
         WaiterActivity waiter = new WaiterActivity();
         String test = waiter.getTest();
-        timeView.setText(time);
 
         //Def of header buttons
         Button orderButton1 = getActivity().findViewById(R.id.laCarteButton);
