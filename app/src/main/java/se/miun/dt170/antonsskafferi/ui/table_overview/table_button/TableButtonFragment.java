@@ -7,15 +7,20 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragmentDirections;
 
-public class TableButtonFragment extends Fragment {
+public class TableButtonFragment extends Fragment implements View.OnClickListener {
 
+    private View view;
     private TableButtonViewModel mViewModel;
 
     public static TableButtonFragment newInstance() {
@@ -25,7 +30,8 @@ public class TableButtonFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.table_button_fragment, container, false);
+        view = inflater.inflate(R.layout.table_button_fragment, container, false);
+        return view;
     }
 
     @Override
@@ -33,6 +39,20 @@ public class TableButtonFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(TableButtonViewModel.class);
         // TODO: Use the ViewModel
+
+        // Example of one button navigation
+        Button orderButton = view.findViewById(R.id.tableButton);
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToOrderOverviewFragment3();
+                Navigation.findNavController(getView()).navigate(action);
+            }
+        });
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }
