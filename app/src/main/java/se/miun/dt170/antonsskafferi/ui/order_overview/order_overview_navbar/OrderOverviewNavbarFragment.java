@@ -53,7 +53,7 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
 
         //Def of header buttons
         Button orderButton1 = getActivity().findViewById(R.id.laCarteButton);
-        Button orderButton2 = getActivity().findViewById(R.id.etcButton);
+        Button orderButton2 = getActivity().findViewById(R.id.drinkButton);
         orderButton1.setOnClickListener(this);
         orderButton2.setOnClickListener(this);
         // TODO: Use the ViewModel
@@ -67,15 +67,12 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
             case R.id.laCarteButton:
                 //temp
                 Toast.makeText(getActivity(), "button1", Toast.LENGTH_SHORT).show();
+                break;
 
-
-            case R.id.etcButton:
+            case R.id.drinkButton:
 
                 //Temp
                 Toast.makeText(getActivity(), "button2", Toast.LENGTH_SHORT).show();
-
-
-
                 break;
 
         }

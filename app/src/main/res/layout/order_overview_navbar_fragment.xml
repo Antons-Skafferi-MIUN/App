@@ -31,8 +31,9 @@
             android:text="A la carte"
             android:textColor="@android:color/white"
             android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/mealImage"
-            app:layout_constraintTop_toTopOf="@+id/mealImage" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/mealImage"
@@ -53,19 +54,9 @@
             android:text="Dryck"
             android:textColor="@android:color/white"
             android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/drinkImage"
-            tools:layout_editor_absoluteY="14dp" />
-
-        <Button
-            android:id="@+id/etcButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Övrigt"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            tools:layout_editor_absoluteY="14dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/drinkImage"
@@ -78,8 +69,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.518" />
 
+        <Button
+            android:id="@+id/etcButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Övrigt"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/etcImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/etcImage"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="60dp"
