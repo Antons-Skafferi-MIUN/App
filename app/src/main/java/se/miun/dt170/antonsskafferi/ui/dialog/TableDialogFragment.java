@@ -27,7 +27,6 @@ public class TableDialogFragment extends DialogFragment {
         dialogView = layoutInflater.inflate(R.layout.table_dialog_fragment, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(dialogView);
-
         return builder.create();
     }
 
