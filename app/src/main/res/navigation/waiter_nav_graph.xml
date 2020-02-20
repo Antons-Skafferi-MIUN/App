@@ -9,12 +9,24 @@
         android:name="se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragment"
         android:label="TableOverviewFragment" >
         <action
-            android:id="@+id/action_tableOverviewFragment_to_tableNavigation"
-            app:destination="@id/tableNavigation" />
+            android:id="@+id/action_tableOverviewFragment_to_tableDialogFragment"
+            app:destination="@id/tableDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderOverviewFragment"
+        android:name="se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment"
+        android:label="OrderOverviewFragment" >
+        <action
+            android:id="@+id/action_orderOverviewFragment_to_tableOverviewFragment"
+            app:destination="@id/tableOverviewFragment" />
     </fragment>
     <dialog
-        android:id="@+id/tableNavigation"
-        android:name="se.miun.dt170.antonsskafferi.ui.dialog.TableDialog"
-        android:label="table_navigation_fragment"
-        tools:layout="@layout/table_navigation_fragment" />
+        android:id="@+id/tableDialogFragment"
+        android:name="se.miun.dt170.antonsskafferi.ui.dialog.TableDialogFragment"
+        android:label="table_dialog_fragment"
+        tools:layout="@layout/table_dialog_fragment" >
+        <action
+            android:id="@+id/action_tableDialogFragment_to_orderOverviewFragment"
+            app:destination="@id/orderOverviewFragment" />
+    </dialog>
 </navigation>

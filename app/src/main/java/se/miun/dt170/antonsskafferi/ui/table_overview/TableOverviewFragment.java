@@ -42,7 +42,7 @@ public class TableOverviewFragment extends Fragment {
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToTableNavigation();
+                NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToTableDialogFragment();
                 Navigation.findNavController(getView()).navigate(action);
             }
         });
