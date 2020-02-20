@@ -20,7 +20,7 @@ import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragmentDirec
 
 public class TableButtonFragment extends Fragment {
 
-    private View view;
+    private View fragmentView;
     private TableButtonViewModel mViewModel;
 
     public static TableButtonFragment newInstance() {
@@ -30,8 +30,13 @@ public class TableButtonFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.table_button_fragment, container, false);
-        return view;
+        return inflater.inflate(R.layout.table_button_fragment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        fragmentView = view;
     }
 
     @Override
@@ -41,7 +46,7 @@ public class TableButtonFragment extends Fragment {
         // TODO: Use the ViewModel
 
         // Example of one button navigation
-        Button orderButton = view.findViewById(R.id.tableButton);
+        Button orderButton = fragmentView.findViewById(R.id.tableButton);
         orderButton.setOnClickListener(v -> {
             NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToOrderOverviewFragment3();
             Navigation.findNavController(getView()).navigate(action);
