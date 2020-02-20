@@ -11,13 +11,13 @@
         android:orientation="vertical">
 
         <fragment
-            android:id="@+id/fragment2"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenHeaderFragment"
+            android:id="@+id/waiterBongHeader"
+            android:name="se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderOverviewBongHeaderFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <fragment
-            android:id="@+id/fragment3"
+            android:id="@+id/bongList"
             android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
