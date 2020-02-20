@@ -40,7 +40,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="Köttbullar och potatis" />
+                        android:text="Köttbullar och potatis " />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="Köttbullar och potatis" />
+                        android:text="Kycklingenchiladas" />
                 </androidx.cardview.widget.CardView>
 
             </GridLayout>
