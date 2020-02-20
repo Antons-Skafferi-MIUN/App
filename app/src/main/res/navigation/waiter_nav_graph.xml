@@ -23,7 +23,8 @@
         tools:layout="@layout/table_dialog_fragment" >
         <action
             android:id="@+id/action_tableDialogFragment_to_orderOverviewFragment"
-            app:destination="@id/orderOverviewFragment" />
+            app:destination="@id/orderOverviewFragment"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </dialog>
     <dialog
         android:id="@+id/foodEditDialog"
