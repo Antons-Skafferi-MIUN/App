@@ -1,4 +1,4 @@
-package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong;
+package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_drinks;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -14,26 +14,25 @@ import android.view.ViewGroup;
 
 import se.miun.dt170.antonsskafferi.R;
 
-public class OrderOverviewBongFragment extends Fragment {
+public class OrderOverviewDrinksFragment extends Fragment {
 
-    private OrderOverviewBongViewModel mViewModel;
+    private OrderOverviewDrinksViewModel mViewModel;
 
-    public static OrderOverviewBongFragment newInstance() {
-        return new OrderOverviewBongFragment();
+    public static OrderOverviewDrinksFragment newInstance() {
+        return new OrderOverviewDrinksFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.order_overview_bong_fragment, container, false);
+        return inflater.inflate(R.layout.order_overview_drinks_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(OrderOverviewBongViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(OrderOverviewDrinksViewModel.class);
         // TODO: Use the ViewModel
-        
     }
 
 }
