@@ -15,6 +15,11 @@ import android.widget.TextView;
 import se.miun.dt170.antonsskafferi.activity.KitchenActivity;
 import se.miun.dt170.antonsskafferi.activity.WaiterActivity;
 
+/**
+ * Main activity that creates either KitchenActivity or WaiterActivity depending on choice.
+ *
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     AppCompatActivity self = this;
