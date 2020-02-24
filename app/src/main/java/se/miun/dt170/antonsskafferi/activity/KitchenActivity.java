@@ -1,8 +1,8 @@
 package se.miun.dt170.antonsskafferi.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import se.miun.dt170.antonsskafferi.R;
 

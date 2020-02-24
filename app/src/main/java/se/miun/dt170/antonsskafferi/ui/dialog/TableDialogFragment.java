@@ -1,12 +1,5 @@
 package se.miun.dt170.antonsskafferi.ui.dialog;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -14,8 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewViewModel;
 
 /**
  * Popup dialog displayed when a {@link se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment} is clicked.
