@@ -6,22 +6,14 @@
     tools:context=".ui.bong.BongListFragment">
 
     <LinearLayout
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongItemFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/bong_item_fragment" />
-
-        <fragment
-            android:id="@+id/fragment4"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongItemFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/bong_item_fragment" />
+        <include
+            layout="@layout/bong_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </FrameLayout>

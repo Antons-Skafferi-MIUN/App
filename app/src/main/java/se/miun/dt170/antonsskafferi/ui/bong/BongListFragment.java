@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import se.miun.dt170.antonsskafferi.R;
 
 /**
- * This is the container for the list of {@link BongItemFragment}.
+ * This is the container for the list of {@link BongItemView}.
  * Displayed to the right in the order {@link se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment}.
  * Displayed in the {@link se.miun.dt170.antonsskafferi.activity.KitchenActivity}.
  */
@@ -38,6 +40,9 @@ public class BongListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(BongListViewModel.class);
         // TODO: Use the ViewModel
+
+
+
     }
 
 }
