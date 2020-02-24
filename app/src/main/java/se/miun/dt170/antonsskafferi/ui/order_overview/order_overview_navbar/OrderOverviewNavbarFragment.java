@@ -3,6 +3,7 @@ package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,8 +34,13 @@ import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_drinks.Orde
 public class OrderOverviewNavbarFragment extends Fragment implements View.OnClickListener {
 
     private OrderOverviewNavbarViewModel mViewModel;
+    private View fragmentView;
     private ImageView btnline1;
     private ImageView btnline2;
+
+    private TextView laCarteButton;
+    private TextView drinkButton;
+
     private Boolean boolbtn1 = true;
     private Boolean boolbtn2 = false;
 
@@ -50,37 +56,40 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        fragmentView = view;
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(OrderOverviewNavbarViewModel.class);
 
         //Def of header buttons
-        btnline1 = getActivity().findViewById(R.id.btn_line1);
-        btnline2 = getActivity().findViewById(R.id.btn_line2);
-        btnline1.setVisibility(View.VISIBLE);
-        btnline2.setVisibility(View.INVISIBLE);
-        Button orderButton1 = getActivity().findViewById(R.id.laCarteButton);
-        Button orderButton2 = getActivity().findViewById(R.id.drinkButton);
-        orderButton1.setOnClickListener(this);
-        orderButton2.setOnClickListener(this);
+        btnline1 = fragmentView.findViewById(R.id.btn_line1);
+        btnline2 = fragmentView.findViewById(R.id.btn_line2);
 
+//        btnline1.setVisibility(View.VISIBLE);
+//        btnline2.setVisibility(View.INVISIBLE);
+
+        laCarteButton = fragmentView.findViewById(R.id.laCarteButton);
+        drinkButton = fragmentView.findViewById(R.id.drinkButton);
+
+        laCarteButton.setOnClickListener(this);
+        drinkButton.setOnClickListener(this);
+
+        laCarteButton.setPaintFlags(laCarteButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         // TODO: Use the ViewModel
     }
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
-
             case R.id.laCarteButton:
-                //temp
-                boolbtn1 = true;
-                boolbtn2 = false;
-                if (boolbtn1) {
-                    btnline1.setVisibility(View.VISIBLE);
-                    btnline2.setVisibility(View.INVISIBLE);
-                }
+                laCarteButton.setPaintFlags(laCarteButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                drinkButton.setPaintFlags(0);
 
                 Toast.makeText(getActivity(), "button1", Toast.LENGTH_SHORT).show();
 
@@ -102,18 +111,10 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
                 // Commit the transaction
                 transaction1.commit();
                 */
-
                 break;
-
             case R.id.drinkButton:
-                //Temp
-                boolbtn1 = false;
-                boolbtn2 = true;
-
-                if (boolbtn2) {
-                    btnline2.setVisibility(View.VISIBLE);
-                    btnline1.setVisibility(View.INVISIBLE);
-                }
+                drinkButton.setPaintFlags(drinkButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                laCarteButton.setPaintFlags(0);
 
                 Toast.makeText(getActivity(), "button2", Toast.LENGTH_SHORT).show();
 
@@ -135,12 +136,8 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
                 transaction.commit();
 
                  */
-
                 break;
-
         }
-
-
     }
 
     public void day() {
@@ -176,6 +173,4 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
                 break;
         }
     }
-
-
 }

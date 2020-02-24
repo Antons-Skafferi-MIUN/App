@@ -21,6 +21,7 @@ public class FoodEditDialogFragment extends DialogFragment {
 
     private FoodEditDialogViewModel mViewModel;
     private View dialogView;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater layoutInflater = requireActivity().getLayoutInflater();
