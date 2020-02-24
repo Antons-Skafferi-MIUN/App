@@ -1,19 +1,22 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import se.miun.dt170.antonsskafferi.R;
 
+/**
+ * This is the containing fragment for bong displayment in the {@link se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment}.
+ * Contains a {@link OrderOverviewBongHeaderFragment} above the bong list to the right.
+ * Also container a {@link se.miun.dt170.antonsskafferi.ui.bong.BongListFragment} with added courses and drinks.
+ */
 public class OrderOverviewBongFragment extends Fragment {
 
     private OrderOverviewBongViewModel mViewModel;

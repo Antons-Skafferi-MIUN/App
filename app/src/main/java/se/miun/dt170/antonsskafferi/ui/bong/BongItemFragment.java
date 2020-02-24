@@ -1,23 +1,21 @@
 package se.miun.dt170.antonsskafferi.ui.bong;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import se.miun.dt170.antonsskafferi.R;
 
 /**
- * A fragment that holds a order. Is displayed in BongListFragment and KitchenActivity
+ * This class represents individual items in a bong list.
+ * Displayed in {@link BongListFragment}.
  */
-
 public class BongItemFragment extends Fragment {
 
     private BongItemViewModel mViewModel;

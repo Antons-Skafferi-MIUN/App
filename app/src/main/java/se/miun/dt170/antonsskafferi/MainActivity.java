@@ -1,7 +1,5 @@
 package se.miun.dt170.antonsskafferi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,16 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import se.miun.dt170.antonsskafferi.activity.KitchenActivity;
 import se.miun.dt170.antonsskafferi.activity.WaiterActivity;
 
 /**
- * Main activity that creates either KitchenActivity or WaiterActivity depending on choice.
- *
+ * Main activity that creates either {@link KitchenActivity} or {@link WaiterActivity} depending on choice.
  */
-
 public class MainActivity extends AppCompatActivity {
 
     AppCompatActivity self = this;

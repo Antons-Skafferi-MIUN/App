@@ -1,19 +1,25 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import se.miun.dt170.antonsskafferi.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
+import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderOverviewBongHeaderFragment;
+
+/**
+ * This is the fullscreen fragment for taking a order
+ * Contains a {@link OrderOverviewBongHeaderFragment} above the bong list to the right.
+ * A {@link se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_courses.OrderOverviewCoursesFragment} containing available courses in the middle.
+ * A {@link se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_drinks.OrderOverviewDrinksFragment} containing available drinks in the middle.
+ * A {@link se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.OrderOverviewNavbarFragment} for the navigation top bar.
+ */
 public class OrderOverviewFragment extends Fragment {
 
     private OrderOverviewViewModel mViewModel;

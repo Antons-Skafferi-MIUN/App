@@ -1,22 +1,21 @@
 package se.miun.dt170.antonsskafferi.ui.dialog;
 
-import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import se.miun.dt170.antonsskafferi.R;
 
+/**
+ * Popup dialog displayed when a {@link se.miun.dt170.antonsskafferi.ui.bong.BongItemFragment} is clicked.
+ */
 public class FoodEditDialogFragment extends DialogFragment {
 
     private FoodEditDialogViewModel mViewModel;

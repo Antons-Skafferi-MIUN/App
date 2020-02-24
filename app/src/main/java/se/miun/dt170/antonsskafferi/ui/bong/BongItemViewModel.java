@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data container for {@link BongItemFragment}
+ */
 public class BongItemViewModel extends ViewModel {
 
     private MutableLiveData<List<Item>> items;

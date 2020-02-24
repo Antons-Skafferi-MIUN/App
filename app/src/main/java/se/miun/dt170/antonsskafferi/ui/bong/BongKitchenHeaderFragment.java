@@ -1,19 +1,21 @@
 package se.miun.dt170.antonsskafferi.ui.bong;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import se.miun.dt170.antonsskafferi.R;
 
+/**
+ * Displayed in the {@link se.miun.dt170.antonsskafferi.activity.KitchenActivity}.
+ * Shows a header for bongs in the kitchen.
+ */
 public class BongKitchenHeaderFragment extends Fragment {
 
     private BongKitchenHeaderViewModel mViewModel;
