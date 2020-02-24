@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 
 import se.miun.dt170.antonsskafferi.R;
 
+/**
+ * A fragment that holds a order. Is displayed in BongListFragment and KitchenActivity
+ */
+
 public class BongItemFragment extends Fragment {
 
     private BongItemViewModel mViewModel;
