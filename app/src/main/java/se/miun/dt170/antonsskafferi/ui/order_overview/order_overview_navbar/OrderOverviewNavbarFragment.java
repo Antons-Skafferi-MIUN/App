@@ -35,15 +35,8 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
 
     private OrderOverviewNavbarViewModel mViewModel;
     private View fragmentView;
-    private ImageView btnline1;
-    private ImageView btnline2;
-
     private TextView laCarteButton;
     private TextView drinkButton;
-
-    private Boolean boolbtn1 = true;
-    private Boolean boolbtn2 = false;
-
 
     public static OrderOverviewNavbarFragment newInstance() {
         return new OrderOverviewNavbarFragment();
@@ -66,19 +59,15 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(OrderOverviewNavbarViewModel.class);
 
-        //Def of header buttons
-        btnline1 = fragmentView.findViewById(R.id.btn_line1);
-        btnline2 = fragmentView.findViewById(R.id.btn_line2);
-
-//        btnline1.setVisibility(View.VISIBLE);
-//        btnline2.setVisibility(View.INVISIBLE);
-
+        // Get views
         laCarteButton = fragmentView.findViewById(R.id.laCarteButton);
         drinkButton = fragmentView.findViewById(R.id.drinkButton);
 
+        // Add listeners
         laCarteButton.setOnClickListener(this);
         drinkButton.setOnClickListener(this);
 
+        // Default properties
         laCarteButton.setPaintFlags(laCarteButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         // TODO: Use the ViewModel
@@ -86,12 +75,16 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
 
     @Override
     public void onClick(View view) {
+
+        //TODO: CHANGE TO COMMAND PATTERN
         switch (view.getId()) {
             case R.id.laCarteButton:
                 laCarteButton.setPaintFlags(laCarteButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                 drinkButton.setPaintFlags(0);
 
                 Toast.makeText(getActivity(), "button1", Toast.LENGTH_SHORT).show();
+
+                //TODO: Remove code comments
 
                 // Create fragment and give it an argument specifying the article it should show
 
@@ -117,6 +110,8 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
                 laCarteButton.setPaintFlags(0);
 
                 Toast.makeText(getActivity(), "button2", Toast.LENGTH_SHORT).show();
+
+                //TODO: Remove code comments
 
                 /*
                 // Create fragment and give it an argument specifying the article it should show

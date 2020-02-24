@@ -87,29 +87,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@tools:sample/date/hhmm" />
 
-        <ImageView
-            android:id="@+id/btn_line1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:src="@drawable/ic_line"
-            app:layout_constraintBottom_toBottomOf="@+id/laCarteButton"
-            app:layout_constraintEnd_toEndOf="@+id/laCarteButton"
-            app:layout_constraintStart_toStartOf="@+id/laCarteButton"
-            app:layout_constraintTop_toTopOf="@+id/laCarteButton" />
-
-        <ImageView
-            android:id="@+id/btn_line2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="32dp"
-            android:src="@drawable/ic_line"
-            app:layout_constraintBottom_toBottomOf="@+id/drinkButton"
-            app:layout_constraintEnd_toEndOf="@+id/drinkButton"
-            app:layout_constraintStart_toStartOf="@+id/drinkButton"
-            app:layout_constraintTop_toTopOf="@+id/drinkButton" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
