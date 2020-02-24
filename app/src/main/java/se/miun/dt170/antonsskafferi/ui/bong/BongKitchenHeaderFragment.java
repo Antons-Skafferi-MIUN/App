@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 
 import se.miun.dt170.antonsskafferi.R;
 
+/**
+ * Displayed in the {@link se.miun.dt170.antonsskafferi.activity.KitchenActivity}
+ * Shows a header for bongs in the kitchen
+ */
 public class BongKitchenHeaderFragment extends Fragment {
 
     private BongKitchenHeaderViewModel mViewModel;

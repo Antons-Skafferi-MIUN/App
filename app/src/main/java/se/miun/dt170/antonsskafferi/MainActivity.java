@@ -16,10 +16,8 @@ import se.miun.dt170.antonsskafferi.activity.KitchenActivity;
 import se.miun.dt170.antonsskafferi.activity.WaiterActivity;
 
 /**
- * Main activity that creates either KitchenActivity or WaiterActivity depending on choice.
- *
+ * Main activity that creates either {@link KitchenActivity} or {@link WaiterActivity} depending on choice.
  */
-
 public class MainActivity extends AppCompatActivity {
 
     AppCompatActivity self = this;

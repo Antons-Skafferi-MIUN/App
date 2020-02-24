@@ -19,8 +19,9 @@ import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragmentDirections;
 
 /**
- * This is the container for the list of fragments that is displayed to the right in the order order_overview_fragment.
- * and in the kitchen activity_kitchen.
+ * This is the container for the list of {@link BongItemFragment}
+ * Displayed to the right in the order {@link se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment}
+ * Displayed in the {@link se.miun.dt170.antonsskafferi.activity.KitchenActivity}
  */
 
 public class BongListFragment extends Fragment {

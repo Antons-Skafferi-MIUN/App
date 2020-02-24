@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import se.miun.dt170.antonsskafferi.R;
 
+/**
+ * Waiter activity is the root for the kitchen navigation graph
+ */
 public class WaiterActivity extends AppCompatActivity {
     private TextView name;
     private Intent intent;
