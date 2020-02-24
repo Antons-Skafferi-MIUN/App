@@ -16,8 +16,10 @@ public class WaiterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiter);
-//        intent = getIntent();
-//        name = findViewById(R.id.displayName);
-//        name.setText("Hello " + intent.getStringExtra("DISPLAY_NAME"));
+        intent = getIntent();
+        name = findViewById(R.id.nameText);
+        name.setText(String.format("Hello %s", intent.getStringExtra("DISPLAY_NAME")));
     }
 }
+
+

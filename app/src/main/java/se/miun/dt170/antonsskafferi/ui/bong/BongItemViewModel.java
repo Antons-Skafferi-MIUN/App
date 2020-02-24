@@ -9,16 +9,6 @@ import java.util.List;
 
 public class BongItemViewModel extends ViewModel {
 
-    class Item {
-        String Name;
-        List<String> extras;
-
-        public Item(String name, List<String> extras) {
-            Name = name;
-            this.extras = extras;
-        }
-    }
-
     private MutableLiveData<List<Item>> items;
 
     public LiveData<List<Item>> getItems() {
@@ -34,5 +24,15 @@ public class BongItemViewModel extends ViewModel {
         List<Item> itemList = new ArrayList<>();
         itemList.add(new Item("Köttbullar", null));
         items.setValue(itemList);
+    }
+
+    class Item {
+        String Name;
+        List<String> extras;
+
+        public Item(String name, List<String> extras) {
+            Name = name;
+            this.extras = extras;
+        }
     }
 }

@@ -33,7 +33,7 @@ public class OrderOverviewBongFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(OrderOverviewBongViewModel.class);
         // TODO: Use the ViewModel
-        
+
     }
 
 }

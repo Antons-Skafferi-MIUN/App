@@ -35,7 +35,7 @@ public class BongItemFragment extends Fragment {
 
         mViewModel.getItems().observe(getViewLifecycleOwner(), items -> {
             // Update UI on item changes
-            
+
         });
     }
 }
