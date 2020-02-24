@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 
 import se.miun.dt170.antonsskafferi.R;
 
+/**
+ * Contains available courses in the middle of the {@link se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment}.
+ */
 public class OrderOverviewCoursesFragment extends Fragment {
 
     private OrderOverviewCoursesViewModel mViewModel;

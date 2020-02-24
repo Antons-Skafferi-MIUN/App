@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 
 import se.miun.dt170.antonsskafferi.R;
 
+/**
+ * Displayed above the bong list in the {@link se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment}.
+ */
 public class OrderOverviewBongHeaderFragment extends Fragment {
 
     private OrderOverviewBongHeaderViewModel mViewModel;

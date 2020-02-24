@@ -17,6 +17,9 @@ import android.view.ViewGroup;
 
 import se.miun.dt170.antonsskafferi.R;
 
+/**
+ * Popup dialog displayed when a {@link se.miun.dt170.antonsskafferi.ui.bong.BongItemFragment} is clicked.
+ */
 public class FoodEditDialogFragment extends DialogFragment {
 
     private FoodEditDialogViewModel mViewModel;

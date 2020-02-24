@@ -31,6 +31,12 @@ import se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_courses.OrderOverviewCoursesFragment;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_drinks.OrderOverviewDrinksFragment;
 
+/**
+ * Displayed at the top of {@link OrderOverviewFragment}.
+ * Contains navigation buttons for navigating between
+ * {@link OrderOverviewCoursesFragment} and
+ * {@link OrderOverviewDrinksFragment}.
+ */
 public class OrderOverviewNavbarFragment extends Fragment implements View.OnClickListener {
 
     private OrderOverviewNavbarViewModel mViewModel;

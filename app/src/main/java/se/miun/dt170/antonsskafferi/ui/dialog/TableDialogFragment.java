@@ -17,6 +17,11 @@ import android.widget.Button;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewViewModel;
 
+/**
+ * Popup dialog displayed when a {@link se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment} is clicked.
+ * Will navigate you to {@link se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment}
+ * or reserve table.
+ */
 public class TableDialogFragment extends DialogFragment {
     private Button openOrderButton;
     private View dialogView;

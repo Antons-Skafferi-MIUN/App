@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import se.miun.dt170.antonsskafferi.R;
 
 /**
- * This class represents individual items in a bong list
- * Displayed in {@link BongListFragment}
+ * This class represents individual items in a bong list.
+ * Displayed in {@link BongListFragment}.
  */
 public class BongItemFragment extends Fragment {
 
