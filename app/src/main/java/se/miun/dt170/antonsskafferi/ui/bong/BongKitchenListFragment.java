@@ -48,7 +48,7 @@ public class BongKitchenListFragment extends Fragment implements View.OnClickLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(BongKitchenListViewModel.class);
+        //mViewModel = ViewModelProviders.of(this).get(BongKitchenListViewModel.class);
 
         foodNameText = bongItemView.findViewById(R.id.foodNameText);
         amountText = bongItemView.findViewById(R.id.amountText);
