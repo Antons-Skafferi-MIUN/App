@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
@@ -19,6 +22,7 @@ import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
  * Contains several {@link se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment}s.
  */
 public class TableOverviewFragment extends Fragment {
+    private TableDialogSharedViewModel sharedViewModel;
 
     private TableOverviewViewModel mViewModel;
 
@@ -29,7 +33,6 @@ public class TableOverviewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.table_overview_fragment, container, false);
     }
 
@@ -37,7 +40,6 @@ public class TableOverviewFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(TableOverviewViewModel.class);
-
         // TODO: Use the ViewModel
     }
 }

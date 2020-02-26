@@ -88,5 +88,6 @@
             app:layout_constraintStart_toEndOf="@+id/buttonFragment6"
             app:layout_constraintTop_toTopOf="@+id/buttonFragment6"
             tools:layout="@layout/table_button_fragment" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

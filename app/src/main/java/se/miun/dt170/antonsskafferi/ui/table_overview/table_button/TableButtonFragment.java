@@ -41,8 +41,9 @@ public class TableButtonFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         fragmentView = view;
     }
 
@@ -53,13 +54,17 @@ public class TableButtonFragment extends Fragment {
         // TODO: Use the ViewModel
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TableDialogSharedViewModel.class);
 
+
         // Example of one button navigation
         Button orderButton = fragmentView.findViewById(R.id.tableButton);
         orderButton.setOnClickListener(v -> {
             sharedViewModel.setTableColor("Green"); //Get the actual table color.
             sharedViewModel.setAvailableSeats(new Integer(5)); //get the actual number of avaialbe seats.
+            sharedViewModel.setIsTableOpen(false);
+            // TODO: Fix bug where if the users uses the back button the observer will be null and unable to observe the value change.
             NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToTableDialogFragment();
             Navigation.findNavController(getView()).navigate(action);
         });
+
     }
 }
