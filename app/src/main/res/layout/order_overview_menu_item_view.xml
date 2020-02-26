@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView71211"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="RÅBIFF"
+                android:textAlignment="center"
+                android:textColor="#3F3F3F"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/textView61211"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread_inside" />
+
+            <TextView
+                android:id="@+id/textView61211"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#8B1E1E"
+                android:backgroundTint="#00802525"
+                android:backgroundTintMode="src_over"
+                android:gravity="center_horizontal"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text="159:-"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView71211" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
