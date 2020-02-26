@@ -23,7 +23,7 @@ public class BongKitchenHeaderView extends ConstraintLayout implements View.OnCl
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.bong_kitchen_header, this, true);
+        inflater.inflate(R.layout.bong_kitchen_header_view, this, true);
 
         tableNumber =  bongHeaderView.findViewById(R.id.tableText);
         orderTime  = bongHeaderView.findViewById(R.id.timeText);
