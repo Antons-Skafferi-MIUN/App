@@ -10,4 +10,12 @@ public class Item {
         Name = name;
         this.extras = extras;
     }
+
+    public String getName() {
+        return Name;
+    }
+
+    public List<String> getExtras() {
+        return extras;
+    }
 }
