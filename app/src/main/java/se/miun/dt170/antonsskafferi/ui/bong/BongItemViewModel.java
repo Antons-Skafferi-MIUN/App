@@ -7,35 +7,29 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.miun.dt170.antonsskafferi.data.Item;
+
 /**
- * Data container for {@link BongItemFragment}
+ * Data container for {@link BongItemView}
  */
 public class BongItemViewModel extends ViewModel {
 
-    private MutableLiveData<List<Item>> items;
+    private MutableLiveData<Item> item;
 
-    public LiveData<List<Item>> getItems() {
-        if (items == null) {
-            items = new MutableLiveData<>();
-            loadUsers();
+    public LiveData<Item> getItem() {
+        if (item == null) {
+            item = new MutableLiveData<>();
+            loadItem();
         }
-        return items;
+        return item;
     }
 
-    private void loadUsers() {
+    private void loadItem() {
         //TODO: Do an asynchronous operation to fetch items.
-        List<Item> itemList = new ArrayList<>();
-        itemList.add(new Item("Köttbullar", null));
-        items.setValue(itemList);
-    }
+        List<String> extrasList = new ArrayList<>();
+        extrasList.add("- Sås");
 
-    class Item {
-        String Name;
-        List<String> extras;
-
-        public Item(String name, List<String> extras) {
-            Name = name;
-            this.extras = extras;
-        }
+        Item newItem = new Item("Pasta Carbonara", extrasList);
+        item.setValue(newItem);
     }
 }
