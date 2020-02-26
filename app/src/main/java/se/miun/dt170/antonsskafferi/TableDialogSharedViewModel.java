@@ -4,12 +4,24 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class TableDialogSharedViewModel extends ViewModel {
-    private MutableLiveData<CharSequence> tableColor = new MutableLiveData<>();
+    private MutableLiveData<String> tableColor = new MutableLiveData<>();
+    private MutableLiveData<Integer> availableSeats = new MutableLiveData<>();
 
-    public void setTableColor(CharSequence _tableColor){
-        tableColor.setValue(_tableColor);
+    public MutableLiveData<Integer> getAvailableSeats() {
+        return availableSeats;
     }
-    public MutableLiveData<CharSequence> getTableColor(){ // change to string??
+
+    public void setAvailableSeats(Integer availableSeats) {
+        this.availableSeats.setValue(availableSeats);
+    }
+
+
+    public void setTableColor(String tableColor){
+        this.tableColor.setValue(tableColor);
+    }
+
+
+    public MutableLiveData<String> getTableColor(){
         return tableColor;
     }
 

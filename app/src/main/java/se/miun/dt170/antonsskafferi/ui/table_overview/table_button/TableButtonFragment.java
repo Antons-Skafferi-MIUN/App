@@ -56,7 +56,8 @@ public class TableButtonFragment extends Fragment {
         // Example of one button navigation
         Button orderButton = fragmentView.findViewById(R.id.tableButton);
         orderButton.setOnClickListener(v -> {
-            sharedViewModel.setTableColor("Green");
+            sharedViewModel.setTableColor("Green"); //Get the actual table color.
+            sharedViewModel.setAvailableSeats(new Integer(5)); //get the actual number of avaialbe seats.
             NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToTableDialogFragment();
             Navigation.findNavController(getView()).navigate(action);
         });

@@ -55,12 +55,13 @@ public class TableDialogFragment extends DialogFragment {
         openOrderButton = dialogView.findViewById(R.id.openOrderButton);
 
         TableDialogSharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).
-                get(TableDialogSharedViewModel.class);
+                get(TableDialogSharedViewModel.class); //gets the shared view model from the associsated fragment.
 
-        sharedViewModel.getTableColor().observe(parent.getViewLifecycleOwner(), new Observer<CharSequence>() {
+        //creates a new observers that will update once the shared view model has new data
+        sharedViewModel.getAvailableSeats().observe(parent.getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
-            public void onChanged(CharSequence charSequence) {
-                Toast.makeText(getActivity(), charSequence, Toast.LENGTH_SHORT).show();
+            public void onChanged(Integer nrOfSeats) {
+                Toast.makeText(getActivity(), nrOfSeats.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
