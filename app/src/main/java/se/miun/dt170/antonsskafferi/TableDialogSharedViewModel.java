@@ -21,10 +21,8 @@ public class TableDialogSharedViewModel extends ViewModel {
     }
 
     public void setAvailableSeats(int availableSeats) {
-        Integer temp = new Integer(availableSeats);
-        this.availableSeats.setValue(temp);
+        this.availableSeats.setValue(availableSeats);
     }
-
 
     public void setTableColor(String tableColor){
         this.tableColor.setValue(tableColor);

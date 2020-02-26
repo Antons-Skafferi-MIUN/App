@@ -22,7 +22,6 @@ import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
  * Contains several {@link se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment}s.
  */
 public class TableOverviewFragment extends Fragment {
-    private TableDialogSharedViewModel sharedViewModel;
 
     private TableOverviewViewModel mViewModel;
 

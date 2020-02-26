@@ -55,6 +55,17 @@ public class TableDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(dialogView);
 
+        sharedViewModel = new ViewModelProvider(requireActivity()).
+                get(TableDialogSharedViewModel.class); //gets the shared view model from the associsated fragment.
+        //creates a new observers that will update once the shared view model has new data
+        MutableLiveData<String> tableColor = sharedViewModel.getTableColor();
+        tableColor.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(getActivity(), "I LIKE TO CRASH", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
 
         return builder.create();
@@ -79,21 +90,11 @@ public class TableDialogFragment extends DialogFragment {
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(5);
         numberPicker.setOnValueChangedListener((picker, oldVal, newVal) -> numberOfSeats = newVal);
-        sharedViewModel = new ViewModelProvider(requireActivity()).
-                get(TableDialogSharedViewModel.class); //gets the shared view model from the associsated fragment.
+
 
         adjustBookingButton();
         adjustOrderButton();
 
-        //creates a new observers that will update once the shared view model has new data
-        MutableLiveData<String> tableColor = sharedViewModel.getTableColor();
-        tableColor.observe(parent.getViewLifecycleOwner(), new Observer<String>() {
-                    @Override
-                    public void onChanged(String s) {
-                        Toast.makeText(getActivity(), "I LIKE TO CRASH", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                //
 
                 openOrderButton.setOnClickListener(v -> {
                     NavDirections action = TableDialogFragmentDirections.actionTableDialogFragmentToOrderOverviewFragment();
