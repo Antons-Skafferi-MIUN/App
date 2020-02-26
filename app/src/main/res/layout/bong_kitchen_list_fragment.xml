@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.bong.BongKitchenListFragment">
+
+    <LinearLayout
+        android:id="@+id/kitchenBongLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/kitchenHeaderFragment"
+            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenHeaderFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/bong_kitchen_header_fragment" />
+
+        <fragment
+            android:id="@+id/kitchenBongItemFragment1"
+            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenItemFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/bong_kitchen_item_fragment" />
+
+        <fragment
+            android:id="@+id/kitchenBongItemFragment2"
+            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenItemFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/bong_kitchen_item_fragment" />
+
+    </LinearLayout>
+</FrameLayout>
