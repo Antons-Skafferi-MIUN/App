@@ -15,7 +15,7 @@
             android:name="se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.OrderOverviewNavbarFragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/coursesFragment"
+            app:layout_constraintBottom_toTopOf="@+id/menuContainerFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
             tools:layout="@layout/order_overview_navbar_fragment" />
 
         <fragment
-            android:id="@+id/coursesFragment"
+            android:id="@+id/menuContainerFragment"
             android:name="se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_courses.OrderOverviewCoursesFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"

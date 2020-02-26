@@ -18,6 +18,11 @@
             android:layout_margin="20dp"
             android:orientation="vertical">
 
+            <include
+                layout="@layout/menu_category_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,103 +36,10 @@
                 android:padding="20dp"
                 android:useDefaultMargins="true">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="156dp"
-                    android:layout_height="98dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:elevation="2dp"
-                    app:cardBackgroundColor="#FFFFFF">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/textView7121"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center_horizontal"
-                            android:text="RÅBIFF"
-                            android:textAlignment="center"
-                            android:textColor="#3F3F3F"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toTopOf="@+id/textView6121"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_chainStyle="spread_inside" />
-
-                        <TextView
-                            android:id="@+id/textView6121"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="#8B1E1E"
-                            android:backgroundTint="#00802525"
-                            android:backgroundTintMode="src_over"
-                            android:gravity="center_horizontal"
-                            android:text="159:-"
-                            android:textColor="#FFFFFF"
-                            android:textSize="10sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView7121" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="156dp"
-                    android:layout_height="98dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:elevation="2dp"
-                    app:cardBackgroundColor="#FFFFFF">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/textView712"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center_horizontal"
-                            android:text="TOAST SKAGEN"
-                            android:textAlignment="center"
-                            android:textColor="#3F3F3F"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toTopOf="@+id/textView612"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_chainStyle="spread_inside" />
-
-                        <TextView
-                            android:id="@+id/textView612"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="#8B1E1E"
-                            android:backgroundTint="#00802525"
-                            android:backgroundTintMode="src_over"
-                            android:gravity="center_horizontal"
-                            android:text="149:-"
-                            android:textColor="#FFFFFF"
-                            android:textSize="10sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView712" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
+                <include
+                    layout="@layout/order_overview_menu_item_view"
+                    android:layout_width="180dp"
+                    android:layout_height="110dp" />
 
             </GridLayout>
 
@@ -143,57 +55,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="20dp"
-                android:useDefaultMargins="true">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="156dp"
-                    android:layout_height="98dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:elevation="2dp"
-                    app:cardBackgroundColor="#FFFFFF">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/textView713"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center_horizontal"
-                            android:text="PASTA CARBONARA"
-                            android:textAlignment="center"
-                            android:textColor="#3F3F3F"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toTopOf="@+id/textView613"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_chainStyle="spread_inside" />
-
-                        <TextView
-                            android:id="@+id/textView613"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="#8B671E"
-                            android:backgroundTint="#00802525"
-                            android:backgroundTintMode="src_over"
-                            android:gravity="center_horizontal"
-                            android:text="229:-"
-                            android:textColor="#FFFFFF"
-                            android:textSize="10sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView713" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-            </GridLayout>
+                android:useDefaultMargins="true"/>
 
             <TextView
                 android:id="@+id/textView12"
@@ -207,57 +69,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="20dp"
-                android:useDefaultMargins="true">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="156dp"
-                    android:layout_height="98dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:elevation="2dp"
-                    app:cardBackgroundColor="#FFFFFF">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/textView714"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:gravity="center_horizontal"
-                            android:text="CREME BRULE"
-                            android:textAlignment="center"
-                            android:textColor="#3F3F3F"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toTopOf="@+id/textView614"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_chainStyle="spread_inside" />
-
-                        <TextView
-                            android:id="@+id/textView614"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="#328B1E"
-                            android:backgroundTint="#00802525"
-                            android:backgroundTintMode="src_over"
-                            android:gravity="center_horizontal"
-                            android:text="89:-"
-                            android:textColor="#FFFFFF"
-                            android:textSize="10sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView714" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-            </GridLayout>
+                android:useDefaultMargins="true"/>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
