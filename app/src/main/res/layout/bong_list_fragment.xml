@@ -6,7 +6,7 @@
     tools:context=".ui.bong.BongListFragment">
 
     <LinearLayout
-        android:id="@+id/listView"
+        android:id="@+id/bongListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
