@@ -11,28 +11,22 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <fragment
-            android:id="@+id/fragment5"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenListFragment"
+        <include
+            layout="@layout/bong_kitchen_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:layout="@layout/bong_kitchen_list_fragment" />
+            android:layout_weight="1" />
 
-        <fragment
-            android:id="@+id/fragment6"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenListFragment"
+        <include
+            layout="@layout/bong_kitchen_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:layout="@layout/bong_kitchen_list_fragment" />
+            android:layout_weight="1" />
 
-        <fragment
-            android:id="@+id/fragment7"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenListFragment"
+        <include
+            layout="@layout/bong_kitchen_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:layout="@layout/bong_kitchen_list_fragment" />
+            android:layout_weight="1" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

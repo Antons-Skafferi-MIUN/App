@@ -11,26 +11,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <fragment
-            android:id="@+id/kitchenHeaderFragment"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenHeaderFragment"
+        <include
+            layout="@layout/bong_kitchen_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/bong_kitchen_header_fragment" />
+            android:layout_height="wrap_content" />
 
-        <fragment
-            android:id="@+id/kitchenBongItemFragment1"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenItemFragment"
+        <include
+            layout="@layout/bong_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/bong_kitchen_item_fragment" />
+            android:layout_height="wrap_content" />
 
-        <fragment
-            android:id="@+id/kitchenBongItemFragment2"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongKitchenItemFragment"
+        <include
+            layout="@layout/bong_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/bong_kitchen_item_fragment" />
-
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </FrameLayout>
