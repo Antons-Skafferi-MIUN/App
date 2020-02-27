@@ -4,4 +4,31 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="lighter_gray">#FFFFFF</color>
+
+    <!-- Colors for the menu overview -->
+    <color name="menu_category_one">#6a0303</color>
+    <color name="menu_category_two">#9a6520</color>
+    <color name="menu_category_three">#446a19</color>
+    <color name="accept_green">#37983a  </color>
+    <color name="delete_red">#c73131</color>
+    <color name="delete_brun">#c98429</color>
+    <color name="bong_selected">#fef3e5</color>
+
+    <!-- Colors for the table overview -->
+    <color name="table_overview_background">#ffffff</color>
+    <color name="table_overview_text_dark">#000000</color>
+    <color name="table_overview_header_background">#000000</color>
+    <color name="table_overview_header_text">#ffffff</color>
+    <color name="table_overview_yellow">#ffeb39</color>
+    <color name="table_overview_red">#ff3939</color>
+    <color name="table_overview_green">#33ff7f</color>
+
+    <!-- Colors for the menu overview -->
+    <color name="popup_red">#cf0404</color>
+    <color name="popup_green">#04cf50</color>
+
+    <!-- Colors for the kitchen overview -->
+    <color name="kitchen_overview_background">#f3f3f3</color>
+    <color name="kitchen_overview_card_background">#fefefe</color>
+    <color name="kitchen_overview_checkbox">#b7ffd6</color>
 </resources>
