@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.miun.dt170.antonsskafferi.data.Item;
+import se.miun.dt170.antonsskafferi.data.ItemRepository;
 
 /**
  * Data container for {@link BongListFragment}
@@ -15,24 +16,11 @@ import se.miun.dt170.antonsskafferi.data.Item;
 public class BongListViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 
-    private MutableLiveData<List<BongItemView>> bongItems;
+    public LiveData<List<Item>> bongItems;
 
-    public LiveData<List<BongItemView>> getItems() {
-        if (bongItems == null) {
-            bongItems = new MutableLiveData<>();
-            loadItems();
-        }
-        return bongItems;
-    }
+    public BongListViewModel() {
 
-    private void loadItems() {
-        //TODO: Do an asynchronous operation to fetch items.
-        List<String> extrasList = new ArrayList<>();
-        extrasList.add("- Sås");
-
-        List<Item> itemList = new ArrayList<>();
-        itemList.add(new Item("Köttbullar", null));
-        itemList.add(new Item("Pasta Carbonara", extrasList));
-//        bongItems.setValue(BongItemFragment.newInstance());
+        ItemRepository itemRepository = new ItemRepository();
+        bongItems = itemRepository.getItems();
     }
 }

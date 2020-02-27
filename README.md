@@ -4,7 +4,7 @@
 2. `$ cd App`
 3. `$ ./install_script.sh`
 
-# API level 22(lollipop) for tablet Nexus 9
+# API level 24(lollipop) for tablet Nexus 9
 
 ## Git policy
 Run the git-hook install script after cloning: `$./install_script.sh`. This will install a pre-push hook that will restrict push access and give hints on how to follow policy. 
@@ -33,7 +33,7 @@ It's crucial we all use the same environment
 ## Mobile development
 
 * Android Studio  
-* Android 5.0 (API level 21), required for native vector graphics
+* Android 5.0 (API level 24), required for native vector graphics
 
 # How to get huge performance increase!!
 1. Open AVD manager in android studio.
