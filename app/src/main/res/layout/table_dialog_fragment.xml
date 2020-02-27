@@ -12,17 +12,6 @@
         android:layout_height="168dp">
 
 
-        <NumberPicker
-            android:id="@+id/availableSeats"
-            android:layout_width="105dp"
-            android:layout_height="88dp"
-            app:layout_constraintBottom_toTopOf="@+id/openOrderButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/dialogTextDisplay"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
         <TextView
             android:id="@+id/dialogTextDisplay"
             android:layout_width="wrap_content"
@@ -31,8 +20,6 @@
             android:textColor="#000000"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/availableSeats"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,8 +29,8 @@
             android:id="@+id/bookingButton"
             android:layout_width="94dp"
             android:layout_height="0dp"
-            android:background="#FF0000"
-            android:text="Boka / Avboka"
+            android:background="#39FF14"
+            android:text="Boka"
             android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/openOrderButton"

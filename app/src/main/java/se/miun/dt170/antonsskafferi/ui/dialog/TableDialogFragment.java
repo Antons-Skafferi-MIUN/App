@@ -85,30 +85,30 @@ public class TableDialogFragment extends DialogFragment {
         parent = getParentFragment();
         openOrderButton = dialogView.findViewById(R.id.openOrderButton);
         bookingButton = dialogView.findViewById(R.id.bookingButton);
-        numberPicker = dialogView.findViewById(R.id.availableSeats);
-
-        numberPicker.setMinValue(0);
-        numberPicker.setMaxValue(5);
-        numberPicker.setOnValueChangedListener((picker, oldVal, newVal) -> numberOfSeats = newVal);
-
 
         adjustBookingButton();
         adjustOrderButton();
 
-
-                openOrderButton.setOnClickListener(v -> {
-                    NavDirections action = TableDialogFragmentDirections.actionTableDialogFragmentToOrderOverviewFragment();
-                    Navigation.findNavController(parent.getView()).navigate(action);
-                });
+        openOrderButton.setOnClickListener(v -> {
+            if(sharedViewModel.getIsTableOpen().getValue() == false){
+                sharedViewModel.setIsTableOpen(!sharedViewModel.getIsTableOpen().getValue());
+                adjustOrderButton();
+                return;
+            }
+            NavDirections action = TableDialogFragmentDirections.actionTableDialogFragmentToOrderOverviewFragment();
+            Navigation.findNavController(parent.getView()).navigate(action);
+        });
 
         bookingButton.setOnClickListener(v -> {
+            sharedViewModel.setIsTableBooked(!sharedViewModel.getIsTableBooked().getValue());
+            adjustBookingButton();
 
         });
 
     }
 
     private void adjustBookingButton(){
-        if(sharedViewModel.getTableColor().getValue().equals("Red")){
+        if(sharedViewModel.getIsTableBooked().getValue() == true){
             bookingButton.setBackgroundColor(green);
             bookingButton.setText("Boka Bord");
         }
