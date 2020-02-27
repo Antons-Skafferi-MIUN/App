@@ -1,81 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bongListContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context=".activity.KitchenActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include
-            layout="@layout/bong_kitchen_header_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <fragment
-            android:id="@+id/fragment11"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/bong_list_fragment" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout6"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout4"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout4">
-
-        <include
-            layout="@layout/bong_kitchen_header_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <fragment
-            android:id="@+id/fragment12"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/bong_list_fragment" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout5"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout4">
-
-        <include
-            layout="@layout/bong_kitchen_header_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <fragment
-            android:id="@+id/fragment14"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/bong_list_fragment" />
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
