@@ -11,41 +11,37 @@
         android:layout_height="match_parent">
 
         <include
-            layout="@layout/navbar_view"
+            android:id="@+id/navbarView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/menuContainerFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            layout="@layout/navbar_view" />
 
 
-        <fragment
-            android:id="@+id/menuContainerFragment"
-            android:name="se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_courses.OrderOverviewCoursesFragment"
+        <include
+            android:id="@+id/menuContainerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/bongContainerFragment"
-
+            app:layout_constraintEnd_toStartOf="@+id/bongContainerView"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/navbarFragment"
+            app:layout_constraintTop_toBottomOf="@+id/navbarView"
             app:layout_constraintVertical_bias="1.0"
-            tools:layout="@layout/order_overview_courses_fragment" />
+            layout="@layout/menu_container_view" />
 
-        <fragment
-            android:id="@+id/bongContainerFragment"
-            android:name="se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderOverviewBongFragment"
+        <include
+            android:id="@+id/bongContainerView"
             android:layout_width="250dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/navbarFragment"
-            tools:layout="@layout/order_overview_bong_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/navbarView"
+            layout="@layout/order_bong_container_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
