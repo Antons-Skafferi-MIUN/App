@@ -17,11 +17,10 @@
             android:layout_height="wrap_content"
             tools:layout="@layout/order_overview_bong_header_fragment" />
 
-        <fragment
-            android:id="@+id/bongList"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListView"
+        <include
+            layout="@layout/bong_list_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/bong_list_view" />
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 </FrameLayout>
