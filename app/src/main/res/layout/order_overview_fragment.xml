@@ -10,9 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <fragment
-            android:id="@+id/navbarFragment"
-            android:name="se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.OrderOverviewNavbarFragment"
+        <include
+            layout="@layout/navbar_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/menuContainerFragment"
@@ -20,7 +19,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout="@layout/order_overview_navbar_fragment" />
+            app:layout_constraintVertical_bias="0.0" />
+
 
         <fragment
             android:id="@+id/menuContainerFragment"
