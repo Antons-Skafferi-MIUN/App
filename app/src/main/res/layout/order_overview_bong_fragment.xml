@@ -19,9 +19,9 @@
 
         <fragment
             android:id="@+id/bongList"
-            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListFragment"
+            android:name="se.miun.dt170.antonsskafferi.ui.bong.BongListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout="@layout/bong_list_fragment" />
+            tools:layout="@layout/bong_list_view" />
     </LinearLayout>
 </FrameLayout>
