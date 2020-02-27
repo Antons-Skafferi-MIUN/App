@@ -13,6 +13,6 @@ public class OrderOverviewMenuItemView extends CardView {
     public OrderOverviewMenuItemView(@NonNull Context context) {
         super(context);
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        layoutInflater.inflate(R.layout.order_overview_menu_container_fragment, this, true);
+        layoutInflater.inflate(R.layout.menu_item_view, this, true);
     }
 }
