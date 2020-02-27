@@ -15,7 +15,7 @@ import se.miun.dt170.antonsskafferi.R;
 /**
  * This is the containing fragment for bong displayment in the {@link se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment}.
  * Contains a {@link OrderOverviewBongHeaderFragment} above the bong list to the right.
- * Also container a {@link se.miun.dt170.antonsskafferi.ui.bong.BongListFragment} with added courses and drinks.
+ * Also container a {@link se.miun.dt170.antonsskafferi.ui.bong.BongListView} with added courses and drinks.
  */
 public class OrderOverviewBongFragment extends Fragment {
 
