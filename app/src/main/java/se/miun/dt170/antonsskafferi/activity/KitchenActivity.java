@@ -1,9 +1,6 @@
 package se.miun.dt170.antonsskafferi.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +11,7 @@ import java.util.Map;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
+import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 import se.miun.dt170.antonsskafferi.ui.bong.BongListView;
 import se.miun.dt170.antonsskafferi.ui.bong.BongListViewModel;
 
@@ -24,7 +22,7 @@ public class KitchenActivity extends AppCompatActivity {
 
     private BongListViewModel bongListViewModel;
     private LinearLayout bongListLayoutContainer;
-    private Map<String, BongListView> bongListViewMap;
+    private Map<String, KitchenBongContainerView> bongListViewMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

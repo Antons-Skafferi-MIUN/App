@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <include
-            layout="@layout/bong_kitchen_header_view"
+            layout="@layout/kitchen_bong_header_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
