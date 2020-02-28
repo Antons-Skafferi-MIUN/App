@@ -3,11 +3,14 @@ package se.miun.dt170.antonsskafferi.ui.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
@@ -89,8 +92,8 @@ public class TableDialogFragment extends DialogFragment {
         openOrderButton = dialogView.findViewById(R.id.openOrderButton);
         bookingButton = dialogView.findViewById(R.id.bookingButton);
 
-        //adjustBookingButton();
-        //adjustOrderButton();
+        adjustBookingButton();
+        adjustOrderButton();
 
         openOrderButton.setOnClickListener(v -> {
             if(!table.isTableOpen()){
@@ -105,8 +108,25 @@ public class TableDialogFragment extends DialogFragment {
         bookingButton.setOnClickListener(v -> {
             table.setTableBooked(!table.isTableBooked());
             adjustBookingButton();
-
+            String test = "";
+            if(table.isTableBooked()){
+            final AlertDialog.Builder enterTimeDialog = new AlertDialog.Builder(this.getContext());
+            final EditText time = new EditText(this.getContext());
+            time.setInputType(InputType.TYPE_CLASS_NUMBER);
+            enterTimeDialog.setTitle("Enter the time for execpted customer arrival")
+                    .setView(time)
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            table.setArrivalTime(time.getText().toString());
+                        }
+                    })
+                    .setNegativeButton("no", null)
+                    .show();
+            }
         });
+
+
 
     }
 

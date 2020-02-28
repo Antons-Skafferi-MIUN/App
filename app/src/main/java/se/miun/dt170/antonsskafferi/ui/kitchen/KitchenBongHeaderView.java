@@ -1,4 +1,4 @@
-package se.miun.dt170.antonsskafferi.ui.bong;
+package se.miun.dt170.antonsskafferi.ui.kitchen;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,7 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import se.miun.dt170.antonsskafferi.R;
 
-public class BongKitchenHeaderView extends ConstraintLayout implements View.OnClickListener  {
+public class KitchenBongHeaderView extends ConstraintLayout implements View.OnClickListener  {
 
     private View bongHeaderView;
     private CheckBox bongHeaderCheckbox;
@@ -19,11 +19,11 @@ public class BongKitchenHeaderView extends ConstraintLayout implements View.OnCl
     private TextView orderTime;
     private boolean headerClicked = false;
 
-    public BongKitchenHeaderView(Context context) {
+    public KitchenBongHeaderView(Context context) {
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.bong_kitchen_header_view, this, true);
+        inflater.inflate(R.layout.kitchen_bong_header_view, this, true);
 
         tableNumber =  bongHeaderView.findViewById(R.id.tableText);
         orderTime  = bongHeaderView.findViewById(R.id.timeText);

@@ -23,7 +23,7 @@ public class BongListView extends LinearLayout {
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View inflate = inflater.inflate(R.layout.bong_list_view, this, true);
+        inflater.inflate(R.layout.bong_list_view, this, true);
 
         setOrientation(VERTICAL); // VERY IMPORTANT
     }
