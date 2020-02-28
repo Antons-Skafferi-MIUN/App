@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<foodss>
+    <foods>
+        <foodCategory>main</foodCategory>
+        <foodId>1</foodId>
+        <foodName>Wallenbergare</foodName>
+        <foodPrice>185</foodPrice>
+    </foods>
+    <foods>
+        <foodCategory>main</foodCategory>
+        <foodId>2</foodId>
+        <foodName>Torskrygg</foodName>
+        <foodPrice>225</foodPrice>
+    </foods>
+    <foods>
+        <foodCategory>main</foodCategory>
+        <foodId>3</foodId>
+        <foodName>Daal</foodName>
+        <foodPrice>125</foodPrice>
+    </foods>
+    <foods>
+        <foodCategory>dessert</foodCategory>
+        <foodId>4</foodId>
+        <foodName>Glass med varma hjortron</foodName>
+        <foodPrice>85</foodPrice>
+    </foods>
+    <foods>
+        <foodCategory>main</foodCategory>
+        <foodId>5</foodId>
+        <foodName>Moules frites</foodName>
+        <foodPrice>200</foodPrice>
+    </foods>
+    <foods>
+        <foodCategory>starter</foodCategory>
+        <foodId>6</foodId>
+        <foodName>Moules frites</foodName>
+        <foodPrice>100</foodPrice>
+    </foods>
+    <foods>
+        <foodCategory>starter</foodCategory>
+        <foodId>7</foodId>
+        <foodName>Toast Skagen</foodName>
+        <foodPrice>100</foodPrice>
+    </foods>
+</foodss>

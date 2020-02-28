@@ -2,7 +2,6 @@ package se.miun.dt170.antonsskafferi.data;
 
 import android.util.Log;
 import android.widget.SimpleAdapter;
-
 import androidx.recyclerview.widget.ListAdapter;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -107,7 +106,7 @@ public class HandleXML {
                 switch (event)
                 {
                     case XmlPullParser.START_TAG:
-                        if (tag.equals("item"))
+                        if (tag.equals("main"))
                             setFood(new HashMap<>());
                             break;
 
