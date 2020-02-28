@@ -7,11 +7,5 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context=".activity.KitchenActivity">
-
-    <include
-        layout="@layout/kitchen_bong_container_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="visible" />
+    
 </LinearLayout>
