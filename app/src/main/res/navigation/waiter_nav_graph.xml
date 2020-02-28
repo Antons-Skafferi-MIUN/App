@@ -31,18 +31,10 @@
             android:id="@+id/action_tableDialogFragment_to_orderOverviewFragment"
             app:destination="@id/orderOverviewFragment"
             app:exitAnim="@anim/fragment_fade_exit" />
-        <action
-            android:id="@+id/action_tableDialogFragment_to_bookingTimeDialogFragment"
-            app:destination="@id/bookingTimeDialogFragment" />
     </dialog>
     <dialog
         android:id="@+id/foodEditDialog"
         android:name="se.miun.dt170.antonsskafferi.ui.dialog.FoodEditDialogFragment"
         android:label="food_edit_dialog_fragment"
         tools:layout="@layout/food_edit_dialog_fragment" />
-    <fragment
-        android:id="@+id/bookingTimeDialogFragment"
-        android:name="se.miun.dt170.antonsskafferi.ui.dialog.BookingTimeDialogFragment"
-        android:label="booking_time_dialog_fragment"
-        tools:layout="@layout/booking_time_dialog_fragment" />
 </navigation>
