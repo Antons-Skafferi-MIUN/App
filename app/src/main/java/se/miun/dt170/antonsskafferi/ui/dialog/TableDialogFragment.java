@@ -24,6 +24,7 @@ import androidx.navigation.Navigation;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
+import se.miun.dt170.antonsskafferi.ui.table_overview.TableView;
 
 /**
  * Popup dialog displayed when a {@link se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment} is clicked.
@@ -33,13 +34,12 @@ import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
 public class TableDialogFragment extends DialogFragment {
     private Button openOrderButton;
     private Button bookingButton;
-    private NumberPicker numberPicker;
     private View dialogView;
     private Fragment parent;
-    private int numberOfSeats;
     private int green = Color.parseColor("#39FF14");
     private int red = Color.parseColor("#FF0000");
     private TableDialogSharedViewModel sharedViewModel;
+    private TableView table;
 
     @Override
     public void onDestroy() {
@@ -58,11 +58,14 @@ public class TableDialogFragment extends DialogFragment {
         sharedViewModel = new ViewModelProvider(requireActivity()).
                 get(TableDialogSharedViewModel.class); //gets the shared view model from the associsated fragment.
         //creates a new observers that will update once the shared view model has new data
-        MutableLiveData<String> tableColor = sharedViewModel.getTableColor();
-        tableColor.observe(this, new Observer<String>() {
+
+
+        MutableLiveData<TableView> mutableTable = sharedViewModel.getTable();
+        table = mutableTable.getValue();
+        mutableTable.observe(this, new Observer<TableView>() {
             @Override
-            public void onChanged(String s) {
-                Toast.makeText(getActivity(), "I LIKE TO CRASH", Toast.LENGTH_SHORT).show();
+            public void onChanged(TableView s) {
+                table = s;
             }
         });
 
@@ -90,8 +93,8 @@ public class TableDialogFragment extends DialogFragment {
         adjustOrderButton();
 
         openOrderButton.setOnClickListener(v -> {
-            if(sharedViewModel.getIsTableOpen().getValue() == false){
-                sharedViewModel.setIsTableOpen(!sharedViewModel.getIsTableOpen().getValue());
+            if(!table.isTableOpen()){
+                table.setTableOpen(!table.isTableOpen());
                 adjustOrderButton();
                 return;
             }
@@ -100,7 +103,7 @@ public class TableDialogFragment extends DialogFragment {
         });
 
         bookingButton.setOnClickListener(v -> {
-            sharedViewModel.setIsTableBooked(!sharedViewModel.getIsTableBooked().getValue());
+            table.setTableBooked(!table.isTableBooked());
             adjustBookingButton();
 
         });
@@ -108,18 +111,20 @@ public class TableDialogFragment extends DialogFragment {
     }
 
     private void adjustBookingButton(){
-        if(sharedViewModel.getIsTableBooked().getValue() == true){
+        if(!table.isTableBooked()){
             bookingButton.setBackgroundColor(green);
+            table.setButtonColor(green);
             bookingButton.setText("Boka Bord");
         }
         else{
             bookingButton.setBackgroundColor(red);
+            table.setButtonColor(red);
             bookingButton.setText("Avboka Bord");
         }
     }
 
     private void adjustOrderButton(){
-        if(sharedViewModel.getIsTableOpen().getValue() == true){
+        if(table.isTableOpen()){
             openOrderButton.setText("Ta en order");
         }
         else{

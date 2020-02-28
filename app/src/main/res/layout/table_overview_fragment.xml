@@ -11,16 +11,6 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/table4"
-            layout="@layout/table_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/table3"
-            app:layout_constraintTop_toTopOf="@+id/table3" />
-
-        <include
             android:id="@+id/table1"
             layout="@layout/table_view"
             android:layout_width="wrap_content"
@@ -50,6 +40,16 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/table2"
             app:layout_constraintTop_toTopOf="@+id/table2" />
+
+        <include
+            android:id="@+id/table4"
+            layout="@layout/table_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/table3"
+            app:layout_constraintTop_toTopOf="@+id/table3" />
 
         <include
             android:id="@+id/table5"
