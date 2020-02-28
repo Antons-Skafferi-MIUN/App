@@ -3,9 +3,11 @@ package se.miun.dt170.antonsskafferi.ui.kitchen;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
@@ -16,7 +18,7 @@ import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
 import se.miun.dt170.antonsskafferi.ui.bong.BongListViewModel;
 
-public class KitchenBongContainerView extends LinearLayout implements LifecycleObserver {
+public class KitchenBongContainerView extends CardView implements LifecycleObserver {
 
     public KitchenBongContainerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -28,14 +30,14 @@ public class KitchenBongContainerView extends LinearLayout implements LifecycleO
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.kitchen_bong_container_view, this, true);
 
-        setOrientation(VERTICAL); // VERY IMPORTANT
-
         BongListViewModel bongListViewModel = new BongListViewModel();
+
+        LinearLayout kitchenBongContainerLinearLayout = findViewById(R.id.kitchenBongContainerLinearLayout);
 
         // Populate bong list on changes to the bong list view model
         bongListViewModel.bongItems.observe(lifecycle, items -> {
             for (Item item : items) {
-                addView(new BongItemView(getContext(), item));
+                kitchenBongContainerLinearLayout.addView(new BongItemView(getContext(), item));
             }
         });
     }

@@ -38,6 +38,8 @@ public class KitchenActivity extends AppCompatActivity {
 
         // Add one bong list
         KitchenBongContainerViews.put("1", new KitchenBongContainerView(this, this));
+        KitchenBongContainerViews.put("2", new KitchenBongContainerView(this, this));
         bongListLayoutContainer.addView(KitchenBongContainerViews.get("1"));
+        bongListLayoutContainer.addView(KitchenBongContainerViews.get("2"));
     }
 }
