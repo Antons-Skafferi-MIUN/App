@@ -2,19 +2,21 @@ package se.miun.dt170.antonsskafferi.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.Item;
+import se.miun.dt170.antonsskafferi.databinding.ActivityKitchenBinding;
+import se.miun.dt170.antonsskafferi.databinding.KitchenBongContainerViewBinding;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
-import se.miun.dt170.antonsskafferi.ui.bong.BongListView;
+import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 import se.miun.dt170.antonsskafferi.ui.bong.BongListViewModel;
 
 /**
@@ -22,29 +24,20 @@ import se.miun.dt170.antonsskafferi.ui.bong.BongListViewModel;
  */
 public class KitchenActivity extends AppCompatActivity {
 
-    private BongListViewModel bongListViewModel;
-    private LinearLayout bongListLayoutContainer;
-    private Map<String, BongListView> bongListViewMap;
+    private Map<String, KitchenBongContainerView> KitchenBongContainerViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kitchen);
 
-        // Create variables
-        bongListLayoutContainer = findViewById(R.id.bongListContainer);
-        bongListViewMap = new HashMap<>();
-        bongListViewModel = new BongListViewModel();
+        KitchenBongContainerViews = new HashMap<>();
+
+        // Create view variables
+        LinearLayout bongListLayoutContainer = findViewById(R.id.bongListContainer);
 
         // Add one bong list
-        bongListViewMap.put("1", new BongListView(this));
-        bongListLayoutContainer.addView(bongListViewMap.get("1"));
-
-        // Populate bong list on changes to the bong list view model
-        bongListViewModel.bongItems.observe(this, items -> {
-            for (Item item : items) {
-                bongListViewMap.get("1").addView(new BongItemView(this, item));
-            }
-        });
+        KitchenBongContainerViews.put("1", new KitchenBongContainerView(this, this));
+        bongListLayoutContainer.addView(KitchenBongContainerViews.get("1"));
     }
 }
