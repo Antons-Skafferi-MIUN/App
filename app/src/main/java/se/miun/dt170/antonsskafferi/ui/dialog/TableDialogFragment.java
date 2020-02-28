@@ -27,7 +27,7 @@ import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableView;
 
 /**
- * Popup dialog displayed when a {@link se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment} is clicked.
+ * Popup dialog displayed when a {@link se.miun.dt170.antonsskafferi.ui.table_overview.TableView} is clicked.
  * Will navigate you to {@link se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment}
  * or reserve table.
  */
@@ -59,9 +59,9 @@ public class TableDialogFragment extends DialogFragment {
                 get(TableDialogSharedViewModel.class); //gets the shared view model from the associsated fragment.
         //creates a new observers that will update once the shared view model has new data
 
-
+        //TODO THIS OBSERVER SEEEM TO FAIL TO OBSERVE.
         MutableLiveData<TableView> mutableTable = sharedViewModel.getTable();
-        table = mutableTable.getValue();
+        table = mutableTable.getValue(); // TEMP FIX
         mutableTable.observe(this, new Observer<TableView>() {
             @Override
             public void onChanged(TableView s) {
@@ -89,8 +89,8 @@ public class TableDialogFragment extends DialogFragment {
         openOrderButton = dialogView.findViewById(R.id.openOrderButton);
         bookingButton = dialogView.findViewById(R.id.bookingButton);
 
-        adjustBookingButton();
-        adjustOrderButton();
+        //adjustBookingButton();
+        //adjustOrderButton();
 
         openOrderButton.setOnClickListener(v -> {
             if(!table.isTableOpen()){
@@ -114,11 +114,13 @@ public class TableDialogFragment extends DialogFragment {
         if(!table.isTableBooked()){
             bookingButton.setBackgroundColor(green);
             table.setButtonColor(green);
+            table.setTableBooked(false);
             bookingButton.setText("Boka Bord");
         }
         else{
             bookingButton.setBackgroundColor(red);
             table.setButtonColor(red);
+            table.setTableBooked(true);
             bookingButton.setText("Avboka Bord");
         }
     }

@@ -14,7 +14,6 @@ import se.miun.dt170.antonsskafferi.R;
 public class TableView extends ConstraintLayout {
     private boolean isTableBooked = false;
     private boolean isTableOpen = false;
-
     public TableView(@NonNull Context context) {
         super(context);
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

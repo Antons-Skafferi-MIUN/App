@@ -26,7 +26,7 @@ import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
 
 /**
  * This is the fullscreen fragment for showing available tables.
- * Contains several {@link se.miun.dt170.antonsskafferi.ui.table_overview.table_button.TableButtonFragment}s.
+ * Contains several {@link se.miun.dt170.antonsskafferi.ui.table_overview.TableView}.
  */
 public class TableOverviewFragment extends Fragment implements Button.OnClickListener {
 
@@ -49,7 +49,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
             TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
             table.setButtonColor(green);
             Button tempButton = table.findViewById(R.id.tableButton);
-           tempButton.setOnClickListener(this);
+            tempButton.setOnClickListener(this);
         }
         return fragmentView;
     }
@@ -69,28 +69,5 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToTableDialogFragment();
         Navigation.findNavController(getView()).navigate(action);
 
-//        switch(table.getId()){
-//            case R.id.table1:
-//                Toast.makeText(getActivity(), "I CLICK TABLE 1", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.table2:
-//                Toast.makeText(getActivity(), "I CLICK TABLE 2", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.table3:
-//                Toast.makeText(getActivity(), "I CLICK TABLE 3", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.table4:
-//                Toast.makeText(getActivity(), "I CLICK TABLE 4", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.table5:
-//                Toast.makeText(getActivity(), "I CLICK TABLE 5", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.table6:
-//                Toast.makeText(getActivity(), "I CLICK TABLE 6", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.table7:
-//                Toast.makeText(getActivity(), "I CLICK TABLE 7", Toast.LENGTH_SHORT).show();
-//                break;
-//        }
     }
 }
