@@ -1,5 +1,6 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,26 +11,22 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment;
-import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_courses.OrderOverviewCoursesFragment;
-import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_drinks.OrderOverviewDrinksFragment;
 
-/**
- * Displayed at the top of {@link OrderOverviewFragment}.
- * Contains navigation buttons for navigating between
- * {@link OrderOverviewCoursesFragment} and
- * {@link OrderOverviewDrinksFragment}.
- */
-public class OrderOverviewNavbarFragment extends Fragment implements View.OnClickListener {
+public class NavbarView extends ConstraintLayout {
+    public NavbarView(Context context) {
+        super(context);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater.inflate(R.layout.navbar_view, this, true);
+    }
 
-    private OrderOverviewNavbarViewModel mViewModel;
+    /*private OrderOverviewNavbarViewModel mViewModel;
     private View fragmentView;
     private TextView laCarteButton;
     private TextView drinkButton;
@@ -41,7 +38,7 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.order_overview_navbar_fragment, container, false);
+        return inflater.inflate(R.layout.navbar_view, container, false);
     }
 
     @Override
@@ -100,7 +97,7 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
                 // Commit the transaction
                 transaction1.commit();
                 */
-                break;
+                /*break;
             case R.id.drinkButton:
                 drinkButton.setPaintFlags(drinkButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                 laCarteButton.setPaintFlags(0);
@@ -127,7 +124,7 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
                 transaction.commit();
 
                  */
-                break;
+                /*break;
         }
     }
 
@@ -163,5 +160,5 @@ public class OrderOverviewNavbarFragment extends Fragment implements View.OnClic
                 //Code
                 break;
         }
-    }
+    }*/
 }
