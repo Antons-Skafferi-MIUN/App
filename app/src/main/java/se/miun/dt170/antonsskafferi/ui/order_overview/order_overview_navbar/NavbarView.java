@@ -3,9 +3,13 @@ package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar;
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +22,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 
 public class NavbarView extends ConstraintLayout {
+    private Button laCarteButton;
+    private Button drinkButton;
+    private MenuContainerView menuContainerView;
+
     public NavbarView(Context context) {
         super(context);
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
