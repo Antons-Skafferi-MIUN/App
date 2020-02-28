@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.google.android.flexbox.FlexboxLayout;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,12 +36,22 @@ public class KitchenActivity extends AppCompatActivity {
         KitchenBongContainerViews = new HashMap<>();
 
         // Create view variables
-        LinearLayout bongListLayoutContainer = findViewById(R.id.bongListContainer);
+        FlexboxLayout bongListLayoutContainer = findViewById(R.id.bongListContainer);
 
         // Add one bong list
         KitchenBongContainerViews.put("1", new KitchenBongContainerView(this, this));
         KitchenBongContainerViews.put("2", new KitchenBongContainerView(this, this));
+        KitchenBongContainerViews.put("3", new KitchenBongContainerView(this, this));
+        KitchenBongContainerViews.put("4", new KitchenBongContainerView(this, this));
+        KitchenBongContainerViews.put("5", new KitchenBongContainerView(this, this));
+        KitchenBongContainerViews.put("6", new KitchenBongContainerView(this, this));
+        KitchenBongContainerViews.put("7", new KitchenBongContainerView(this, this));
         bongListLayoutContainer.addView(KitchenBongContainerViews.get("1"));
         bongListLayoutContainer.addView(KitchenBongContainerViews.get("2"));
+        bongListLayoutContainer.addView(KitchenBongContainerViews.get("3"));
+        bongListLayoutContainer.addView(KitchenBongContainerViews.get("4"));
+        bongListLayoutContainer.addView(KitchenBongContainerViews.get("5"));
+        bongListLayoutContainer.addView(KitchenBongContainerViews.get("6"));
+        bongListLayoutContainer.addView(KitchenBongContainerViews.get("7"));
     }
 }
