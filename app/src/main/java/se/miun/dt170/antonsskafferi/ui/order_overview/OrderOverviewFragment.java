@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderOverviewBongHeaderFragment;
 
 /**
  * This is the fullscreen fragment for taking a order
