@@ -67,6 +67,7 @@ public class KitchenActivity extends AppCompatActivity {
         // API testing
         mAPIService = ApiUtils.getAPIService();
 
+        // TEMPORARY EXAMPLE CODE
         getFoods();
         getDrinks();
         getRestaurantTables();
