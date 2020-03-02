@@ -1,12 +1,21 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
+@Root(name = "foods")
 public class Foods {
+
+    @Element(name = "foodPrice")
     private String foodPrice;
 
+    @Element(name = "foodName")
     private String foodName;
 
+    @Element(name = "foodId")
     private String foodId;
 
+    @Element(name = "foodCategory")
     private String foodCategory;
 
     public String getFoodPrice() {

@@ -1,13 +1,21 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
-public class Foodss {
-    private Foods[] foods;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
 
-    public Foods[] getFoods() {
+import java.util.ArrayList;
+
+@Root(name = "foodss")
+public class Foodss {
+
+    @ElementList(inline = true)
+    private ArrayList<Foods> foods;
+
+    public ArrayList<Foods> getFoods() {
         return foods;
     }
 
-    public void setFoods(Foods[] foods) {
+    public void setFoods(ArrayList<Foods> foods) {
         this.foods = foods;
     }
 
