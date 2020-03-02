@@ -1,57 +1,26 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
-import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-@Root(name = "foods")
+import java.util.ArrayList;
+
+@Root(name = "foodss")
 public class Foods {
 
-    @Element(name = "foodPrice")
-    private String foodPrice;
+    @ElementList(inline = true)
+    private ArrayList<Food> foods;
 
-    @Element(name = "foodName")
-    private String foodName;
-
-    @Element(name = "foodId")
-    private String foodId;
-
-    @Element(name = "foodCategory")
-    private String foodCategory;
-
-    public String getFoodPrice() {
-        return foodPrice;
+    public ArrayList<Food> getFoods() {
+        return foods;
     }
 
-    public void setFoodPrice(String foodPrice) {
-        this.foodPrice = foodPrice;
-    }
-
-    public String getFoodName() {
-        return foodName;
-    }
-
-    public void setFoodName(String foodName) {
-        this.foodName = foodName;
-    }
-
-    public String getFoodId() {
-        return foodId;
-    }
-
-    public void setFoodId(String foodId) {
-        this.foodId = foodId;
-    }
-
-    public String getFoodCategory() {
-        return foodCategory;
-    }
-
-    public void setFoodCategory(String foodCategory) {
-        this.foodCategory = foodCategory;
+    public void setFoods(ArrayList<Food> foods) {
+        this.foods = foods;
     }
 
     @Override
     public String toString() {
-        return "ClassPojo [foodPrice = " + foodPrice + ", foodName = " + foodName + ", foodId = " + foodId + ", foodCategory = " + foodCategory + "]";
+        return "ClassPojo [foods = " + foods + "]";
     }
 }

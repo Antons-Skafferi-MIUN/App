@@ -5,7 +5,7 @@ public class OrderRows {
 
     private Orders orderId;
 
-    private Foods foodId;
+    private Food foodId;
 
     private String orderRowId;
 
@@ -25,11 +25,11 @@ public class OrderRows {
         this.orderId = orderId;
     }
 
-    public Foods getFoodId() {
+    public Food getFoodId() {
         return foodId;
     }
 
-    public void setFoodId(Foods foodId) {
+    public void setFoodId(Food foodId) {
         this.foodId = foodId;
     }
 

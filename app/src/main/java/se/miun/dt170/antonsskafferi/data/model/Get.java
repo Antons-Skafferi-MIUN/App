@@ -1,23 +1,19 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
-import org.simpleframework.xml.Default;
-import org.simpleframework.xml.DefaultType;
-
-@Default(DefaultType.PROPERTY)
 public class Get {
-    private Foodss foodss;
+    private Foods foods;
 //    private Drinkss drinkss;
 //    private RestaurantTabless restaurantTabless;
 //    private Orderss orderss;
 //    private OrderRowss orderRowss;
 //    private Reservationss reservationss;
 
-    public Foodss getFoodss() {
-        return foodss;
+    public Foods getFoods() {
+        return foods;
     }
 
-    public void setFoodss(Foodss foodss) {
-        this.foodss = foodss;
+    public void setFoods(Foods foods) {
+        this.foods = foods;
     }
 
 //    public Drinkss getDrinkss() {
@@ -62,6 +58,6 @@ public class Get {
 
     @Override
     public String toString() {
-        return "ClassPojo [foodss = " + foodss + "]"; //, drinkss = " + drinkss + ", restaurantTabless = " + restaurantTabless + ", orderss = " + orderss + ", orderRowss = " + orderRowss + ", reservationss = " + reservationss + "]";
+        return "ClassPojo [foodss = " + foods + "]"; //, drinkss = " + drinkss + ", restaurantTabless = " + restaurantTabless + ", orderss = " + orderss + ", orderRowss = " + orderRowss + ", reservationss = " + reservationss + "]";
     }
 }
