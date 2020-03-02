@@ -5,12 +5,14 @@ public class MenuItem {
     private String title = "";
     private String cost = "";
     private String category ="";
+    private String id ="";
 
     //CTOR
     public MenuItem() {
         this.setTitle(title);
         this.setCost(cost);
         this.setCategory(category);
+        this.setId(id);
     }
 
     //Getters
@@ -37,5 +39,13 @@ public class MenuItem {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

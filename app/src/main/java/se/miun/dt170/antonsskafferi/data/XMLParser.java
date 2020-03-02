@@ -13,6 +13,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class XMLParser {
     //private String urlString = "http://10.250.121.124:8080/antonapi/webresources/entities.foods";
     //private String urlString = "https://entresundsvall.se/arrangemang/feed/";
@@ -20,6 +22,11 @@ public class XMLParser {
     private XmlPullParserFactory xmlFactoryObject;
     private List<MenuItem> menuitemlist;
     private MenuItem menuobject;
+
+    public XMLParser() {
+        fetchXML();
+    }
+
 
     public void fetchXML() {
         Thread thread = new Thread(new Runnable() {
@@ -85,17 +92,21 @@ public class XMLParser {
 
                     case XmlPullParser.END_TAG:
                         switch (tag) {
+                            case "foodId":
+                                menuobject.setId(text);
+                                Log.d("FOODID:", text);
+                                break;
                             case "foodCategory":
                                 menuobject.setCategory(text);
-                                Log.d("FOODCATEGORY!!!!!!!!!", text);
+                                Log.d("FOODCATEGORY:", text);
                                 break;
                             case "foodName":
                                 menuobject.setTitle(text);
-                                Log.d("FOODNAME TITLE!!!!!!", text);
+                                Log.d("FOODNAME TITLE:", text);
                                 break;
                             case "foodPrice":
                                 menuobject.setCost(text);
-                                Log.d("FOODNAME PRICE!!!!", text);
+                                Log.d("FOODNAME PRICE:", text);
                                 break;
                             case "foods":
                                 if (menuobject != null)
@@ -125,6 +136,7 @@ public class XMLParser {
 
 
     public List<MenuItem> getMenuitemlist() {
+        Log.d(TAG, "getMenuitemlist: ");
         return menuitemlist;
     }
 }

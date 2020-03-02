@@ -1,6 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 /**
  * This is the fullscreen fragment for taking a order
@@ -30,6 +34,9 @@ public class OrderOverviewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "KÖR NU---OrderOverViewFragment: ");
+
+
         return inflater.inflate(R.layout.order_overview_fragment, container, false);
     }
 
