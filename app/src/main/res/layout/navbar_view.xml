@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+<se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -80,4 +80,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/date/hhmm" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView>
