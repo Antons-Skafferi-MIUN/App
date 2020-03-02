@@ -12,9 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.List;
+
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.Item;
+import se.miun.dt170.antonsskafferi.data.ItemRepository;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
 
 /**
@@ -26,9 +33,12 @@ import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.Navb
  */
 public class OrderOverviewFragment extends Fragment implements View.OnClickListener {
 
+    private ItemRepository itemRepository;
     private OrderOverviewViewModel mViewModel;
     private Button laCarteButton;
     private Button drinkButton;
+    private MenuContainerView menuContainerView;
+    private NavbarView navbarView;
 
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
@@ -39,7 +49,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                              @Nullable Bundle savedInstanceState) {
 
         View orderOverviewFragmentView = inflater.inflate(R.layout.order_overview_fragment, container, false);
-        ConstraintLayout navbarView = orderOverviewFragmentView.findViewById(R.id.navbarView);
+        itemRepository = new ItemRepository();
+        navbarView = orderOverviewFragmentView.findViewById(R.id.navbarView);
         laCarteButton = navbarView.findViewById(R.id.laCarteButton);
         drinkButton = navbarView.findViewById(R.id.drinkButton);
         laCarteButton.setOnClickListener(this);
@@ -56,6 +67,15 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.laCarteButton:
+                //fill food
+                break;
+            case R.id.drinkButton:
+                //fill drinks
+                break;
+            // TODO: Add cases for edit/remove/send and add to bong
+        }
 
     }
 }
