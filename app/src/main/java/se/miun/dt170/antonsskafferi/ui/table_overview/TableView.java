@@ -38,26 +38,9 @@ public class TableView extends ConstraintLayout {
         return tableAvailableColor;
     }
 
-    public void setTableAvailableColor(int tableAvailableColor) {
-        this.tableAvailableColor = tableAvailableColor;
-    }
-
     public int getTableBookedColor() {
         return tableBookedColor;
     }
-
-    public void setTableBookedColor(int tableBookedColor) {
-        this.tableBookedColor = tableBookedColor;
-    }
-
-    public int getTableTextColor() {
-        return tableTextColor;
-    }
-
-    public void setTableTextColor(int tableTextColor) {
-        this.tableTextColor = tableTextColor;
-    }
-
 
 
     public TableView(@NonNull Context context) {
@@ -66,6 +49,7 @@ public class TableView extends ConstraintLayout {
 
     public TableView(@NonNull Context context, AttributeSet attrs) {
         super(context,attrs);
+
     }
 
     /**
@@ -102,24 +86,8 @@ public class TableView extends ConstraintLayout {
         isTableBooked = tableBooked;
     }
 
-    public boolean isTableOpen() {
-        return isTableOpen;
-    }
-
-    public void setTableOpen(boolean tableOpen) {
-        isTableOpen = tableOpen;
-    }
-
-    public String getArrivalTime() {
-        return textView.getText().toString();
-    }
-
     public void setArrivalTime(String time) {
         this.textView.setText(time);
-    }
-
-    public String getTableButtonText() {
-        return tableButton.getText().toString();
     }
 
     public void setTableButtonText(String buttonText) {
