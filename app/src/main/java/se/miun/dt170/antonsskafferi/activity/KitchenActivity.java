@@ -14,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
@@ -58,12 +59,14 @@ public class KitchenActivity extends AppCompatActivity {
         mAPIService = ApiUtils.getAPIService();
 
         getFoods();
+        getDrinks();
     }
 
+    // Temporary location for getting food from database
     public void getFoods() {
         mAPIService.getFoods().enqueue(new Callback<Foods>() {
             @Override
-            public void onResponse(Call<Foods> Foodss, Response<Foods> response) {
+            public void onResponse(Call<Foods> Foods, Response<Foods> response) {
                 if (response.isSuccessful()) {
                     showResponse(response.body().toString());
                     Log.i("Retrofit", "get submitted to API." + response.body().toString());
@@ -77,7 +80,25 @@ public class KitchenActivity extends AppCompatActivity {
         });
     }
 
+    public void getDrinks() {
+        mAPIService.getDrinks().enqueue(new Callback<Drinks>() {
+            @Override
+            public void onResponse(Call<Drinks> Drinks, Response<Drinks> response) {
+                if (response.isSuccessful()) {
+                    showResponse(response.body().toString());
+                    Log.i("Retrofit", "get submitted to API." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Drinks> call, Throwable t) {
+                Log.e("Retrofit", "Unable to submit post to API." + t.toString());
+            }
+        });
+    }
+
     public void showResponse(String response) {
+        // TODO: Do something with response
         Log.i("Retrofit", response);
 
 //        if (mResponseTv.getVisibility() == View.GONE) {

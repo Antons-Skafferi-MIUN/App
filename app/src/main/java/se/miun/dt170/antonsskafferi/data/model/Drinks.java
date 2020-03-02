@@ -1,58 +1,26 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
+import java.util.ArrayList;
+
+@Root(name = "drinkss")
 public class Drinks {
-    private String drinkId;
 
-    private String drinkType;
+    @ElementList(inline = true)
+    private ArrayList<Drink> drinks;
 
-    private String drinkPrice;
-
-    private String drinkCategory;
-
-    private String drinkName;
-
-    public String getDrinkId() {
-        return drinkId;
+    public ArrayList<Drink> getDrinks() {
+        return drinks;
     }
 
-    public void setDrinkId(String drinkId) {
-        this.drinkId = drinkId;
-    }
-
-    public String getDrinkType() {
-        return drinkType;
-    }
-
-    public void setDrinkType(String drinkType) {
-        this.drinkType = drinkType;
-    }
-
-    public String getDrinkPrice() {
-        return drinkPrice;
-    }
-
-    public void setDrinkPrice(String drinkPrice) {
-        this.drinkPrice = drinkPrice;
-    }
-
-    public String getDrinkCategory() {
-        return drinkCategory;
-    }
-
-    public void setDrinkCategory(String drinkCategory) {
-        this.drinkCategory = drinkCategory;
-    }
-
-    public String getDrinkName() {
-        return drinkName;
-    }
-
-    public void setDrinkName(String drinkName) {
-        this.drinkName = drinkName;
+    public void setDrinks(ArrayList<Drink> drinks) {
+        this.drinks = drinks;
     }
 
     @Override
     public String toString() {
-        return "ClassPojo [drinkId = " + drinkId + ", drinkType = " + drinkType + ", drinkPrice = " + drinkPrice + ", drinkCategory = " + drinkCategory + ", drinkName = " + drinkName + "]";
+        return "ClassPojo [drinks = " + drinks + "]";
     }
 }

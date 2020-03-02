@@ -1,7 +1,7 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
 public class OrderRows {
-    private Drinks drinkId;
+    private Drink drinkId;
 
     private Orders orderId;
 
@@ -9,11 +9,11 @@ public class OrderRows {
 
     private String orderRowId;
 
-    public Drinks getDrinkId() {
+    public Drink getDrinkId() {
         return drinkId;
     }
 
-    public void setDrinkId(Drinks drinkId) {
+    public void setDrinkId(Drink drinkId) {
         this.drinkId = drinkId;
     }
 
