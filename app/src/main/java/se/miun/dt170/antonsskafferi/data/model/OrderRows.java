@@ -3,7 +3,7 @@ package se.miun.dt170.antonsskafferi.data.model;
 public class OrderRows {
     private Drink drinkId;
 
-    private Orders orderId;
+    private Order orderId;
 
     private Food foodId;
 
@@ -17,11 +17,11 @@ public class OrderRows {
         this.drinkId = drinkId;
     }
 
-    public Orders getOrderId() {
+    public Order getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Orders orderId) {
+    public void setOrderId(Order orderId) {
         this.orderId = orderId;
     }
 

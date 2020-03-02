@@ -5,7 +5,7 @@ public class Reservations {
 
     private String reservationId;
 
-    private RestaurantTables tableId;
+    private RestaurantTable tableId;
 
     private String reservationDate;
 
@@ -27,11 +27,11 @@ public class Reservations {
         this.reservationId = reservationId;
     }
 
-    public RestaurantTables getTableId() {
+    public RestaurantTable getTableId() {
         return tableId;
     }
 
-    public void setTableId(RestaurantTables tableId) {
+    public void setTableId(RestaurantTable tableId) {
         this.tableId = tableId;
     }
 

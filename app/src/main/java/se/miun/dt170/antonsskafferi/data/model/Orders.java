@@ -1,38 +1,26 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
+import java.util.ArrayList;
+
+@Root(name = "orderss")
 public class Orders {
-    private String orderTime;
 
-    private String orderId;
+    @ElementList(inline = true)
+    private ArrayList<Order> orders;
 
-    private RestaurantTables tableId;
-
-    public String getOrderTime() {
-        return orderTime;
+    public ArrayList<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrderTime(String orderTime) {
-        this.orderTime = orderTime;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public RestaurantTables getTableId() {
-        return tableId;
-    }
-
-    public void setTableId(RestaurantTables tableId) {
-        this.tableId = tableId;
+    public void setOrders(ArrayList<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
     public String toString() {
-        return "ClassPojo [orderTime = " + orderTime + ", orderId = " + orderId + ", tableId = " + tableId + "]";
+        return "ClassPojo [orders = " + orders + "]";
     }
 }

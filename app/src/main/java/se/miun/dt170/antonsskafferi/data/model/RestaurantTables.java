@@ -1,48 +1,26 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
+import java.util.ArrayList;
+
+@Root(name = "restaurantTabless")
 public class RestaurantTables {
-    private String tableAvailableSeats;
 
-    private String tableTotalSeats;
+    @ElementList(inline = true)
+    private ArrayList<RestaurantTable> restaurantTables;
 
-    private String tableId;
-
-    private String tableStatus;
-
-    public String getTableAvailableSeats() {
-        return tableAvailableSeats;
+    public ArrayList<RestaurantTable> getRestaurantTables() {
+        return restaurantTables;
     }
 
-    public void setTableAvailableSeats(String tableAvailableSeats) {
-        this.tableAvailableSeats = tableAvailableSeats;
-    }
-
-    public String getTableTotalSeats() {
-        return tableTotalSeats;
-    }
-
-    public void setTableTotalSeats(String tableTotalSeats) {
-        this.tableTotalSeats = tableTotalSeats;
-    }
-
-    public String getTableId() {
-        return tableId;
-    }
-
-    public void setTableId(String tableId) {
-        this.tableId = tableId;
-    }
-
-    public String getTableStatus() {
-        return tableStatus;
-    }
-
-    public void setTableStatus(String tableStatus) {
-        this.tableStatus = tableStatus;
+    public void setRestaurantTables(ArrayList<RestaurantTable> restaurantTables) {
+        this.restaurantTables = restaurantTables;
     }
 
     @Override
     public String toString() {
-        return "ClassPojo [tableAvailableSeats = " + tableAvailableSeats + ", tableTotalSeats = " + tableTotalSeats + ", tableId = " + tableId + ", tableStatus = " + tableStatus + "]";
+        return "ClassPojo [restaurantTables = " + restaurantTables + "]";
     }
 }
