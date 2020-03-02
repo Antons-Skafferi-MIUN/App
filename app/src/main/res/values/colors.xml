@@ -26,6 +26,7 @@
     <!-- Colors for the menu overview -->
     <color name="popup_red">#cf0404</color>
     <color name="popup_green">#04cf50</color>
+    <color name="popup_gray">#DCDCDC</color>
 
     <!-- Colors for the kitchen overview -->
     <color name="kitchen_overview_background">#f3f3f3</color>
