@@ -1,7 +1,9 @@
 package se.miun.dt170.antonsskafferi.data.remote;
 
+
 import retrofit2.Call;
 import retrofit2.http.GET;
+import rx.Observable;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
@@ -12,20 +14,20 @@ import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 public interface ApiService {
 
     @GET("entities.foods")
-    Call<Foods> getFoods();
+    Observable<Foods> getFoods();
 
     @GET("entities.drinks")
-    Call<Drinks> getDrinks();
+    Observable<Drinks> getDrinks();
 
     @GET("entities.orders")
-    Call<Orders> getOrders();
+    Observable<Orders> getOrders();
 
     @GET("entities.restauranttables")
-    Call<RestaurantTables> getRestaurantTables();
+    Observable<RestaurantTables> getRestaurantTables();
 
     @GET("entities.reservations")
-    Call<Reservations> getReservations();
+    Observable<Reservations> getReservations();
 
     @GET("entities.orderrows")
-    Call<OrderRows> getOrderRows();
+    Observable<OrderRows> getOrderRows();
 }

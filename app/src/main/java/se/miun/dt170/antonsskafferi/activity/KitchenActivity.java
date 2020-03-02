@@ -13,11 +13,16 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
+import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
+import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
@@ -72,114 +77,139 @@ public class KitchenActivity extends AppCompatActivity {
 
     // Temporary location for getting food from database
     public void getFoods() {
-        mAPIService.getFoods().enqueue(new Callback<Foods>() {
-            @Override
-            public void onResponse(Call<Foods> Foods, Response<Foods> response) {
-                if (response.isSuccessful()) {
-                    showResponse(response.body().toString());
-                    Log.i("Retrofit", "get submitted to API." + response.body().toString());
-                }
-            }
+        mAPIService.getFoods().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Foods>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFailure(Call<Foods> call, Throwable t) {
-                Log.e("Retrofit", "Unable to submit post to API." + t.toString());
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(Foods response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
     }
 
     public void getDrinks() {
-        mAPIService.getDrinks().enqueue(new Callback<Drinks>() {
-            @Override
-            public void onResponse(Call<Drinks> Drinks, Response<Drinks> response) {
-                if (response.isSuccessful()) {
-                    showResponse(response.body().toString());
-                    Log.i("Retrofit", "get submitted to API." + response.body().toString());
-                }
-            }
+        mAPIService.getDrinks().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Drinks>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFailure(Call<Drinks> call, Throwable t) {
-                Log.e("Retrofit", "Unable to submit post to API." + t.toString());
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(Drinks response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
     }
 
     public void getRestaurantTables() {
-        mAPIService.getRestaurantTables().enqueue(new Callback<RestaurantTables>() {
-            @Override
-            public void onResponse(Call<RestaurantTables> Drinks, Response<RestaurantTables> response) {
-                if (response.isSuccessful()) {
-                    showResponse(response.body().toString());
-                    Log.i("Retrofit", "get submitted to API." + response.body().toString());
-                }
-            }
+        mAPIService.getRestaurantTables().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<RestaurantTables>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFailure(Call<RestaurantTables> call, Throwable t) {
-                Log.e("Retrofit", "Unable to submit post to API." + t.toString());
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(RestaurantTables response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
     }
 
     public void getOrders() {
-        mAPIService.getOrders().enqueue(new Callback<Orders>() {
-            @Override
-            public void onResponse(Call<Orders> Drinks, Response<Orders> response) {
-                if (response.isSuccessful()) {
-                    showResponse(response.body().toString());
-                    Log.i("Retrofit", "get submitted to API." + response.body().toString());
-                }
-            }
+        mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Orders>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFailure(Call<Orders> call, Throwable t) {
-                Log.e("Retrofit", "Unable to submit post to API." + t.toString());
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(Orders response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
     }
 
     public void getReservations() {
-        mAPIService.getReservations().enqueue(new Callback<Reservations>() {
-            @Override
-            public void onResponse(Call<Reservations> Drinks, Response<Reservations> response) {
-                if (response.isSuccessful()) {
-                    showResponse(response.body().toString());
-                    Log.i("Retrofit", "get submitted to API." + response.body().toString());
-                }
-            }
+        mAPIService.getReservations().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Reservations>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFailure(Call<Reservations> call, Throwable t) {
-                Log.e("Retrofit", "Unable to submit post to API." + t.toString());
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(Reservations response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
     }
 
     public void getOrderRows() {
-        mAPIService.getOrderRows().enqueue(new Callback<OrderRows>() {
-            @Override
-            public void onResponse(Call<OrderRows> Drinks, Response<OrderRows> response) {
-                if (response.isSuccessful()) {
-                    showResponse(response.body().toString());
-                    Log.i("Retrofit", "get submitted to API." + response.body().toString());
-                }
-            }
+        mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<OrderRows>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFailure(Call<OrderRows> call, Throwable t) {
-                Log.e("Retrofit", "Unable to submit post to API." + t.toString());
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(OrderRows response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
     }
 
     public void showResponse(String response) {
         // TODO: Do something with response
         Log.i("Retrofit", response);
-
-//        if (mResponseTv.getVisibility() == View.GONE) {
-//            mResponseTv.setVisibility(View.VISIBLE);
-//        }
-//        mResponseTv.setText(response);
     }
 }
