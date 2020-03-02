@@ -16,7 +16,9 @@ import retrofit2.Response;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
+import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
+import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
@@ -64,6 +66,8 @@ public class KitchenActivity extends AppCompatActivity {
         getDrinks();
         getRestaurantTables();
         getOrders();
+        getReservations();
+        getOrderRows();
     }
 
     // Temporary location for getting food from database
@@ -130,6 +134,40 @@ public class KitchenActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Orders> call, Throwable t) {
+                Log.e("Retrofit", "Unable to submit post to API." + t.toString());
+            }
+        });
+    }
+
+    public void getReservations() {
+        mAPIService.getReservations().enqueue(new Callback<Reservations>() {
+            @Override
+            public void onResponse(Call<Reservations> Drinks, Response<Reservations> response) {
+                if (response.isSuccessful()) {
+                    showResponse(response.body().toString());
+                    Log.i("Retrofit", "get submitted to API." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Reservations> call, Throwable t) {
+                Log.e("Retrofit", "Unable to submit post to API." + t.toString());
+            }
+        });
+    }
+
+    public void getOrderRows() {
+        mAPIService.getOrderRows().enqueue(new Callback<OrderRows>() {
+            @Override
+            public void onResponse(Call<OrderRows> Drinks, Response<OrderRows> response) {
+                if (response.isSuccessful()) {
+                    showResponse(response.body().toString());
+                    Log.i("Retrofit", "get submitted to API." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderRows> call, Throwable t) {
                 Log.e("Retrofit", "Unable to submit post to API." + t.toString());
             }
         });

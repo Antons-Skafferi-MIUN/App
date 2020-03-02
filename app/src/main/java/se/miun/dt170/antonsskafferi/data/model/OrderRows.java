@@ -1,48 +1,26 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
+import java.util.ArrayList;
+
+@Root(name = "orderRowss")
 public class OrderRows {
-    private Drink drinkId;
 
-    private Order orderId;
+    @ElementList(inline = true)
+    private ArrayList<OrderRow> orderRows;
 
-    private Food foodId;
-
-    private String orderRowId;
-
-    public Drink getDrinkId() {
-        return drinkId;
+    public ArrayList<OrderRow> getOrderRows() {
+        return orderRows;
     }
 
-    public void setDrinkId(Drink drinkId) {
-        this.drinkId = drinkId;
-    }
-
-    public Order getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Order orderId) {
-        this.orderId = orderId;
-    }
-
-    public Food getFoodId() {
-        return foodId;
-    }
-
-    public void setFoodId(Food foodId) {
-        this.foodId = foodId;
-    }
-
-    public String getOrderRowId() {
-        return orderRowId;
-    }
-
-    public void setOrderRowId(String orderRowId) {
-        this.orderRowId = orderRowId;
+    public void setOrderRows(ArrayList<OrderRow> orderRows) {
+        this.orderRows = orderRows;
     }
 
     @Override
     public String toString() {
-        return "ClassPojo [drinkId = " + drinkId + ", orderId = " + orderId + ", foodId = " + foodId + ", orderRowId = " + orderRowId + "]";
+        return "ClassPojo [orderRows = " + orderRows + "]";
     }
 }

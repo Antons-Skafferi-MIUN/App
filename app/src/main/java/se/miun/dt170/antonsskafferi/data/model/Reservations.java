@@ -1,58 +1,26 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
+import java.util.ArrayList;
+
+@Root(name = "reservationss")
 public class Reservations {
-    private String reservationPhone;
 
-    private String reservationId;
+    @ElementList(inline = true)
+    private ArrayList<Reservation> reservations;
 
-    private RestaurantTable tableId;
-
-    private String reservationDate;
-
-    private String reservationName;
-
-    public String getReservationPhone() {
-        return reservationPhone;
+    public ArrayList<Reservation> getReservations() {
+        return reservations;
     }
 
-    public void setReservationPhone(String reservationPhone) {
-        this.reservationPhone = reservationPhone;
-    }
-
-    public String getReservationId() {
-        return reservationId;
-    }
-
-    public void setReservationId(String reservationId) {
-        this.reservationId = reservationId;
-    }
-
-    public RestaurantTable getTableId() {
-        return tableId;
-    }
-
-    public void setTableId(RestaurantTable tableId) {
-        this.tableId = tableId;
-    }
-
-    public String getReservationDate() {
-        return reservationDate;
-    }
-
-    public void setReservationDate(String reservationDate) {
-        this.reservationDate = reservationDate;
-    }
-
-    public String getReservationName() {
-        return reservationName;
-    }
-
-    public void setReservationName(String reservationName) {
-        this.reservationName = reservationName;
+    public void setReservations(ArrayList<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     @Override
     public String toString() {
-        return "ClassPojo [reservationPhone = " + reservationPhone + ", reservationId = " + reservationId + ", tableId = " + tableId + ", reservationDate = " + reservationDate + ", reservationName = " + reservationName + "]";
+        return "ClassPojo [reservations = " + reservations + "]";
     }
 }
