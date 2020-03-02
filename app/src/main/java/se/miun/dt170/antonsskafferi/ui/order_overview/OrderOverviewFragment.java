@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,7 +35,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private Button laCarteButton;
     private Button drinkButton;
     private MenuItemView menuItemView;
-    private MenuContainerView menuContainerView;
+    private LinearLayout menuContainerLayout;
     private NavbarView navbarView;
 
     public static OrderOverviewFragment newInstance() {
@@ -45,21 +47,18 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                              @Nullable Bundle savedInstanceState) {
 
         View orderOverviewFragmentView = inflater.inflate(R.layout.order_overview_fragment, container, false);
-        menuContainerView = orderOverviewFragmentView.findViewById(R.id.menuContainerView);
-        menuContainerView.setOnClickListener(this);
+        menuContainerLayout = orderOverviewFragmentView.findViewById(R.id.menuContainerLayout);
         navbarView = orderOverviewFragmentView.findViewById(R.id.navbarView);
         laCarteButton = navbarView.findViewById(R.id.laCarteButton);
         drinkButton = navbarView.findViewById(R.id.drinkButton);
         laCarteButton.setOnClickListener(this);
         drinkButton.setOnClickListener(this);
-        
-        ViewGroup menuContainer = (ViewGroup) menuContainerView;
-        /*for (ViewGroup menuCategory : menuContainer) {
 
-        }*/
+        ViewGroup menuContainer = (ViewGroup) menuContainerLayout;
+
         for(int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++){ // for each child apply a listener to the childs tableButton
-            Log.d("CategoryMessage", "In category");
-            ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex);
+            ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
+            Log.d("CategoryMessage", "Added category");
 
             for (int menuItemIndex = 0; menuItemIndex < menuCategory.getChildCount(); menuItemIndex++) {
                 if (menuCategory.getChildAt(menuItemIndex) instanceof MenuItemView) {
@@ -81,11 +80,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v instanceof MenuItemView) {
-            Toast.makeText(getActivity(), "RÅBIFF", Toast.LENGTH_SHORT).show();
-        }
-
         switch (v.getId()) {
+            case R.id.menuItemView:
+                TextView menuItemNameTextView = v.findViewById(R.id.menuItemPrice);
+                Toast.makeText(getActivity(), menuItemNameTextView.getText(), Toast.LENGTH_SHORT).show();
+                break;
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
                 //fill food
