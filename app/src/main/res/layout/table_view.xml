@@ -12,20 +12,7 @@
             android:text="B1"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@+id/timeLeftText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/peopleText" />
-
-        <TextView
-            android:id="@+id/peopleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0/5"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/tableButton"
-            app:layout_constraintEnd_toEndOf="@+id/tableButton"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/arrivalTime"
@@ -39,12 +26,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tableButton" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:src="@mipmap/ic_launcher_round"
-            app:layout_constraintStart_toEndOf="@+id/tableButton"
-            app:layout_constraintTop_toTopOf="@+id/tableButton" />
 </se.miun.dt170.antonsskafferi.ui.table_overview.TableView>

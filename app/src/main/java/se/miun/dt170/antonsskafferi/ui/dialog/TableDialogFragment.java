@@ -4,23 +4,23 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -39,10 +39,14 @@ public class TableDialogFragment extends DialogFragment {
     private Button bookingButton;
     private View dialogView;
     private Fragment parent;
-    private int green = Color.parseColor("#39FF14");
-    private int red = Color.parseColor("#FF0000");
     private TableDialogSharedViewModel sharedViewModel;
     private TableView table;
+    private Drawable popupAvailableColor;
+    private Drawable popupBookedColor;
+    private Drawable cancelButtonColor;
+    private TextView textDisplay;
+    private Button cancelButton;
+
 
     @Override
     public void onDestroy() {
@@ -53,6 +57,10 @@ public class TableDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        popupAvailableColor = ContextCompat.getDrawable(this.getContext(),R.drawable.green_button_border);
+        popupBookedColor = ContextCompat.getDrawable(this.getContext(),R.drawable.red_button_border);
+        cancelButtonColor = ContextCompat.getDrawable(this.getContext(),R.drawable.white_button_border);
+
         LayoutInflater layoutInflater = requireActivity().getLayoutInflater();
         dialogView = layoutInflater.inflate(R.layout.table_dialog_fragment, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -72,8 +80,6 @@ public class TableDialogFragment extends DialogFragment {
             }
         });
 
-
-
         return builder.create();
     }
 
@@ -82,7 +88,6 @@ public class TableDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         dialogView = view;
-
     }
 
     @Override
@@ -91,24 +96,25 @@ public class TableDialogFragment extends DialogFragment {
         parent = getParentFragment();
         openOrderButton = dialogView.findViewById(R.id.openOrderButton);
         bookingButton = dialogView.findViewById(R.id.bookingButton);
+        textDisplay = dialogView.findViewById(R.id.dialogTextDisplay);
+        cancelButton = dialogView.findViewById(R.id.cancelButton);
+
+        textDisplay.setText("Bord " + Integer.toString(table.getTableNr()));
+        cancelButton.setBackground(cancelButtonColor);
 
         adjustBookingButton();
         adjustOrderButton();
 
+        cancelButton.setOnClickListener(v ->{
+          this.dismiss();
+        });
         openOrderButton.setOnClickListener(v -> {
-            if(!table.isTableOpen()){
-                table.setTableOpen(!table.isTableOpen());
-                adjustOrderButton();
-                return;
-            }
             NavDirections action = TableDialogFragmentDirections.actionTableDialogFragmentToOrderOverviewFragment();
             Navigation.findNavController(parent.getView()).navigate(action);
         });
 
         bookingButton.setOnClickListener(v -> {
             table.setTableBooked(!table.isTableBooked());
-            adjustBookingButton();
-            String test = "";
             if(table.isTableBooked()){
             final AlertDialog.Builder enterTimeDialog = new AlertDialog.Builder(this.getContext());
             final EditText time = new EditText(this.getContext());
@@ -119,40 +125,50 @@ public class TableDialogFragment extends DialogFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             table.setArrivalTime(time.getText().toString());
+                            adjustBookingButton();
                         }
                     })
-                    .setNegativeButton("no", null)
+                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            table.setTableBooked(false);
+                            adjustBookingButton();
+                        }
+                    })
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            table.setTableBooked(false);
+                            adjustBookingButton();
+                        }
+                    })
                     .show();
             }
+            else{
+                adjustBookingButton();
+            }
         });
-
-
-
     }
 
     private void adjustBookingButton(){
-        if(!table.isTableBooked()){
-            bookingButton.setBackgroundColor(green);
-            table.setButtonColor(green);
+        if(!table.isTableBooked()){ //table is available.
+            bookingButton.setBackground(popupAvailableColor); //change to popup
+            table.setButtonColor(table.getTableAvailableColor());
             table.setTableBooked(false);
             bookingButton.setText("Boka Bord");
+            table.setArrivalTime("");
         }
         else{
-            bookingButton.setBackgroundColor(red);
-            table.setButtonColor(red);
+            bookingButton.setBackground(popupBookedColor);
+            table.setButtonColor(table.getTableBookedColor());
             table.setTableBooked(true);
             bookingButton.setText("Avboka Bord");
         }
     }
 
     private void adjustOrderButton(){
-        if(table.isTableOpen()){
-            openOrderButton.setText("Ta en order");
-        }
-        else{
-            openOrderButton.setText("Öppna bord");
-
-        }
+        openOrderButton.setText("Ta en order");
+        openOrderButton.setBackground(popupAvailableColor);
     }
 
 

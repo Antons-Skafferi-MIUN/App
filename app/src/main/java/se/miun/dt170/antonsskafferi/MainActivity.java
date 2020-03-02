@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
                 if (waiterCheckBox.isChecked()) {
                     waiterCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
                     Intent waiterActivity = new Intent(self, WaiterActivity.class);
-                    if(TextUtils.isEmpty(inputEditText.getText().toString())) {
-                        inputEditText.setError("Fältet får inte vara tomt");
-                        return;
-                    }
+//                    if(TextUtils.isEmpty(inputEditText.getText().toString())) {
+//                        inputEditText.setError("Fältet får inte vara tomt");
+//                        return;
+//                    }
                     waiterActivity.putExtra("DISPLAY_NAME", inputEditText.getText().toString());
                     startActivity(waiterActivity);
 
