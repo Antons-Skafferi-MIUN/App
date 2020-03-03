@@ -5,9 +5,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import se.miun.dt170.antonsskafferi.R;
 
-public class OrderBongContainerView extends LinearLayout {
+public class OrderBongContainerView extends ConstraintLayout {
     /*public OrderBongContainerView(Context context) {
         super(context);
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
