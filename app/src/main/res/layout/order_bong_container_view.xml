@@ -2,7 +2,6 @@
 <se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
@@ -14,6 +13,13 @@
     <include
         layout="@layout/order_bong_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/orderbongbuttons"
+        layout="@layout/order_bong_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 </se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView>

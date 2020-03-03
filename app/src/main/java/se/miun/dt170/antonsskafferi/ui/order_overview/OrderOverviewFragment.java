@@ -38,6 +38,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private LinearLayout menuContainerLayout;
     private NavbarView navbarView;
 
+
+
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
     }
@@ -99,7 +101,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 Toast.makeText(getActivity(), "DRINKS", Toast.LENGTH_SHORT).show();
                 //fill drinks
                 break;
-            // TODO: Add cases for edit/remove/send and add to bong
+
+                //Add cases for edit/remove/send and add to bong
+
         }
 
     }
