@@ -133,4 +133,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         BongItemView bongItemView = new BongItemView(getContext(), item);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
+
+    private void sendOrder() {
+
+    }
 }
