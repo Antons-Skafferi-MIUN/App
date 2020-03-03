@@ -3,12 +3,16 @@ package se.miun.dt170.antonsskafferi.data.remote;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
+import se.miun.dt170.antonsskafferi.data.model.Order;
+import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
@@ -53,4 +57,14 @@ public interface ApiService {
     // POST METHODS
     @POST("entities.reservations")
     Observable<Reservation> postReservation(@Body Reservation reservation);
+
+    // DELETE METHODS
+    @DELETE("entities.reservations/{reservationId}")
+    Call<Reservation> deleteReservation(@Path("reservationId") long id);
+
+    @DELETE("entities.orders/{orderId}")
+    Call<Order> deleteOrder(@Path("orderId") long id);
+
+    @DELETE("entities.orderrows/{orderRowId}")
+    Call<OrderRow> deleteOrderRow(@Path("orderRowId") long id);
 }

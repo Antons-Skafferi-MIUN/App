@@ -21,6 +21,7 @@ import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.Order;
+import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
@@ -79,6 +80,71 @@ public class KitchenActivity extends AppCompatActivity {
 
         Reservation reservation = new Reservation("070-98752", new RestaurantTable("3"), "today", "Billy Sallad");
         postReservation(reservation);
+
+        //DELETE variables
+        long delReservationId = 1;
+        long delOrderId = 1;
+        long delOrderRowId = 1;
+
+        //DELETE method calls
+        deleteReservation(delReservationId);
+        deleteOrder(delOrderId);
+        deleteOrderRow(delOrderRowId);
+    }
+
+    //DELETE Calls
+    private void deleteReservation(long delReservationId) {
+        mAPIService.deleteReservation(delReservationId).enqueue(new Callback<Reservation>() {
+            @Override
+            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Reservation> call, Throwable t) {
+                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void deleteOrder(long delOrderId) {
+        mAPIService.deleteOrder(delOrderId).enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Order> call, Throwable t) {
+                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void deleteOrderRow(long delOrderRowId) {
+        mAPIService.deleteOrderRow(delOrderRowId).enqueue(new Callback<OrderRow>() {
+            @Override
+            public void onResponse(Call<OrderRow> call, Response<OrderRow> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderRow> call, Throwable t) {
+                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
     }
 
     private void postReservation(Reservation reservation) {
