@@ -5,8 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/bong_item_view"
+    <LinearLayout
+        android:id="@+id/orderBongListLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/bongListLinearLayout"
+            layout="@layout/bong_item_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 </se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView>

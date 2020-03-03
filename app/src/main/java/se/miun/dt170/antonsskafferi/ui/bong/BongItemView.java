@@ -18,7 +18,6 @@ import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.Item;
 
 public class BongItemView extends ConstraintLayout implements View.OnClickListener {
-    private TextView amountText;
     private boolean itemClicked = false;
     private TextView foodNameText;
     private TextView extraText;
@@ -36,7 +35,6 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         CheckBox checkBox = findViewById(R.id.checkBox);
         foodNameText = findViewById(R.id.foodNameText);
         extraText = findViewById(R.id.extraText);
-        amountText = findViewById(R.id.amountText);
 
         foodNameText.setText(item.getName());
 
@@ -61,12 +59,10 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         if (!itemClicked) {
             foodNameText.setTextColor(Color.parseColor("#00cc00"));
             extraText.setTextColor(Color.parseColor("#00cc00"));
-            amountText.setTextColor(Color.parseColor("#00cc00"));
             itemClicked = true;
         } else {
             foodNameText.setTextColor(Color.parseColor("#000000"));
             extraText.setTextColor(Color.parseColor("#000000"));
-            amountText.setTextColor(Color.parseColor("#000000"));
             itemClicked = false;
         }
     }

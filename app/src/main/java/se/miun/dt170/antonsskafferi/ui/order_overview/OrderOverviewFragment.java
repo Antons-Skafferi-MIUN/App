@@ -38,6 +38,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderOverviewViewModel mViewModel;
     private Button laCarteButton;
     private Button drinkButton;
+    private MenuContainerView menuContainerView;
     private LinearLayout menuContainerLayout;
     private NavbarView navbarView;
     private OrderBongContainerView orderBongContainerView;
@@ -52,13 +53,20 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                              @Nullable Bundle savedInstanceState) {
 
         View orderOverviewFragmentView = inflater.inflate(R.layout.order_overview_fragment, container, false);
+        menuContainerView = orderOverviewFragmentView.findViewById(R.id.menuContainerView);
         menuContainerLayout = orderOverviewFragmentView.findViewById(R.id.menuContainerLayout);
         navbarView = orderOverviewFragmentView.findViewById(R.id.navbarView);
         laCarteButton = navbarView.findViewById(R.id.laCarteButton);
         drinkButton = navbarView.findViewById(R.id.drinkButton);
         orderBongListView = orderOverviewFragmentView.findViewById(R.id.orderBongListView);
         setNavbarListener();
+        menuContainerView.addCategory("Testkategori");
         setMenuItemListener();
+
+        /*TextView textView = new TextView(getContext());
+        textView.setText("Test");
+        menuContainerLayout.addView(textView);*/
+
 
         return orderOverviewFragmentView;
     }
@@ -94,11 +102,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menuItemView:
-                TextView menuItemNameTextView = v.findViewById(R.id.menuItemPrice);
-                Toast.makeText(getActivity(), menuItemNameTextView.getText(), Toast.LENGTH_SHORT).show();
-                Item item = new Item("Test", null);
-                BongItemView bongItemView = new BongItemView(getContext(), item);
-                orderBongListView.addView(bongItemView);
+                    addMenuItemToBong(v);
                 break;
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
@@ -112,5 +116,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    private void addMenuItemToBong
+    private void addMenuItemToBong(View v) {
+        TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
+        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        Item item = new Item(menuItemNameTextView.getText().toString(),null);
+        BongItemView bongItemView = new BongItemView(getContext(), item);
+        orderBongListLinearLayout.addView(bongItemView);
+    }
 }
