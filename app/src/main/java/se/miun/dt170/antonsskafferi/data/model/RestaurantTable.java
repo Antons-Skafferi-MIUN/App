@@ -6,17 +6,24 @@ import org.simpleframework.xml.Root;
 @Root(name = "restaurantTables")
 public class RestaurantTable {
 
-    @Element(name = "tableAvailableSeats")
+    @Element(name = "tableAvailableSeats", required = false)
     private String tableAvailableSeats;
 
-    @Element(name = "tableTotalSeats")
+    @Element(name = "tableTotalSeats", required = false)
     private String tableTotalSeats;
 
     @Element(name = "tableId")
     private String tableId;
 
-    @Element(name = "tableStatus")
+    @Element(name = "tableStatus", required = false)
     private String tableStatus;
+
+    public RestaurantTable() {
+    }
+
+    public RestaurantTable(String tableId) {
+        this.tableId = tableId;
+    }
 
     public String getTableAvailableSeats() {
         return tableAvailableSeats;

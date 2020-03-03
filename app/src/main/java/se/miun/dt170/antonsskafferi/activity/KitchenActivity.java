@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.flexbox.FlexboxLayout;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
+import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
@@ -74,6 +76,29 @@ public class KitchenActivity extends AppCompatActivity {
         getOrders();
         getReservations();
         getOrderRows();
+
+        Reservation reservation = new Reservation("070-98752", new RestaurantTable("3"), "today", "Billy Sallad");
+        postReservation(reservation);
+    }
+
+    private void postReservation(Reservation reservation) {
+        mAPIService.postReservation(reservation).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Reservation>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Retrofit RxJava POST", e.toString());
+                    }
+
+                    @Override
+                    public void onNext(Reservation response) {
+                        Log.i("Retrofit RxJava POST", "post submitted to API." + response.toString());
+                    }
+                });
     }
 
     // Temporary location for getting food from database
@@ -87,7 +112,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -109,7 +134,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -131,7 +156,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -153,7 +178,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -170,12 +195,11 @@ public class KitchenActivity extends AppCompatActivity {
                 .subscribe(new Subscriber<Reservations>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -197,7 +221,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item

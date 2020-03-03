@@ -1,7 +1,8 @@
 package se.miun.dt170.antonsskafferi.data.remote;
 
 public class ApiUtils {
-    public static final String BASE_URL = "http://10.250.121.142:8080/antonapi/webresources/";
+
+    public static final String BASE_URL = "http://10.250.121.128:8080/antonapi/webresources/";
 
     private ApiUtils() {
     }
