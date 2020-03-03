@@ -15,6 +15,7 @@
         android:textSize="18sp" />
 
     <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/menuCategoryFlexbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:alignContent="flex_start"
