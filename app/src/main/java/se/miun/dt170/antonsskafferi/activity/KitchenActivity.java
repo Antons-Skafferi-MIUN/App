@@ -1,5 +1,8 @@
 package se.miun.dt170.antonsskafferi.activity;
 
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.GregorianCalendar;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -11,16 +14,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
-import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
@@ -77,7 +76,10 @@ public class KitchenActivity extends AppCompatActivity {
         getReservations();
         getOrderRows();
 
-        Reservation reservation = new Reservation("070-98752", new RestaurantTable("3"), "today", "Billy Sallad");
+        Date time = GregorianCalendar.getInstance(TimeZone.getDefault()).getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX"); // IMPORTANT PATTERN, DON'T CHANGE
+        String formattedTime = simpleDateFormat.format(time);
+        Reservation reservation = new Reservation("070-98752", new RestaurantTable("2"), formattedTime, "Billy Sallad Test");
         postReservation(reservation);
     }
 
@@ -86,17 +88,17 @@ public class KitchenActivity extends AppCompatActivity {
                 .subscribe(new Subscriber<Reservation>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.i("Complete", "POST reservation complete");
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("Retrofit RxJava POST", e.toString());
+                        e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(Reservation response) {
-                        Log.i("Retrofit RxJava POST", "post submitted to API." + response.toString());
                     }
                 });
     }
@@ -107,7 +109,7 @@ public class KitchenActivity extends AppCompatActivity {
                 .subscribe(new Subscriber<Foods>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.i("Complete", "GET food complete");
                     }
 
                     @Override
