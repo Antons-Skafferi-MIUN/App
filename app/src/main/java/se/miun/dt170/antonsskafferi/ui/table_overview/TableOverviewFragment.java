@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
+import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
@@ -87,8 +88,11 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     }
 
     public void updateFragment(Reservations tablesReservations){
+        //TODO IF THERE ARE MORE RESERVATIONS THAN TABLES WE CANT LOOK AT RESERVE SIZE
+        //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
+        //
           ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
-
+          DateConverter date = new DateConverter();
           for(int tableIndex = 0; tableIndex < reservationsList.size(); tableIndex++){
               Reservation reservation =  reservationsList.get(tableIndex);
               RestaurantTable restaurantTable = reservation.getTableId();
@@ -100,7 +104,11 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
               else{
                   table.bookTable();
               }
-              table.setArrivalTime(reservation.getReservationDate()); //ISO-8601
+              Log.i("Retrofit RxJava",  new Integer(tableIndex).toString());
+              Log.i("GET RESERV DATE",  reservation.getReservationDate());
+
+              table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+
           }
     }
 }

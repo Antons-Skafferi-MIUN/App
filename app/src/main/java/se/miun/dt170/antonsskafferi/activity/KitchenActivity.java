@@ -74,17 +74,13 @@ public class KitchenActivity extends AppCompatActivity {
         // TEMPORARY EXAMPLE CODE
         getFoods();
         getDrinks();
-        getOrders();
-        getOrderRows();
-<<<<<<< HEAD
-        Log.i("TEST", "MESSAGE");
 
-=======
+        Log.i("TEST", "MESSAGE");
 
         Date time = GregorianCalendar.getInstance(TimeZone.getDefault()).getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX"); // IMPORTANT PATTERN, DON'T CHANGE
         String formattedTime = simpleDateFormat.format(time);
-        Reservation reservation = new Reservation("070-98752", new RestaurantTable("2"), formattedTime, "Billy Sallad Test");
+        Reservation reservation = new Reservation("070-98752", new RestaurantTable("1"), formattedTime, "Billy Sallad Test");
         postReservation(reservation);
     }
 
@@ -104,7 +100,6 @@ public class KitchenActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
->>>>>>> 062b498e548d17c254eb49331755c2827ea259e2
     }
 
     // Temporary location for getting food from database
@@ -151,24 +146,6 @@ public class KitchenActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
-<<<<<<< HEAD
-=======
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(RestaurantTables response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
->>>>>>> 062b498e548d17c254eb49331755c2827ea259e2
 
     public void getOrders() {
         mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
