@@ -87,15 +87,15 @@ public class KitchenActivity extends AppCompatActivity {
         Reservation reservation = new Reservation("070-98752", new RestaurantTable("1"), formattedTime, "Billy Sallad Test");
         postReservation(reservation);
 
-        //DELETE variables
-        long delReservationId = 1;
-        long delOrderId = 1;
-        long delOrderRowId = 1;
-
-        //DELETE method calls
-        deleteReservation(delReservationId);
-        deleteOrder(delOrderId);
-        deleteOrderRow(delOrderRowId);
+//        //DELETE variables
+//        long delReservationId = 1;
+//        long delOrderId = 1;
+//        long delOrderRowId = 1;
+//
+//        //DELETE method calls
+//        deleteReservation(delReservationId);
+//        deleteOrder(delOrderId);
+//        deleteOrderRow(delOrderRowId);
     }
 
     //DELETE Calls
@@ -153,27 +153,6 @@ public class KitchenActivity extends AppCompatActivity {
         });
     }
 
-    private void postReservation(Reservation reservation) {
-        mAPIService.postReservation(reservation).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Reservation>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava POST", e.toString());
-                    }
-
-                    @Override
-                    public void onNext(Reservation response) {
-                        Log.i("Retrofit RxJava POST", "post submitted to API." + response.toString());
-                    }
-                });
-
-
-    }
 
     private void postReservation(Reservation reservation) {
         mAPIService.postReservation(reservation).enqueue(new Callback<Reservation>() {
