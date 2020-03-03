@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import se.miun.dt170.antonsskafferi.activity.KitchenActivity;
 import se.miun.dt170.antonsskafferi.activity.WaiterActivity;
@@ -18,7 +20,7 @@ import se.miun.dt170.antonsskafferi.activity.WaiterActivity;
 /**
  * Main activity that creates either {@link KitchenActivity} or {@link WaiterActivity} depending on choice.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     AppCompatActivity self = this;
     private CheckBox waiterCheckBox;
@@ -26,76 +28,79 @@ public class MainActivity extends AppCompatActivity {
     private Button enterButton;
     private EditText inputEditText;
 
+    private int deselected;
+    private int selected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        deselected = ContextCompat.getColor(this, R.color.deselected_faded_gray);;
+        selected = ContextCompat.getColor(this, R.color.selected_white);;
 
         enterButton = findViewById(R.id.enterButton);
         waiterCheckBox = findViewById(R.id.waiterCheckBox);
         kitchenCheckBox = findViewById(R.id.kitchenCheckBox);
         inputEditText = findViewById(R.id.inputBox);
         waiterCheckBox.setChecked(true);
-        waiterCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
+        waiterCheckBox.setTextColor(selected);
         waiterCheckBox.setPaintFlags(waiterCheckBox.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        waiterCheckBox.setOnClickListener(this);
+        kitchenCheckBox.setOnClickListener(this);
+        enterButton.setOnClickListener(this);
 
-        waiterCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(kitchenCheckBox.isChecked()){
-                    kitchenCheckBox.setTextColor(Color.parseColor("#a9a9a9"));
-                    kitchenCheckBox.setPaintFlags(0);
-                    kitchenCheckBox.setChecked(false);
-                }
-                if (!waiterCheckBox.isChecked()) {
-                    waiterCheckBox.setTextColor(Color.parseColor("#a9a9a9"));
-                    waiterCheckBox.setPaintFlags(0);
-                } else {
-                    waiterCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
-                    waiterCheckBox.setPaintFlags(waiterCheckBox.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                    inputEditText.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+    }
 
-        kitchenCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.kitchenCheckBox:
                 if (waiterCheckBox.isChecked()){
-                    waiterCheckBox.setTextColor(Color.parseColor("#a9a9a9"));
+                    waiterCheckBox.setTextColor(deselected); //fades waiter checkbox
                     waiterCheckBox.setPaintFlags(0);
                     waiterCheckBox.setChecked(false);
                 }
                 if (!kitchenCheckBox.isChecked()) {
-                    kitchenCheckBox.setTextColor(Color.parseColor("#a9a9a9"));
+                    kitchenCheckBox.setTextColor(deselected);
                     kitchenCheckBox.setPaintFlags(0);
                 } else {
-                    kitchenCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
+                    kitchenCheckBox.setTextColor(selected);
                     kitchenCheckBox.setPaintFlags(waiterCheckBox.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                     inputEditText.setVisibility(View.GONE);
                 }
-            }
-        });
-
-        enterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.waiterCheckBox:
+                if(kitchenCheckBox.isChecked()){
+                    kitchenCheckBox.setTextColor(deselected);
+                    kitchenCheckBox.setPaintFlags(0);
+                    kitchenCheckBox.setChecked(false);
+                }
+                if (!waiterCheckBox.isChecked()) {
+                    waiterCheckBox.setTextColor(deselected);
+                    waiterCheckBox.setPaintFlags(0);
+                } else {
+                    waiterCheckBox.setTextColor(selected);
+                    waiterCheckBox.setPaintFlags(waiterCheckBox.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                    inputEditText.setVisibility(View.VISIBLE);
+                }
+                break;
+            case R.id.enterButton:
                 if (waiterCheckBox.isChecked()) {
-                    waiterCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
+                    waiterCheckBox.setTextColor(selected);
                     Intent waiterActivity = new Intent(self, WaiterActivity.class);
-                    if(TextUtils.isEmpty(inputEditText.getText().toString())) {
-                        inputEditText.setError("Fältet får inte vara tomt");
-                        return;
-                    }
+//                    if(TextUtils.isEmpty(inputEditText.getText().toString())) {
+//                        inputEditText.setError("Fältet får inte vara tomt");
+//                        return;
+//                    }
                     waiterActivity.putExtra("DISPLAY_NAME", inputEditText.getText().toString());
                     startActivity(waiterActivity);
 
                 } else if (kitchenCheckBox.isChecked()) {
-                    kitchenCheckBox.setTextColor(Color.parseColor("#FFFFFF"));
+                    kitchenCheckBox.setTextColor(selected);
                     startActivity(new Intent(self, KitchenActivity.class));
                 }
-
-            }
-        });
+                break;
+        }
     }
 }
