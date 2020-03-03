@@ -2,6 +2,7 @@ package se.miun.dt170.antonsskafferi.ui.bong;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -20,7 +21,11 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private TextView amountText;
     private boolean itemClicked = false;
     private TextView foodNameText;
-    private final TextView extraText;
+    private TextView extraText;
+
+    public BongItemView(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+    }
 
     public BongItemView(@NonNull Context context, Item item) {
         super(context);

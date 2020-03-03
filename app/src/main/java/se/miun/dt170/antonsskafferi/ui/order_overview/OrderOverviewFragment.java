@@ -58,11 +58,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
         for(int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++){ // for each child apply a listener to the childs tableButton
             ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
-            Log.d("CategoryMessage", "Added category");
 
             for (int menuItemIndex = 0; menuItemIndex < menuCategory.getChildCount(); menuItemIndex++) {
                 if (menuCategory.getChildAt(menuItemIndex) instanceof MenuItemView) {
-                    Log.d("ListenerMessage", "Added listener");
                     MenuItemView menuItemView = (MenuItemView) menuCategory.getChildAt(menuItemIndex);
                     menuItemView.setOnClickListener(this);
                 }
