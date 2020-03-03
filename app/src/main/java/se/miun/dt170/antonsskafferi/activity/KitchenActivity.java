@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.flexbox.FlexboxLayout;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,10 +21,12 @@ import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.Order;
+import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
+import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
@@ -73,7 +76,94 @@ public class KitchenActivity extends AppCompatActivity {
         getRestaurantTables();
         getOrders();
         getOrderRows();
-        Log.i("TEST", "MESSAGE");
+
+        Reservation reservation = new Reservation("070-98752", new RestaurantTable("3"), "today", "Billy Sallad");
+        postReservation(reservation);
+
+        //DELETE variables
+        long delReservationId = 1;
+        long delOrderId = 1;
+        long delOrderRowId = 1;
+
+        //DELETE method calls
+        deleteReservation(delReservationId);
+        deleteOrder(delOrderId);
+        deleteOrderRow(delOrderRowId);
+    }
+
+    //DELETE Calls
+    private void deleteReservation(long delReservationId) {
+        mAPIService.deleteReservation(delReservationId).enqueue(new Callback<Reservation>() {
+            @Override
+            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Reservation> call, Throwable t) {
+                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void deleteOrder(long delOrderId) {
+        mAPIService.deleteOrder(delOrderId).enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Order> call, Throwable t) {
+                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void deleteOrderRow(long delOrderRowId) {
+        mAPIService.deleteOrderRow(delOrderRowId).enqueue(new Callback<OrderRow>() {
+            @Override
+            public void onResponse(Call<OrderRow> call, Response<OrderRow> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderRow> call, Throwable t) {
+                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void postReservation(Reservation reservation) {
+        mAPIService.postReservation(reservation).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Reservation>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Retrofit RxJava POST", e.toString());
+                    }
+
+                    @Override
+                    public void onNext(Reservation response) {
+                        Log.i("Retrofit RxJava POST", "post submitted to API." + response.toString());
+                    }
+                });
 
     }
 
@@ -88,7 +178,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -110,7 +200,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -132,7 +222,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -154,7 +244,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -166,6 +256,26 @@ public class KitchenActivity extends AppCompatActivity {
                 });
     }
 
+    public void getReservations() {
+        mAPIService.getReservations().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Reservations>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Retrofit RxJava", e.toString());
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(Reservations response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
+    }
 
 
     public void getOrderRows() {
@@ -178,7 +288,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
