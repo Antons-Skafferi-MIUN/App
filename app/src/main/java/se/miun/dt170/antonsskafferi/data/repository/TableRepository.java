@@ -5,25 +5,20 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
+import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragment;
 
-public class ReservationRepository {
+public class TableRepository {
     private ApiService mAPIService;
-    private MutableLiveData<Reservations> reservations;
 
-    public ReservationRepository(){
+    public TableRepository(){
         mAPIService = ApiUtils.getAPIService();
     }
 
-    public MutableLiveData<Reservations> getReservations(TableOverviewFragment fragmentView) {
-        if (reservations == null) {
-            reservations = new MutableLiveData<>();
-        }
-        mAPIService.getReservations()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+    public void getRestaurantTables(TableOverviewFragment fragmentView) {
+        mAPIService.getReservations().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Reservations>() {
                     @Override
                     public void onCompleted() {
@@ -32,15 +27,16 @@ public class ReservationRepository {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.i("ERROR IN getReservationS", e.toString());
+                        Log.i("ERROR IN TABLEREPOS", e.toString());
+
                     }
+
                     // Called on every new observed item
                     @Override
                     public void onNext(Reservations response) {
                         fragmentView.updateFragment(response);
                     }
                 });
-
-        return reservations;
     }
+
 }

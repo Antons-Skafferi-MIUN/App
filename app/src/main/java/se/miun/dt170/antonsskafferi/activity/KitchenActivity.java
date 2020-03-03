@@ -70,7 +70,6 @@ public class KitchenActivity extends AppCompatActivity {
         // TEMPORARY EXAMPLE CODE
         getFoods();
         getDrinks();
-        getRestaurantTables();
         getOrders();
         getOrderRows();
         Log.i("TEST", "MESSAGE");
@@ -122,27 +121,7 @@ public class KitchenActivity extends AppCompatActivity {
                 });
     }
 
-    public void getRestaurantTables() {
-        mAPIService.getRestaurantTables().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RestaurantTables>() {
-                    @Override
-                    public void onCompleted() {
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(RestaurantTables response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
 
     public void getOrders() {
         mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
