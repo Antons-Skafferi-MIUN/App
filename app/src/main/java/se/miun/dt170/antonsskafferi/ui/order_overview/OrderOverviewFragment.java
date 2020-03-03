@@ -16,7 +16,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
+import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
@@ -34,9 +38,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderOverviewViewModel mViewModel;
     private Button laCarteButton;
     private Button drinkButton;
-    private MenuItemView menuItemView;
+    private MenuContainerView menuContainerView;
     private LinearLayout menuContainerLayout;
     private NavbarView navbarView;
+    private OrderBongContainerView orderBongContainerView;
+    private OrderBongListView orderBongListView;
 
 
 
@@ -49,12 +55,20 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                              @Nullable Bundle savedInstanceState) {
 
         View orderOverviewFragmentView = inflater.inflate(R.layout.order_overview_fragment, container, false);
+        menuContainerView = orderOverviewFragmentView.findViewById(R.id.menuContainerView);
         menuContainerLayout = orderOverviewFragmentView.findViewById(R.id.menuContainerLayout);
         navbarView = orderOverviewFragmentView.findViewById(R.id.navbarView);
         laCarteButton = navbarView.findViewById(R.id.laCarteButton);
         drinkButton = navbarView.findViewById(R.id.drinkButton);
+        orderBongListView = orderOverviewFragmentView.findViewById(R.id.orderBongListView);
         setNavbarListener();
+        menuContainerView.addCategory("Testkategori");
         setMenuItemListener();
+
+        /*TextView textView = new TextView(getContext());
+        textView.setText("Test");
+        menuContainerLayout.addView(textView);*/
+
 
         return orderOverviewFragmentView;
     }
@@ -73,7 +87,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
             }
         }
     }
-    
+
     private void setNavbarListener() {
         laCarteButton.setOnClickListener(this);
         drinkButton.setOnClickListener(this);
@@ -90,8 +104,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menuItemView:
-                TextView menuItemNameTextView = v.findViewById(R.id.menuItemPrice);
-                Toast.makeText(getActivity(), menuItemNameTextView.getText(), Toast.LENGTH_SHORT).show();
+                    addMenuItemToBong(v);
                 break;
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
@@ -105,6 +118,13 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 //Add cases for edit/remove/send and add to bong
 
         }
+    }
 
+    private void addMenuItemToBong(View v) {
+        TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
+        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        Item item = new Item(menuItemNameTextView.getText().toString(),null);
+        BongItemView bongItemView = new BongItemView(getContext(), item);
+        orderBongListLinearLayout.addView(bongItemView);
     }
 }

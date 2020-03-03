@@ -4,10 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import se.miun.dt170.antonsskafferi.R;
 
-public class OrderBongListView extends LinearLayout {
+public class OrderBongListView extends ScrollView {
     /*public OrderBongListView(Context context) {
         super(context);
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
