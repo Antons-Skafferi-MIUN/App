@@ -14,6 +14,11 @@
     <color name="delete_brun">#c98429</color>
     <color name="bong_selected">#fef3e5</color>
 
+    <!-- Colors for the main actvity  -->
+    <color name="enter_button_green">@android:color/holo_green_light</color>
+    <color name="deselected_faded_gray">#a9a9a9</color>
+    <color name="selected_white">#ffffff</color>
+
     <!-- Colors for the table overview -->
     <color name="table_overview_background">#ffffff</color>
     <color name="table_overview_text_dark">#000000</color>

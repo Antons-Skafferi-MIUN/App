@@ -51,22 +51,27 @@ public class TableView extends ConstraintLayout {
         super(context,attrs);
 
     }
+    @Override
+    public void onFinishInflate() {
+        super.onFinishInflate();
+        tableBookedColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_red);
+        tableAvailableColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_green);
+        tableTextColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_text_dark);
+        tableButton = findViewById(R.id.tableButton);
+        textView = findViewById(R.id.arrivalTime);
+        textView.setTextColor(tableTextColor);
+        setButtonColor(tableAvailableColor);
+        setArrivalTime("");
+    }
+
 
     /**
      * Sets up a table with default values.
      * @param tablenr The number for the table.
      */
     public void setup(int tablenr){
-        tableBookedColor = ContextCompat.getColor(this.getContext(),R.color.table_overview_red);
-        tableAvailableColor = ContextCompat.getColor(this.getContext(),R.color.table_overview_green);
-        tableTextColor = ContextCompat.getColor(this.getContext(),R.color.table_overview_text_dark);
-        tableButton = findViewById(R.id.tableButton);
-        textView = findViewById(R.id.arrivalTime);
-        textView.setTextColor(tableTextColor);
-        setTableNr(tablenr);
-        setButtonColor(tableAvailableColor);
         setTableButtonText("Bord " + Integer.toString(tablenr));
-        setArrivalTime("");
+        setTableNr(tablenr);
     }
 
     /**
