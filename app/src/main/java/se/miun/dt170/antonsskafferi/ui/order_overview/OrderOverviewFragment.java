@@ -51,12 +51,16 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         navbarView = orderOverviewFragmentView.findViewById(R.id.navbarView);
         laCarteButton = navbarView.findViewById(R.id.laCarteButton);
         drinkButton = navbarView.findViewById(R.id.drinkButton);
-        laCarteButton.setOnClickListener(this);
-        drinkButton.setOnClickListener(this);
+        setNavbarListener();
+        setMenuItemListener();
 
+        return orderOverviewFragmentView;
+    }
+
+    private void setMenuItemListener() {
         ViewGroup menuContainer = (ViewGroup) menuContainerLayout;
 
-        for(int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++){ // for each child apply a listener to the childs tableButton
+        for(int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++){
             ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
 
             for (int menuItemIndex = 0; menuItemIndex < menuCategory.getChildCount(); menuItemIndex++) {
@@ -66,7 +70,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 }
             }
         }
-        return orderOverviewFragmentView;
+    }
+    
+    private void setNavbarListener() {
+        laCarteButton.setOnClickListener(this);
+        drinkButton.setOnClickListener(this);
     }
 
     @Override
