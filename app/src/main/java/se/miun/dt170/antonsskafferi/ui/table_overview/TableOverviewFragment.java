@@ -38,7 +38,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.table_overview_fragment, container, false);
-        ViewGroup parent = (ViewGroup) fragmentView.findViewById(R.id.table1).getParent();
+        ViewGroup parent = (ViewGroup) fragmentView.findViewById(R.id.TableOverviewLayout);
         for(int tableIndex = 0; tableIndex < parent.getChildCount(); tableIndex++){ // for each child apply a listener to the childs tableButton
             TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
             table.setup(tableIndex+1);
