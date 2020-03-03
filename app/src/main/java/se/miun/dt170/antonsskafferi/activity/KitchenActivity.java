@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -84,23 +87,21 @@ public class KitchenActivity extends AppCompatActivity {
     }
 
     private void postReservation(Reservation reservation) {
-        mAPIService.postReservation(reservation).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Reservation>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.i("Complete", "POST reservation complete");
-                    }
+        mAPIService.postReservation(reservation).enqueue(new Callback<Reservation>() {
+            @Override
+            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit POST", "post submitted to API.");
+                }
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava POST", e.toString());
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onNext(Reservation response) {
-                    }
-                });
+            @Override
+            public void onFailure(Call<Reservation> call, Throwable t) {
+                Log.e("Retrofit POST", "Unable to submit post to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
     }
 
     // Temporary location for getting food from database
