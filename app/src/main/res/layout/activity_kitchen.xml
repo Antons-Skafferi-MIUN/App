@@ -10,13 +10,17 @@
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/bongListContainer"
+
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:alignContent="flex_start"
         app:alignItems="flex_start"
-        app:flexDirection="row"
+        app:dividerDrawable="@drawable/divider"
         app:flexWrap="wrap"
-        app:justifyContent="flex_start">
+        app:showDivider="beginning|middle"
+
+        >
 
     </com.google.android.flexbox.FlexboxLayout>
 
