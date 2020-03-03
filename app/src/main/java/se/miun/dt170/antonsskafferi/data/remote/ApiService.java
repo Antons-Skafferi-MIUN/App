@@ -3,6 +3,8 @@ package se.miun.dt170.antonsskafferi.data.remote;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.DELETE;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -56,8 +58,8 @@ public interface ApiService {
 
     // POST METHODS
     @POST("entities.reservations")
-    Observable<Reservation> postReservation(@Body Reservation reservation);
-
+    Call<Reservation> postReservation(@Body Reservation reservation);
+  
     // DELETE METHODS
     @DELETE("entities.reservations/{reservationId}")
     Call<Reservation> deleteReservation(@Path("reservationId") long id);

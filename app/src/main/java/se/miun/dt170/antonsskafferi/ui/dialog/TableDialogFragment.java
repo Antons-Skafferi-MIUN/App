@@ -153,16 +153,13 @@ public class TableDialogFragment extends DialogFragment {
     private void adjustBookingButton(){
         if(!table.isTableBooked()){ //table is available.
             bookingButton.setBackground(popupAvailableColor); //change to popup
-            table.setButtonColor(table.getTableAvailableColor());
-            table.setTableBooked(false);
             bookingButton.setText("Boka Bord");
-            table.setArrivalTime("");
+            table.removeBooking();
         }
         else{
             bookingButton.setBackground(popupBookedColor);
-            table.setButtonColor(table.getTableBookedColor());
-            table.setTableBooked(true);
             bookingButton.setText("Avboka Bord");
+            table.bookTable();
         }
     }
 

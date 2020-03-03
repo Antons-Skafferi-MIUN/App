@@ -76,11 +76,21 @@ public class TableView extends ConstraintLayout {
 
     /**
      * Sets the color of a table.
-     * @param color
      */
+
+    public void bookTable(){
+        setButtonColor(getTableBookedColor());
+        setTableBooked(true);
+    }
+    public void removeBooking(){
+        setButtonColor(getTableAvailableColor());
+        setTableBooked(false);
+        setArrivalTime("");
+    }
     public void setButtonColor(int color){
         tableButton.setBackgroundColor(color);
     }
+
 
 
     public boolean isTableBooked() {
