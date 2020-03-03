@@ -75,7 +75,6 @@ public class KitchenActivity extends AppCompatActivity {
         getDrinks();
         getRestaurantTables();
         getOrders();
-        getReservations();
         getOrderRows();
 
         Reservation reservation = new Reservation("070-98752", new RestaurantTable("3"), "today", "Billy Sallad");
@@ -165,6 +164,7 @@ public class KitchenActivity extends AppCompatActivity {
                         Log.i("Retrofit RxJava POST", "post submitted to API." + response.toString());
                     }
                 });
+
     }
 
     // Temporary location for getting food from database
@@ -276,6 +276,7 @@ public class KitchenActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     public void getOrderRows() {
         mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

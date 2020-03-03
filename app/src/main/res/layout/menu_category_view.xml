@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <se.miun.dt170.antonsskafferi.ui.order_overview.menu_category_view.MenuCategoryView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/menuCategoryView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="30dp">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/menuCategoryNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -15,98 +16,18 @@
         android:textSize="18sp" />
 
     <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/menuCategoryFlexbox"
+
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:alignContent="flex_start"
         app:alignItems="flex_start"
-        app:flexDirection="row"
+        app:dividerDrawable="@drawable/divider"
         app:flexWrap="wrap"
-        app:justifyContent="space_evenly">
+        app:showDivider="beginning|middle"
 
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
-
-        <include
-            layout="@layout/menu_item_view"
-            android:layout_width="180dp"
-            android:layout_height="110dp" />
+        >
 
         <include
             layout="@layout/menu_item_view"

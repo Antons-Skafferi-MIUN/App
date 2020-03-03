@@ -119,7 +119,7 @@ public class TableDialogFragment extends DialogFragment {
             final AlertDialog.Builder enterTimeDialog = new AlertDialog.Builder(this.getContext());
             final EditText time = new EditText(this.getContext());
             time.setInputType(InputType.TYPE_CLASS_NUMBER);
-            enterTimeDialog.setTitle("Enter the time for execpted customer arrival")
+            enterTimeDialog.setTitle("Enter the time for expected customer arrival")
                     .setView(time)
                     .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                         @Override

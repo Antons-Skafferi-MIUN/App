@@ -4,6 +4,7 @@ public class ApiUtils {
 
     public static final String BASE_URL = "http://10.250.120.152:8080/antondb/webresources/";
 
+
     private ApiUtils() {
     }
 

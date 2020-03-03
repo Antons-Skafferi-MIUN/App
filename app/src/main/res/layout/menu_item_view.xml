@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView71211"
+            android:id="@+id/menuItemName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -19,7 +19,7 @@
             android:textAlignment="center"
             android:textColor="#3F3F3F"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView61211"
+            app:layout_constraintBottom_toTopOf="@+id/menuItemPrice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
             app:layout_constraintVertical_chainStyle="spread_inside" />
 
         <TextView
-            android:id="@+id/textView61211"
+            android:id="@+id/menuItemPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="#8B1E1E"
@@ -43,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView71211" />
+            app:layout_constraintTop_toBottomOf="@+id/menuItemName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView>
