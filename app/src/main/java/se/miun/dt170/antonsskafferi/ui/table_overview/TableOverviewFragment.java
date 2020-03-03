@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
+import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 
 /**
  * This is the fullscreen fragment for showing available tables.
@@ -28,6 +29,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     private View fragmentView;;
     private TableDialogSharedViewModel sharedViewModel;
     private int green = Color.parseColor("#39FF14");
+    private ApiService mAPIService;
 
 
     public static TableOverviewFragment newInstance() {
@@ -37,6 +39,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         fragmentView = inflater.inflate(R.layout.table_overview_fragment, container, false);
         ViewGroup parent = (ViewGroup) fragmentView.findViewById(R.id.TableOverviewLayout);
         for(int tableIndex = 0; tableIndex < parent.getChildCount(); tableIndex++){ // for each child apply a listener to the childs tableButton
@@ -44,6 +47,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
             table.setup(tableIndex+1);
             Button tempButton = table.findViewById(R.id.tableButton);
             tempButton.setOnClickListener(this);
+
         }
         return fragmentView;
     }

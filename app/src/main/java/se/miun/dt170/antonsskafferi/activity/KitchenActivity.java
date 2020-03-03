@@ -74,6 +74,8 @@ public class KitchenActivity extends AppCompatActivity {
         getOrders();
         getReservations();
         getOrderRows();
+        Log.i("TEST", "MESSAGE");
+
     }
 
     // Temporary location for getting food from database
@@ -175,7 +177,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.i("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
