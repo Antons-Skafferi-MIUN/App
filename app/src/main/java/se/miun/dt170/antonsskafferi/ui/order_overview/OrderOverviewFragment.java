@@ -65,11 +65,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         menuContainerView.addCategory("Testkategori");
         setMenuItemListener();
 
-        /*TextView textView = new TextView(getContext());
-        textView.setText("Test");
-        menuContainerLayout.addView(textView);*/
-
-
         return orderOverviewFragmentView;
     }
 
@@ -125,6 +120,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         Item item = new Item(menuItemNameTextView.getText().toString(),null);
         BongItemView bongItemView = new BongItemView(getContext(), item);
-        orderBongListLinearLayout.addView(bongItemView);
+        orderBongListLinearLayout.addView(bongItemView, 0);
     }
 }

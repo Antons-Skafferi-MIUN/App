@@ -21,6 +21,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private boolean itemClicked = false;
     private TextView foodNameText;
     private TextView extraText;
+    private CheckBox checkBox;
 
     public BongItemView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -32,7 +33,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.bong_item_view, this, true);
 
-        CheckBox checkBox = findViewById(R.id.checkBox);
+        checkBox = findViewById(R.id.checkBox);
         foodNameText = findViewById(R.id.foodNameText);
         extraText = findViewById(R.id.extraText);
 
