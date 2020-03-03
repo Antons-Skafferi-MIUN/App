@@ -6,10 +6,10 @@ import org.simpleframework.xml.Root;
 @Root(name = "reservations")
 public class Reservation {
 
-    @Element(name = "reservationPhone")
+    @Element(name = "reservationPhone", required = false)
     private String reservationPhone;
 
-    @Element(name = "reservationId")
+    @Element(name = "reservationId", required = false)
     private String reservationId;
 
     @Element(name = "tableId")
@@ -20,6 +20,23 @@ public class Reservation {
 
     @Element(name = "reservationName", required = false)
     private String reservationName;
+
+    public Reservation() {
+    }
+
+    /**
+     *
+     * @param reservationPhone
+     * @param tableId
+     * @param reservationDate
+     * @param reservationName
+     */
+    public Reservation(String reservationPhone, RestaurantTable tableId, String reservationDate, String reservationName) {
+        this.reservationPhone = reservationPhone;
+        this.tableId = tableId;
+        this.reservationDate = reservationDate;
+        this.reservationName = reservationName;
+    }
 
     public String getReservationPhone() {
         return reservationPhone;

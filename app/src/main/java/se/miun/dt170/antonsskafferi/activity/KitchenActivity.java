@@ -1,5 +1,8 @@
 package se.miun.dt170.antonsskafferi.activity;
 
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.GregorianCalendar;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -7,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.flexbox.FlexboxLayout;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,11 +23,11 @@ import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
-import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
+import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
@@ -72,8 +76,35 @@ public class KitchenActivity extends AppCompatActivity {
         getDrinks();
         getOrders();
         getOrderRows();
+<<<<<<< HEAD
         Log.i("TEST", "MESSAGE");
 
+=======
+
+        Date time = GregorianCalendar.getInstance(TimeZone.getDefault()).getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX"); // IMPORTANT PATTERN, DON'T CHANGE
+        String formattedTime = simpleDateFormat.format(time);
+        Reservation reservation = new Reservation("070-98752", new RestaurantTable("2"), formattedTime, "Billy Sallad Test");
+        postReservation(reservation);
+    }
+
+    private void postReservation(Reservation reservation) {
+        mAPIService.postReservation(reservation).enqueue(new Callback<Reservation>() {
+            @Override
+            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit POST", "post submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Reservation> call, Throwable t) {
+                Log.e("Retrofit POST", "Unable to submit post to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+>>>>>>> 062b498e548d17c254eb49331755c2827ea259e2
     }
 
     // Temporary location for getting food from database
@@ -82,12 +113,12 @@ public class KitchenActivity extends AppCompatActivity {
                 .subscribe(new Subscriber<Foods>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.i("Complete", "GET food complete");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -109,7 +140,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -122,6 +153,22 @@ public class KitchenActivity extends AppCompatActivity {
     }
 
 
+<<<<<<< HEAD
+=======
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Retrofit RxJava", e.toString());
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(RestaurantTables response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
+    }
+>>>>>>> 062b498e548d17c254eb49331755c2827ea259e2
 
     public void getOrders() {
         mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -133,7 +180,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
@@ -157,7 +204,7 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("Retrofit RxJava", e.toString());
                     }
 
                     // Called on every new observed item
