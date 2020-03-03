@@ -74,7 +74,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
             case R.id.drinkButton:
                 //fill drinks
                 break;
-            // TODO: Add cases for edit/remove/send and add to bong
+                //Add cases for edit/remove/send and add to bong
         }
 
     }
