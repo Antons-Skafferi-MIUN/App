@@ -21,21 +21,21 @@ import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
  */
 public interface ApiService {
 
-    @GET("entities.foods")
+    @GET("entity.foods")
     Observable<Foods> getFoods();
 
-    @GET("entities.drinks")
+    @GET("entity.drinks")
     Observable<Drinks> getDrinks();
 
-    @GET("entities.orders")
+    @GET("entity.orders")
     Observable<Orders> getOrders();
 
-    @GET("entities.restauranttables")
+    @GET("entity.restauranttables")
     Observable<RestaurantTables> getRestaurantTables();
 
-    @GET("entities.reservations")
+    @GET("entity.reservations")
     Observable<Reservations> getReservations();
 
-    @GET("entities.orderrows")
+    @GET("entity.orderrows")
     Observable<OrderRows> getOrderRows();
 }

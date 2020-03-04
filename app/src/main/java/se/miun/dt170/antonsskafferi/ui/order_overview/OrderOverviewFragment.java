@@ -15,15 +15,28 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import java.util.ArrayList;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
+import se.miun.dt170.antonsskafferi.data.model.Food;
+import se.miun.dt170.antonsskafferi.data.model.Foods;
+import se.miun.dt170.antonsskafferi.data.remote.ApiService;
+import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
+import se.miun.dt170.antonsskafferi.ui.dialog.TableDialogFragmentDirections;
+import se.miun.dt170.antonsskafferi.ui.order_overview.menu_category_view.MenuCategoryView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 /**
  * This is the fullscreen fragment for taking a order
@@ -39,11 +52,13 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private Button laCarteButton;
     private Button drinkButton;
     private MenuContainerView menuContainerView;
+    private MenuCategoryView menuCategoryView;
     private LinearLayout menuContainerLayout;
     private NavbarView navbarView;
     private OrderBongContainerView orderBongContainerView;
     private OrderBongListView orderBongListView;
-
+    private ApiService mAPIService;
+    ArrayList<String> categorylist;
 
 
     public static OrderOverviewFragment newInstance() {
@@ -62,21 +77,25 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         drinkButton = navbarView.findViewById(R.id.drinkButton);
         orderBongListView = orderOverviewFragmentView.findViewById(R.id.orderBongListView);
         setNavbarListener();
+        categorylist = new ArrayList<String>();
+        // API Service
+        mAPIService = ApiUtils.getAPIService();
+
+        // GET FOODS!!!!!!
+        getFoods();
+
         menuContainerView.addCategory("Testkategori");
         setMenuItemListener();
-
         /*TextView textView = new TextView(getContext());
         textView.setText("Test");
         menuContainerLayout.addView(textView);*/
-
-
         return orderOverviewFragmentView;
     }
 
     private void setMenuItemListener() {
         ViewGroup menuContainer = (ViewGroup) menuContainerLayout;
 
-        for(int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++){
+        for (int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++) {
             ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
 
             for (int menuItemIndex = 0; menuItemIndex < menuCategory.getChildCount(); menuItemIndex++) {
@@ -104,7 +123,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menuItemView:
-                    addMenuItemToBong(v);
+                addMenuItemToBong(v);
                 break;
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
@@ -115,7 +134,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 //fill drinks
                 break;
 
-                //Add cases for edit/remove/send and add to bong
+            //Add cases for edit/remove/send and add to bong
 
         }
     }
@@ -123,8 +142,72 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private void addMenuItemToBong(View v) {
         TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        Item item = new Item(menuItemNameTextView.getText().toString(),null);
+        Item item = new Item(menuItemNameTextView.getText().toString(), null);
         BongItemView bongItemView = new BongItemView(getContext(), item);
         orderBongListLinearLayout.addView(bongItemView);
     }
+
+
+    // Temporary location for getting food from database
+    public void getFoods() {
+        mAPIService.getFoods().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Foods>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        Log.e("error", "onError: " + e.toString());
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(Foods response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                        Log.d("MAT", response.toString());
+
+                        //Pick food itemobject and get category
+                        //If category is new - create new category
+
+                        categorylist.add("BALLLAFKUU");
+
+                        ArrayList<Food> objects = response.getFoods();
+                        for (Food food : objects) {
+                            String category = food.getFoodCategory();
+                            String foodName = food.getFoodName();
+                            String price = food.getFoodPrice();
+                            Log.d("CATEGORYs", category);
+
+                            if (!categorylist.contains(category)) {
+                                categorylist.add(category);
+                                Log.d(TAG, "NY KATEGORI! ");
+                                menuContainerView.addCategory(category);
+                                //Add item in category
+                                //menuCategoryView.addMenuItem(foodName, price);
+                            }
+                            else {
+                                //menuContainerView.addCategory(category);
+                                //Add item to category
+                                //menuCategoryView.addMenuItem(foodName, price);
+                                Log.d(TAG, "KATEGORI fANNS redan! ");
+                            }
+                        }
+
+
+
+
+                    }
+                });
+    }
+
+
+    public void showResponse(String response) {
+        // TODO: Do something with response
+        Log.i("Retrofit", response);
+    }
+
 }
