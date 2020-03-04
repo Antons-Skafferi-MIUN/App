@@ -9,17 +9,24 @@ public class Drink {
     @Element(name = "drinkId")
     private String drinkId;
 
-    @Element(name = "drinkType")
+    @Element(name = "drinkType", required = false)
     private String drinkType;
 
-    @Element(name = "drinkPrice")
+    @Element(name = "drinkPrice", required = false)
     private String drinkPrice;
 
-    @Element(name = "drinkCategory")
+    @Element(name = "drinkCategory", required = false)
     private String drinkCategory;
 
-    @Element(name = "drinkName")
+    @Element(name = "drinkName", required = false)
     private String drinkName;
+
+    public Drink() {
+    }
+
+    public Drink(String drinkId) {
+        this.drinkId = drinkId;
+    }
 
     public String getDrinkId() {
         return drinkId;

@@ -10,7 +10,7 @@ public class Reservation {
     private String reservationPhone;
 
     @Element(name = "reservationId", required = false)
-    private String reservationId;
+    private String reservationId; // auto-increment
 
     @Element(name = "tableId")
     private RestaurantTable tableId;
@@ -28,7 +28,7 @@ public class Reservation {
      *
      * @param reservationPhone
      * @param tableId
-     * @param reservationDate
+     * @param reservationDate formatted as ISO-8601
      * @param reservationName
      */
     public Reservation(String reservationPhone, RestaurantTable tableId, String reservationDate, String reservationName) {
