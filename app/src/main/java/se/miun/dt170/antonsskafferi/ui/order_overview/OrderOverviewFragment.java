@@ -42,6 +42,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private Button laCarteButton;
     private Button drinkButton;
     private ImageButton sendButton;
+    private ImageButton editButton;
+    private ImageButton deleteButton;
     private MenuContainerView menuContainerView;
     private LinearLayout menuContainerLayout;
     private NavbarView navbarView;
@@ -70,6 +72,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         orderBongButtonsView = orderBongContainerView.findViewById(R.id.orderbongbuttons);
         sendButton = orderBongButtonsView.findViewById(R.id.sendButton);
         sendButton.setOnClickListener(this);
+        editButton = orderBongButtonsView.findViewById(R.id.editButton);
+        editButton.setOnClickListener(this);
+        deleteButton = orderBongButtonsView.findViewById(R.id.deleteButton);
+        deleteButton.setOnClickListener(this);
         setNavbarListener();
         menuContainerView.addCategory("Testkategori");
         setMenuItemListener();
@@ -122,6 +128,13 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 Toast.makeText(getActivity(), "SEND", Toast.LENGTH_SHORT).show();
                 break;
                 //Add cases for edit/remove/send and add to bong
+            case R.id.editButton:
+                Toast.makeText(getActivity(), "EDIT", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.deleteButton:
+                Toast.makeText(getActivity(), "DELETE", Toast.LENGTH_SHORT).show();
+                removeAllItemFromBong(orderBongListView);
+                break;
 
         }
     }
@@ -136,5 +149,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void sendOrder() {
 
+    }
+
+    //remove all items from bong list
+    private void removeAllItemFromBong(View v) {
+        LinearLayout orderBongListLinearLayout = v.findViewById(R.id.orderBongListLinearLayout);
+        orderBongListLinearLayout.removeAllViews();
     }
 }
