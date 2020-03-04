@@ -8,6 +8,8 @@ import retrofit2.http.POST;
 import rx.Observable;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
+import se.miun.dt170.antonsskafferi.data.model.Order;
+import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
@@ -31,25 +33,32 @@ import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 public interface ApiService {
 
     // GET METHODS
-    @GET("entities.foods")
+    @GET("entity.foods")
     Observable<Foods> getFoods();
 
-    @GET("entities.drinks")
+    @GET("entity.drinks")
     Observable<Drinks> getDrinks();
 
-    @GET("entities.orders")
+    @GET("entity.orders")
     Observable<Orders> getOrders();
 
-    @GET("entities.restauranttables")
+    @GET("entity.restauranttables")
     Observable<RestaurantTables> getRestaurantTables();
 
-    @GET("entities.reservations")
+    @GET("entity.reservations")
     Observable<Reservations> getReservations();
 
-    @GET("entities.orderrows")
+    @GET("entity.orderrows")
     Observable<OrderRows> getOrderRows();
 
     // POST METHODS
-    @POST("entities.reservations")
+    @POST("entity.reservations")
     Call<Reservation> postReservation(@Body Reservation reservation);
+
+    @POST("entity.orderrows")
+    Call<OrderRow> postOrderRow(@Body OrderRow orderRow);
+
+    @POST("entity.orders")
+    Call<Order> postOrder(@Body Order order);
+
 }
