@@ -16,9 +16,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <include
-            layout="@layout/menu_category_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 </se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView>

@@ -15,7 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.flexbox.FlexboxLayout;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -78,13 +81,14 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         orderBongListView = orderOverviewFragmentView.findViewById(R.id.orderBongListView);
         setNavbarListener();
         categorylist = new ArrayList<String>();
+
         // API Service
         mAPIService = ApiUtils.getAPIService();
 
         // GET FOODS!!!!!!
         getFoods();
 
-        menuContainerView.addCategory("Testkategori");
+        //menuContainerView.addCategory("Testkategori");
         setMenuItemListener();
         /*TextView textView = new TextView(getContext());
         textView.setText("Test");
@@ -170,38 +174,12 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                         Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
                         Log.d("MAT", response.toString());
 
-                        //Pick food itemobject and get category
-                        //If category is new - create new category
-
-                        categorylist.add("BALLLAFKUU");
-
-                        ArrayList<Food> objects = response.getFoods();
-                        for (Food food : objects) {
-                            String category = food.getFoodCategory();
-                            String foodName = food.getFoodName();
-                            String price = food.getFoodPrice();
-                            Log.d("CATEGORYs", category);
-
-                            if (!categorylist.contains(category)) {
-                                categorylist.add(category);
-                                Log.d(TAG, "NY KATEGORI! ");
-                                menuContainerView.addCategory(category);
-                                //Add item in category
-                                //menuCategoryView.addMenuItem(foodName, price);
-                            }
-                            else {
-                                //menuContainerView.addCategory(category);
-                                //Add item to category
-                                //menuCategoryView.addMenuItem(foodName, price);
-                                Log.d(TAG, "KATEGORI fANNS redan! ");
-                            }
-                        }
-
-
-
+                        //Start sorting the foodobjects
+                        menuContainerView.createMenuCategories(response.getFoods());
 
                     }
-                });
+
+    });
     }
 
 
