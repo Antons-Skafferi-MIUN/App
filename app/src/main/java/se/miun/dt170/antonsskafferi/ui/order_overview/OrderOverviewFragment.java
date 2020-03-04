@@ -85,14 +85,15 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         // API Service
         mAPIService = ApiUtils.getAPIService();
 
-        // GET FOODS!!!!!!
+        // API Calls
         getFoods();
 
-        //menuContainerView.addCategory("Testkategori");
         setMenuItemListener();
+
         /*TextView textView = new TextView(getContext());
         textView.setText("Test");
         menuContainerLayout.addView(textView);*/
+
         return orderOverviewFragmentView;
     }
 
@@ -172,11 +173,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                     public void onNext(Foods response) {
                         showResponse(response.toString());
                         Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                        Log.d("MAT", response.toString());
+                        //Log.d("MAT", response.toString());
 
                         //Start sorting the foodobjects
                         menuContainerView.createMenuCategories(response.getFoods());
-
                     }
 
     });
