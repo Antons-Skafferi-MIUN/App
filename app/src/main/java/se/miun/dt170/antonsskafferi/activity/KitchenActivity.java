@@ -78,9 +78,9 @@ public class KitchenActivity extends AppCompatActivity {
         // TEMPORARY EXAMPLE CODE
         getFoods();
         getDrinks();
-        getRestaurantTables();
+        Log.i("TEST", "MESSAGE");
+
         getOrders();
-        getReservations();
         getOrderRows();
 
         // Post
@@ -92,7 +92,17 @@ public class KitchenActivity extends AppCompatActivity {
 
         Order order = new Order(formattedTime, new RestaurantTable("2"));
         postOrder(order);
-
+      
+      
+//        //DELETE variables
+//        long delReservationId = 1;
+//        long delOrderId = 1;
+//        long delOrderRowId = 1;
+//
+//        //DELETE method calls
+//        deleteReservation(delReservationId);
+//        deleteOrder(delOrderId);
+//        deleteOrderRow(delOrderRowId);
     }
 
     private void postOrder(Order order) {
@@ -139,6 +149,62 @@ public class KitchenActivity extends AppCompatActivity {
             }
         });
     }
+
+    //DELETE Calls
+    private void deleteReservation(long delReservationId) {
+        mAPIService.deleteReservation(delReservationId).enqueue(new Callback<Reservation>() {
+            @Override
+            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Reservation> call, Throwable t) {
+                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void deleteOrder(long delOrderId) {
+        mAPIService.deleteOrder(delOrderId).enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Order> call, Throwable t) {
+                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void deleteOrderRow(long delOrderRowId) {
+        mAPIService.deleteOrderRow(delOrderRowId).enqueue(new Callback<OrderRow>() {
+            @Override
+            public void onResponse(Call<OrderRow> call, Response<OrderRow> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderRow> call, Throwable t) {
+                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
 
     private void postReservation(Reservation reservation) {
         mAPIService.postReservation(reservation).enqueue(new Callback<Reservation>() {
@@ -204,28 +270,6 @@ public class KitchenActivity extends AppCompatActivity {
                 });
     }
 
-    public void getRestaurantTables() {
-        mAPIService.getRestaurantTables().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<RestaurantTables>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(RestaurantTables response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
     public void getOrders() {
         mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Orders>() {
@@ -268,6 +312,7 @@ public class KitchenActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
     public void getOrderRows() {
         mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

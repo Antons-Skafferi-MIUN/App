@@ -119,7 +119,7 @@ public class TableDialogFragment extends DialogFragment {
             final AlertDialog.Builder enterTimeDialog = new AlertDialog.Builder(this.getContext());
             final EditText time = new EditText(this.getContext());
             time.setInputType(InputType.TYPE_CLASS_NUMBER);
-            enterTimeDialog.setTitle("Enter the time for execpted customer arrival")
+            enterTimeDialog.setTitle("Enter the time for expected customer arrival")
                     .setView(time)
                     .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                         @Override
@@ -153,16 +153,13 @@ public class TableDialogFragment extends DialogFragment {
     private void adjustBookingButton(){
         if(!table.isTableBooked()){ //table is available.
             bookingButton.setBackground(popupAvailableColor); //change to popup
-            table.setButtonColor(table.getTableAvailableColor());
-            table.setTableBooked(false);
             bookingButton.setText("Boka Bord");
-            table.setArrivalTime("");
+            table.removeBooking();
         }
         else{
             bookingButton.setBackground(popupBookedColor);
-            table.setButtonColor(table.getTableBookedColor());
-            table.setTableBooked(true);
             bookingButton.setText("Avboka Bord");
+            table.bookTable();
         }
     }
 

@@ -5,6 +5,11 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.DELETE;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
@@ -60,5 +65,14 @@ public interface ApiService {
 
     @POST("entity.orders")
     Call<Order> postOrder(@Body Order order);
+  
+    // DELETE METHODS
+    @DELETE("entity.reservations/{reservationId}")
+    Call<Reservation> deleteReservation(@Path("reservationId") long id);
 
+    @DELETE("entity.orders/{orderId}")
+    Call<Order> deleteOrder(@Path("orderId") long id);
+
+    @DELETE("entity.orderrows/{orderRowId}")
+    Call<OrderRow> deleteOrderRow(@Path("orderRowId") long id);
 }

@@ -38,26 +38,9 @@ public class TableView extends ConstraintLayout {
         return tableAvailableColor;
     }
 
-    public void setTableAvailableColor(int tableAvailableColor) {
-        this.tableAvailableColor = tableAvailableColor;
-    }
-
     public int getTableBookedColor() {
         return tableBookedColor;
     }
-
-    public void setTableBookedColor(int tableBookedColor) {
-        this.tableBookedColor = tableBookedColor;
-    }
-
-    public int getTableTextColor() {
-        return tableTextColor;
-    }
-
-    public void setTableTextColor(int tableTextColor) {
-        this.tableTextColor = tableTextColor;
-    }
-
 
 
     public TableView(@NonNull Context context) {
@@ -66,32 +49,48 @@ public class TableView extends ConstraintLayout {
 
     public TableView(@NonNull Context context, AttributeSet attrs) {
         super(context,attrs);
+
     }
+    @Override
+    public void onFinishInflate() {
+        super.onFinishInflate();
+        tableBookedColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_red);
+        tableAvailableColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_green);
+        tableTextColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_text_dark);
+        tableButton = findViewById(R.id.tableButton);
+        textView = findViewById(R.id.arrivalTime);
+        textView.setTextColor(tableTextColor);
+        setButtonColor(tableAvailableColor);
+        setArrivalTime("");
+    }
+
 
     /**
      * Sets up a table with default values.
      * @param tablenr The number for the table.
      */
     public void setup(int tablenr){
-        tableBookedColor = ContextCompat.getColor(this.getContext(),R.color.table_overview_red);
-        tableAvailableColor = ContextCompat.getColor(this.getContext(),R.color.table_overview_green);
-        tableTextColor = ContextCompat.getColor(this.getContext(),R.color.table_overview_text_dark);
-        tableButton = findViewById(R.id.tableButton);
-        textView = findViewById(R.id.arrivalTime);
-        textView.setTextColor(tableTextColor);
-        setTableNr(tablenr);
-        setButtonColor(tableAvailableColor);
         setTableButtonText("Bord " + Integer.toString(tablenr));
-        setArrivalTime("");
+        setTableNr(tablenr);
     }
 
     /**
      * Sets the color of a table.
-     * @param color
      */
+
+    public void bookTable(){
+        setButtonColor(getTableBookedColor());
+        setTableBooked(true);
+    }
+    public void removeBooking(){
+        setButtonColor(getTableAvailableColor());
+        setTableBooked(false);
+        setArrivalTime("");
+    }
     public void setButtonColor(int color){
         tableButton.setBackgroundColor(color);
     }
+
 
 
     public boolean isTableBooked() {
@@ -102,24 +101,8 @@ public class TableView extends ConstraintLayout {
         isTableBooked = tableBooked;
     }
 
-    public boolean isTableOpen() {
-        return isTableOpen;
-    }
-
-    public void setTableOpen(boolean tableOpen) {
-        isTableOpen = tableOpen;
-    }
-
-    public String getArrivalTime() {
-        return textView.getText().toString();
-    }
-
     public void setArrivalTime(String time) {
         this.textView.setText(time);
-    }
-
-    public String getTableButtonText() {
-        return tableButton.getText().toString();
     }
 
     public void setTableButtonText(String buttonText) {

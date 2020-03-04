@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/orderBongListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/bong_item_view"
+    <LinearLayout
+        android:id="@+id/orderBongListLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
+
+</se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView>

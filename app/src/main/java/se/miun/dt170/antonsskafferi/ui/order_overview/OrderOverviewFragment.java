@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +17,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
+import se.miun.dt170.antonsskafferi.databinding.OrderBongButtonsBinding;
+import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
@@ -32,9 +41,15 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderOverviewViewModel mViewModel;
     private Button laCarteButton;
     private Button drinkButton;
-    private MenuItemView menuItemView;
+    private ImageButton sendButton;
     private MenuContainerView menuContainerView;
+    private LinearLayout menuContainerLayout;
     private NavbarView navbarView;
+    private OrderBongContainerView orderBongContainerView;
+    private OrderBongButtonsView orderBongButtonsView;
+    private OrderBongListView orderBongListView;
+
+
 
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
@@ -46,30 +61,40 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
         View orderOverviewFragmentView = inflater.inflate(R.layout.order_overview_fragment, container, false);
         menuContainerView = orderOverviewFragmentView.findViewById(R.id.menuContainerView);
-        menuContainerView.setOnClickListener(this);
+        menuContainerLayout = orderOverviewFragmentView.findViewById(R.id.menuContainerLayout);
+        orderBongContainerView = orderOverviewFragmentView.findViewById(R.id.orderBongContainerView);
         navbarView = orderOverviewFragmentView.findViewById(R.id.navbarView);
         laCarteButton = navbarView.findViewById(R.id.laCarteButton);
         drinkButton = navbarView.findViewById(R.id.drinkButton);
-        laCarteButton.setOnClickListener(this);
-        drinkButton.setOnClickListener(this);
-        
-        ViewGroup menuContainer = (ViewGroup) menuContainerView;
-        /*for (ViewGroup menuCategory : menuContainer) {
+        orderBongListView = orderBongContainerView.findViewById(R.id.orderBongListView);
+        orderBongButtonsView = orderBongContainerView.findViewById(R.id.orderbongbuttons);
+        sendButton = orderBongButtonsView.findViewById(R.id.sendButton);
+        sendButton.setOnClickListener(this);
+        setNavbarListener();
+        menuContainerView.addCategory("Testkategori");
+        setMenuItemListener();
 
-        }*/
-        for(int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++){ // for each child apply a listener to the childs tableButton
-            Log.d("CategoryMessage", "In category");
-            ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex);
+        return orderOverviewFragmentView;
+    }
+
+    private void setMenuItemListener() {
+        ViewGroup menuContainer = (ViewGroup) menuContainerLayout;
+
+        for(int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++){
+            ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
 
             for (int menuItemIndex = 0; menuItemIndex < menuCategory.getChildCount(); menuItemIndex++) {
                 if (menuCategory.getChildAt(menuItemIndex) instanceof MenuItemView) {
-                    Log.d("ListenerMessage", "Added listener");
                     MenuItemView menuItemView = (MenuItemView) menuCategory.getChildAt(menuItemIndex);
                     menuItemView.setOnClickListener(this);
                 }
             }
         }
-        return orderOverviewFragmentView;
+    }
+
+    private void setNavbarListener() {
+        laCarteButton.setOnClickListener(this);
+        drinkButton.setOnClickListener(this);
     }
 
     @Override
@@ -81,11 +106,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v instanceof MenuItemView) {
-            Toast.makeText(getActivity(), "RÅBIFF", Toast.LENGTH_SHORT).show();
-        }
-
         switch (v.getId()) {
+            case R.id.menuItemView:
+                    addMenuItemToBong(v);
+                break;
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
                 //fill food
@@ -94,8 +118,23 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 Toast.makeText(getActivity(), "DRINKS", Toast.LENGTH_SHORT).show();
                 //fill drinks
                 break;
-            // TODO: Add cases for edit/remove/send and add to bong
+            case R.id.sendButton:
+                Toast.makeText(getActivity(), "SEND", Toast.LENGTH_SHORT).show();
+                break;
+                //Add cases for edit/remove/send and add to bong
+
         }
+    }
+
+    private void addMenuItemToBong(View v) {
+        TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
+        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        Item item = new Item(menuItemNameTextView.getText().toString(),null);
+        BongItemView bongItemView = new BongItemView(getContext(), item);
+        orderBongListLinearLayout.addView(bongItemView, 0);
+    }
+
+    private void sendOrder() {
 
     }
 }
