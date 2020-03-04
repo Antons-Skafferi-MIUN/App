@@ -23,6 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.order_overview.order_overview_bong.orderOverviewPopUp"
+            android:theme="@style/AppTheme.custom"
+            ></activity>
     </application>
 
 </manifest>

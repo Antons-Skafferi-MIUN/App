@@ -1,7 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +19,11 @@ import androidx.lifecycle.ViewModelProviders;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
-import se.miun.dt170.antonsskafferi.databinding.OrderBongButtonsBinding;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.orderOverviewPopUp;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
@@ -130,6 +130,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 //Add cases for edit/remove/send and add to bong
             case R.id.editButton:
                 Toast.makeText(getActivity(), "EDIT", Toast.LENGTH_SHORT).show();
+                popupWindow(v);
                 break;
             case R.id.deleteButton:
                 Toast.makeText(getActivity(), "DELETE", Toast.LENGTH_SHORT).show();
@@ -155,5 +156,16 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private void removeAllItemFromBong(View v) {
         LinearLayout orderBongListLinearLayout = v.findViewById(R.id.orderBongListLinearLayout);
         orderBongListLinearLayout.removeAllViews();
+
     }
+
+
+    private void popupWindow(View v) {
+        //startActivity(new Intent(OrderOverviewFragment.this,orderOverviewPopUp.class));
+        Intent intent=new Intent(OrderOverviewFragment.this.getContext(), orderOverviewPopUp.class);
+        startActivity(intent);
+    }
+
+
+
 }
