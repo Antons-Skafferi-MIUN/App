@@ -38,32 +38,32 @@ import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 public interface ApiService {
 
     // GET METHODS
-    @GET("entity.foods")
+    @GET("entities.foods")
     Observable<Foods> getFoods();
 
-    @GET("entity.drinks")
+    @GET("entities.drinks")
     Observable<Drinks> getDrinks();
 
-    @GET("entity.orders")
+    @GET("entities.orders")
     Observable<Orders> getOrders();
 
-    @GET("entity.restauranttables")
+    @GET("entities.restauranttables")
     Observable<RestaurantTables> getRestaurantTables();
 
-    @GET("entity.reservations")
+    @GET("entities.reservations")
     Observable<Reservations> getReservations();
 
-    @GET("entity.orderrows")
+    @GET("entities.orderrows")
     Observable<OrderRows> getOrderRows();
 
     // POST METHODS
-    @POST("entity.reservations")
+    @POST("entities.reservations")
     Call<Reservation> postReservation(@Body Reservation reservation);
 
-    @POST("entity.orderrows")
+    @POST("entities.orderrows")
     Call<OrderRow> postOrderRow(@Body OrderRow orderRow);
 
-    @POST("entity.orders")
+    @POST("entities.orders")
     Call<Order> postOrder(@Body Order order);
   
     // DELETE METHODS
