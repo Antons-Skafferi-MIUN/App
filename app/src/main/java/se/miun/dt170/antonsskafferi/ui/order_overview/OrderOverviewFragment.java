@@ -23,6 +23,7 @@ import se.miun.dt170.antonsskafferi.databinding.OrderBongButtonsBinding;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongHeaderView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
@@ -48,6 +49,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderBongContainerView orderBongContainerView;
     private OrderBongButtonsView orderBongButtonsView;
     private OrderBongListView orderBongListView;
+    private LinearLayout orderBongListLinearLayout;
 
 
 
@@ -60,6 +62,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                              @Nullable Bundle savedInstanceState) {
 
         View orderOverviewFragmentView = inflater.inflate(R.layout.order_overview_fragment, container, false);
+        orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         menuContainerView = orderOverviewFragmentView.findViewById(R.id.menuContainerView);
         menuContainerLayout = orderOverviewFragmentView.findViewById(R.id.menuContainerLayout);
         orderBongContainerView = orderOverviewFragmentView.findViewById(R.id.orderBongContainerView);
@@ -119,7 +122,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 //fill drinks
                 break;
             case R.id.sendButton:
-                Toast.makeText(getActivity(), "SEND", Toast.LENGTH_SHORT).show();
+                sendOrder(v);
                 break;
                 //Add cases for edit/remove/send and add to bong
 
@@ -128,13 +131,24 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void addMenuItemToBong(View v) {
         TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
-        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         Item item = new Item(menuItemNameTextView.getText().toString(),null);
         BongItemView bongItemView = new BongItemView(getContext(), item);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
 
-    private void sendOrder() {
+    private void sendOrder(View v) {
+        OrderBongHeaderView orderBongHeaderView = orderBongContainerView.findViewById(R.id.orderBongHeaderView);
+        TextView waiterName = orderBongHeaderView.findViewById(R.id.waiterName);
+        TextView tableNumber = orderBongHeaderView.findViewById(R.id.tableNumber);
+        TextView orderNumber = orderBongHeaderView.findViewById(R.id.orderNumber);
+        TextView time = orderBongHeaderView.findViewById(R.id.time);
 
+        ViewGroup orderRows = (ViewGroup) orderBongListLinearLayout;
+
+        for (int orderRowIndex = 0; orderRowIndex < orderRows.getChildCount(); orderRowIndex++) {
+            //TextView
+        }
+
+        Toast.makeText(getActivity(), waiterName.getText(), Toast.LENGTH_SHORT).show();
     }
 }
