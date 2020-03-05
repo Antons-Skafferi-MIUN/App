@@ -1,5 +1,6 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.jetbrains.annotations.NotNull;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -21,10 +22,18 @@ public class Drink {
     @Element(name = "drinkName", required = false)
     private String drinkName;
 
+    /**
+     * Only used for serialization of XML to object for Retrofit!
+     */
     public Drink() {
     }
 
-    public Drink(String drinkId) {
+    /**
+     * Use this constructor when you're doing a POST request.
+     *
+     * @param drinkId
+     */
+    public Drink(@NotNull String drinkId) {
         this.drinkId = drinkId;
     }
 

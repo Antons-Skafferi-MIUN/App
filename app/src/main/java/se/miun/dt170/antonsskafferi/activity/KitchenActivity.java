@@ -1,8 +1,5 @@
 package se.miun.dt170.antonsskafferi.activity;
 
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.GregorianCalendar;
-import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.flexbox.FlexboxLayout;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +17,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.model.Drink;
+import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
@@ -32,7 +28,6 @@ import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
-import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
@@ -84,16 +79,15 @@ public class KitchenActivity extends AppCompatActivity {
         getOrderRows();
 
         // Post
-        Date time = GregorianCalendar.getInstance(TimeZone.getDefault()).getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX"); // IMPORTANT PATTERN, DON'T CHANGE
-        String formattedTime = simpleDateFormat.format(time);
-        Reservation reservation = new Reservation("070-98752", new RestaurantTable("2"), formattedTime, "Billy Sallad Test");
+
+        DateConverter dateConverter = new DateConverter();
+        Reservation reservation = new Reservation(new RestaurantTable("2"), "070-98752", dateConverter.getCurrentTime(), "Billy Sallad Test");
 //        postReservation(reservation);
 
-        Order order = new Order(formattedTime, new RestaurantTable("2"));
+        Order order = new Order(new RestaurantTable("2"), dateConverter.getCurrentTime());
         postOrder(order);
-      
-      
+
+        getReservations();
 //        //DELETE variables
 //        long delReservationId = 1;
 //        long delOrderId = 1;
@@ -115,9 +109,7 @@ public class KitchenActivity extends AppCompatActivity {
                     Log.i("Retrofit POST", "order post submitted to API.");
 
                     // Post a new OrderRow using the new OrderID
-                    Drink drink = new Drink("6");
-                    Food food = new Food("1");
-                    OrderRow orderRow = new OrderRow(drink, response.body(), food);
+                    OrderRow orderRow = new OrderRow(response.body(), null, new Food("3"), null);
                     postOrderRow(orderRow);
                 }
             }
