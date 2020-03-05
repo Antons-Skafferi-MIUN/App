@@ -1,9 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view;
 
 import android.content.Context;
-import android.text.Layout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
@@ -11,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment;
 
 public class MenuItemView extends CardView {
 

@@ -48,10 +48,11 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         fragmentView = inflater.inflate(R.layout.table_overview_fragment, container, false);
         ViewGroup parent = fragmentView.findViewById(R.id.TableOverviewLayout);
         nrOfTable = parent.getChildCount();
-        for(int tableIndex = 0; tableIndex < nrOfTable; tableIndex++){ // for each child apply a listener to the childs tableButton
+        for (int tableIndex = 0; tableIndex < nrOfTable; tableIndex++) { // for each child apply a listener to the childs tableButton
 
             TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
-            table.setup(tableIndex+1);
+            table.setup(tableIndex + 1);
+
             Button tempButton = table.findViewById(R.id.tableButton);
             tempButton.setOnClickListener(this);
             //TODO ADD TABLES IN LSIT FOR EASY ACCESS LATER.
@@ -62,10 +63,10 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TableRepository reservations =  new TableRepository();
+        TableRepository reservations = new TableRepository();
         reservations.getRestaurantTables(this);
 
-       // Log.i("RESERVATIONS IN TABLEOVERVIEWFRAGMENT", reservations.getValue().toString());
+        // Log.i("RESERVATIONS IN TABLEOVERVIEWFRAGMENT", reservations.getValue().toString());
 
         mViewModel = ViewModelProviders.of(this).get(TableOverviewViewModel.class);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TableDialogSharedViewModel.class);
@@ -81,28 +82,30 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
     }
 
-    public void updateFragment(Reservations tablesReservations){
-        //TODO IF THERE ARE MORE RESERVATIONS THAN TABLES WE CANT LOOK AT RESERVE SIZE
+    public void updateFragment(Reservations tablesReservations) {
         //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
-        //
-          ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
-          DateConverter date = new DateConverter();
-          for(int tableIndex = 0; tableIndex < reservationsList.size(); tableIndex++){
-              Reservation reservation =  reservationsList.get(tableIndex);
-              RestaurantTable restaurantTable = reservation.getTableId();
-              TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
+        // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
+        // GET ALL TODAYS RESERVATIONS.
+        ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
 
-              if(restaurantTable.getTableStatus().equals("vacant")){
-                  table.removeBooking();
-              }
-              else{
-                  table.bookTable();
-              }
-              Log.i("Retrofit RxJava",  new Integer(tableIndex).toString());
-              Log.i("GET RESERV DATE",  reservation.getReservationDate());
+        DateConverter date = new DateConverter();
+        for (int tableIndex = 0; tableIndex < nrOfTable; tableIndex++) {
+            Reservation reservation = reservationsList.get(tableIndex);
+            RestaurantTable restaurantTable = reservation.getTableId();
+            TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
 
-              table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+            if (restaurantTable.getTableStatus().equals("vacant")) {
+                sharedViewModel.setDialogText("Bord " + table.getTableNr());
+                table.removeBooking();
+            } else {
+                table.bookTable();
+                sharedViewModel.setDialogText("Bokat av: " + reservation.getReservationName() + "\n" + "Kontakt: " + reservation.getReservationPhone());
+            }
+            Log.i("Retrofit RxJava", new Integer(tableIndex).toString());
+            Log.i("GET RESERV DATE", reservation.getReservationDate());
 
-          }
+            table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+
+        }
     }
 }

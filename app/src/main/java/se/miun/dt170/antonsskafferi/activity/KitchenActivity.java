@@ -7,8 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.flexbox.FlexboxLayout;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,11 +93,6 @@ public class KitchenActivity extends AppCompatActivity {
 
     public void buildOrderRow(OrderRow orderRow) {
         Log.d("Building orderRow", orderRow.toString());
-    }
-
-    public void showResponse(String response) {
-        // TODO: Do something with response
-        Log.i("Retrofit", response);
     }
 
     private void postOrder(Order order) {
@@ -303,4 +302,8 @@ public class KitchenActivity extends AppCompatActivity {
     }
 
 
+    public void showResponse(String response) {
+        // TODO: Do something with response
+        Log.i("Retrofit", response);
+    }
 }

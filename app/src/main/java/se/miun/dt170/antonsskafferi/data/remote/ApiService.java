@@ -21,17 +21,18 @@ import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 /**
  * This interface defines API end-points.
  * Documentation: https://square.github.io/retrofit/
- *
+ * <p>
  * Consult https://code.tutsplus.com/tutorials/sending-data-with-retrofit-2-http-client-for-android--cms-27845
  * and https://guides.codepath.com/android/Consuming-APIs-with-Retrofit
  * for more information.
- *
+ * <p>
  * Pojo classes generated using http://pojo.sodhanalibrary.com/
  * The classes are annotated using Simple XML Serialization annotations from
  * http://simple.sourceforge.net/download/stream/doc/tutorial/tutorial.php
- *
+ * <p>
  * TODO: Add end-points for POST, PUT and DELETE
  */
+
 public interface ApiService {
 
 
@@ -67,6 +68,7 @@ public interface ApiService {
     @POST("entities.reservations")
     Call<Reservation> postReservation(@Body Reservation reservation);
 
+
     /**
      * Posts a new {@link OrderRow} to the database.
      * <p>
@@ -87,7 +89,6 @@ public interface ApiService {
      */
     @POST("entities.orders")
     Call<Order> postOrder(@Body Order order);
-
 
     // DELETE METHODS
 

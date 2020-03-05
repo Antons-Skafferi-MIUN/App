@@ -1,15 +1,12 @@
 package se.miun.dt170.antonsskafferi;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -20,7 +17,7 @@ import se.miun.dt170.antonsskafferi.activity.WaiterActivity;
 /**
  * Main activity that creates either {@link KitchenActivity} or {@link WaiterActivity} depending on choice.
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     AppCompatActivity self = this;
     private CheckBox waiterCheckBox;
@@ -36,8 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        deselected = ContextCompat.getColor(this, R.color.deselected_faded_gray);;
-        selected = ContextCompat.getColor(this, R.color.selected_white);;
+        deselected = ContextCompat.getColor(this, R.color.deselected_faded_gray);
+        selected = ContextCompat.getColor(this, R.color.selected_white);
 
         enterButton = findViewById(R.id.enterButton);
         waiterCheckBox = findViewById(R.id.waiterCheckBox);
@@ -54,9 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.kitchenCheckBox:
-                if (waiterCheckBox.isChecked()){
+                if (waiterCheckBox.isChecked()) {
                     waiterCheckBox.setTextColor(deselected); //fades waiter checkbox
                     waiterCheckBox.setPaintFlags(0);
                     waiterCheckBox.setChecked(false);
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.waiterCheckBox:
-                if(kitchenCheckBox.isChecked()){
+                if (kitchenCheckBox.isChecked()) {
                     kitchenCheckBox.setTextColor(deselected);
                     kitchenCheckBox.setPaintFlags(0);
                     kitchenCheckBox.setChecked(false);
