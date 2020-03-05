@@ -3,18 +3,16 @@ package se.miun.dt170.antonsskafferi.ui.kitchen;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.Item;
+import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
 import se.miun.dt170.antonsskafferi.ui.bong.BongListViewModel;
 
@@ -24,7 +22,7 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
         super(context, attrs);
     }
 
-    public KitchenBongContainerView(Context context, LifecycleOwner lifecycle) {
+    public KitchenBongContainerView(Context context, LifecycleOwner lifecycle, Order order) {
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

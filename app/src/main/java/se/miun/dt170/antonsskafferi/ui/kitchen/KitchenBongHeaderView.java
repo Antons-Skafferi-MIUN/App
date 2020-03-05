@@ -2,6 +2,7 @@ package se.miun.dt170.antonsskafferi.ui.kitchen;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -18,6 +19,10 @@ public class KitchenBongHeaderView extends ConstraintLayout implements View.OnCl
     private TextView tableNumber;
     private TextView orderTime;
     private boolean headerClicked = false;
+
+    public KitchenBongHeaderView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
     public KitchenBongHeaderView(Context context) {
         super(context);

@@ -1,18 +1,15 @@
 package se.miun.dt170.antonsskafferi.ui.table_overview;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
@@ -26,9 +23,6 @@ import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
-import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
-import se.miun.dt170.antonsskafferi.data.remote.ApiService;
-import se.miun.dt170.antonsskafferi.data.repository.ReservationRepository;
 import se.miun.dt170.antonsskafferi.data.repository.TableRepository;
 
 /**
@@ -38,7 +32,7 @@ import se.miun.dt170.antonsskafferi.data.repository.TableRepository;
 public class TableOverviewFragment extends Fragment implements Button.OnClickListener {
 
     private TableOverviewViewModel mViewModel;
-    private View fragmentView;;
+    private View fragmentView;
     private TableDialogSharedViewModel sharedViewModel;
     private int nrOfTable;
 
@@ -52,11 +46,11 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
 
         fragmentView = inflater.inflate(R.layout.table_overview_fragment, container, false);
-        ViewGroup parent = (ViewGroup) fragmentView.findViewById(R.id.TableOverviewLayout);
+        ViewGroup parent = fragmentView.findViewById(R.id.TableOverviewLayout);
         nrOfTable = parent.getChildCount();
         for(int tableIndex = 0; tableIndex < nrOfTable; tableIndex++){ // for each child apply a listener to the childs tableButton
 
-            TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
+            TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
             table.setup(tableIndex+1);
             Button tempButton = table.findViewById(R.id.tableButton);
             tempButton.setOnClickListener(this);
@@ -96,7 +90,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
           for(int tableIndex = 0; tableIndex < reservationsList.size(); tableIndex++){
               Reservation reservation =  reservationsList.get(tableIndex);
               RestaurantTable restaurantTable = reservation.getTableId();
-              TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
+              TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
 
               if(restaurantTable.getTableStatus().equals("vacant")){
                   table.removeBooking();
