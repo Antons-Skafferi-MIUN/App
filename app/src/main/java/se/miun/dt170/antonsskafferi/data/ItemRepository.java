@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
-
 public class ItemRepository {
 
     private MutableLiveData<List<Item>> bongItems;

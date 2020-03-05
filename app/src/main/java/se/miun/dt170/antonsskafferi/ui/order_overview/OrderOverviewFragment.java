@@ -52,7 +52,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderBongListView orderBongListView;
 
 
-
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
     }
@@ -84,10 +83,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     }
 
     private void setMenuItemListener() {
-        ViewGroup menuContainer = (ViewGroup) menuContainerLayout;
+        ViewGroup menuContainer = menuContainerLayout;
 
-        for(int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++){
-            ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
+        for (int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++) {
+            ViewGroup menuCategory = menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
 
             for (int menuItemIndex = 0; menuItemIndex < menuCategory.getChildCount(); menuItemIndex++) {
                 if (menuCategory.getChildAt(menuItemIndex) instanceof MenuItemView) {
@@ -114,7 +113,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menuItemView:
-                    addMenuItemToBong(v);
+                addMenuItemToBong(v);
                 break;
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
@@ -127,7 +126,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
             case R.id.sendButton:
                 Toast.makeText(getActivity(), "SEND", Toast.LENGTH_SHORT).show();
                 break;
-                //Add cases for edit/remove/send and add to bong
+            //Add cases for edit/remove/send and add to bong
             case R.id.editButton:
                 Toast.makeText(getActivity(), "EDIT", Toast.LENGTH_SHORT).show();
                 popupWindow(v);
@@ -143,7 +142,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private void addMenuItemToBong(View v) {
         TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        Item item = new Item(menuItemNameTextView.getText().toString(),null);
+        Item item = new Item(menuItemNameTextView.getText().toString(), null);
         BongItemView bongItemView = new BongItemView(getContext(), item);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
@@ -162,10 +161,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void popupWindow(View v) {
         //startActivity(new Intent(OrderOverviewFragment.this,orderOverviewPopUp.class));
-        Intent intent=new Intent(OrderOverviewFragment.this.getContext(), orderOverviewPopUp.class);
+        Intent intent = new Intent(OrderOverviewFragment.this.getContext(), orderOverviewPopUp.class);
         startActivity(intent);
     }
-
 
 
 }

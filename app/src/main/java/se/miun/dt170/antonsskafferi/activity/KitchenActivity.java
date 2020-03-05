@@ -1,8 +1,5 @@
 package se.miun.dt170.antonsskafferi.activity;
 
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.GregorianCalendar;
-import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,9 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.flexbox.FlexboxLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +21,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.model.Drink;
+import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
@@ -32,7 +32,6 @@ import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
-import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
@@ -80,20 +79,14 @@ public class KitchenActivity extends AppCompatActivity {
         getDrinks();
         Log.i("TEST", "MESSAGE");
 
-        getOrders();
-        getOrderRows();
 
-        // Post
-        Date time = GregorianCalendar.getInstance(TimeZone.getDefault()).getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX"); // IMPORTANT PATTERN, DON'T CHANGE
-        String formattedTime = simpleDateFormat.format(time);
-        Reservation reservation = new Reservation("070-98752", new RestaurantTable("2"), formattedTime, "Billy Sallad Test");
+        DateConverter dateConverter = new DateConverter();
+        Reservation reservation = new Reservation(new RestaurantTable("2"), "070-98752", dateConverter.getCurrentTime(), "Billy Sallad Test");
 //        postReservation(reservation);
 
-        Order order = new Order(formattedTime, new RestaurantTable("2"));
+        Order order = new Order(new RestaurantTable("2"), dateConverter.getCurrentTime());
         postOrder(order);
-      
-      
+
 //        //DELETE variables
 //        long delReservationId = 1;
 //        long delOrderId = 1;
@@ -115,9 +108,7 @@ public class KitchenActivity extends AppCompatActivity {
                     Log.i("Retrofit POST", "order post submitted to API.");
 
                     // Post a new OrderRow using the new OrderID
-                    Drink drink = new Drink("6");
-                    Food food = new Food("1");
-                    OrderRow orderRow = new OrderRow(drink, response.body(), food);
+                    OrderRow orderRow = new OrderRow(response.body(), null, new Food("3"), null);
                     postOrderRow(orderRow);
                 }
             }
@@ -264,72 +255,6 @@ public class KitchenActivity extends AppCompatActivity {
                     // Called on every new observed item
                     @Override
                     public void onNext(Drinks response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
-    public void getOrders() {
-        mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Orders>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(Orders response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
-    public void getReservations() {
-        mAPIService.getReservations().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Reservations>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(Reservations response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
-
-    public void getOrderRows() {
-        mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OrderRows>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(OrderRows response) {
                         showResponse(response.toString());
                         Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
                     }

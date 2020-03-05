@@ -1,15 +1,11 @@
 package se.miun.dt170.antonsskafferi.ui.table_overview;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
@@ -20,6 +16,17 @@ public class TableView extends ConstraintLayout {
     private boolean isTableOpen = false;
     private TextView textView;
     private Button tableButton;
+    private int tableNr;
+    private int tableAvailableColor;
+    private int tableBookedColor;
+    private int tableTextColor;
+    public TableView(@NonNull Context context) {
+        super(context);
+    }
+    public TableView(@NonNull Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+    }
 
     public int getTableNr() {
         return tableNr;
@@ -29,11 +36,6 @@ public class TableView extends ConstraintLayout {
         this.tableNr = tableNr;
     }
 
-    private int tableNr;
-    private int tableAvailableColor;
-    private int tableBookedColor;
-    private int tableTextColor;
-
     public int getTableAvailableColor() {
         return tableAvailableColor;
     }
@@ -42,15 +44,6 @@ public class TableView extends ConstraintLayout {
         return tableBookedColor;
     }
 
-
-    public TableView(@NonNull Context context) {
-        super(context);
-    }
-
-    public TableView(@NonNull Context context, AttributeSet attrs) {
-        super(context,attrs);
-
-    }
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
@@ -67,10 +60,11 @@ public class TableView extends ConstraintLayout {
 
     /**
      * Sets up a table with default values.
+     *
      * @param tablenr The number for the table.
      */
-    public void setup(int tablenr){
-        setTableButtonText("Bord " + Integer.toString(tablenr));
+    public void setup(int tablenr) {
+        setTableButtonText("Bord " + tablenr);
         setTableNr(tablenr);
     }
 
@@ -78,19 +72,20 @@ public class TableView extends ConstraintLayout {
      * Sets the color of a table.
      */
 
-    public void bookTable(){
+    public void bookTable() {
         setButtonColor(getTableBookedColor());
         setTableBooked(true);
     }
-    public void removeBooking(){
+
+    public void removeBooking() {
         setButtonColor(getTableAvailableColor());
         setTableBooked(false);
         setArrivalTime("");
     }
-    public void setButtonColor(int color){
+
+    public void setButtonColor(int color) {
         tableButton.setBackgroundColor(color);
     }
-
 
 
     public boolean isTableBooked() {

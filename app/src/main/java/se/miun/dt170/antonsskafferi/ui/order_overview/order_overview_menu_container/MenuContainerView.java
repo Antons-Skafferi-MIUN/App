@@ -2,7 +2,6 @@ package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_conta
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 

@@ -1,6 +1,9 @@
 package se.miun.dt170.antonsskafferi.data.repository;
+
 import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -11,16 +14,13 @@ import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragment;
 
 public class ReservationRepository {
     private ApiService mAPIService;
-    private MutableLiveData<Reservations> reservations;
 
-    public ReservationRepository(){
+    public ReservationRepository() {
         mAPIService = ApiUtils.getAPIService();
     }
 
-    public MutableLiveData<Reservations> getReservations(TableOverviewFragment fragmentView) {
-        if (reservations == null) {
-            reservations = new MutableLiveData<>();
-        }
+    public void getReservations(TableOverviewFragment fragmentView) {
+
         mAPIService.getReservations()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -34,13 +34,12 @@ public class ReservationRepository {
                     public void onError(Throwable e) {
                         Log.i("ERROR IN getReservationS", e.toString());
                     }
+
                     // Called on every new observed item
                     @Override
                     public void onNext(Reservations response) {
                         fragmentView.updateFragment(response);
                     }
                 });
-
-        return reservations;
     }
 }
