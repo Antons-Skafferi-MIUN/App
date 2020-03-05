@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
+import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
@@ -84,10 +84,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     }
 
     private void setMenuItemListener() {
-        ViewGroup menuContainer = (ViewGroup) menuContainerLayout;
+        ViewGroup menuContainer = menuContainerLayout;
 
         for(int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++){
-            ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
+            ViewGroup menuCategory = menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
 
             for (int menuItemIndex = 0; menuItemIndex < menuCategory.getChildCount(); menuItemIndex++) {
                 if (menuCategory.getChildAt(menuItemIndex) instanceof MenuItemView) {
@@ -143,8 +143,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private void addMenuItemToBong(View v) {
         TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        Item item = new Item(menuItemNameTextView.getText().toString(),null);
-        BongItemView bongItemView = new BongItemView(getContext(), item);
+        Food food = new Food(menuItemNameTextView.getText().toString());
+        BongItemView bongItemView = new BongItemView(getContext(), food, null);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
 
