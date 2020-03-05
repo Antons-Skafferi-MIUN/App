@@ -88,15 +88,17 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     }
 
     public void updateFragment(Reservations tablesReservations){
-        //TODO IF THERE ARE MORE RESERVATIONS THAN TABLES WE CANT LOOK AT RESERVE SIZE
         //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
         // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
+        // GET ALL TODAYS RESERVATIONS.
           ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
+
           DateConverter date = new DateConverter();
-          for(int tableIndex = 0; tableIndex < reservationsList.size(); tableIndex++){
+          for(int tableIndex = 0; tableIndex < nrOfTable; tableIndex++){
               Reservation reservation =  reservationsList.get(tableIndex);
               RestaurantTable restaurantTable = reservation.getTableId();
               TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
+
               if(restaurantTable.getTableStatus().equals("vacant")){
                   sharedViewModel.setDialogText("Bord " + table.getTableNr());
                   table.removeBooking();

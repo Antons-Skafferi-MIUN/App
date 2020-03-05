@@ -78,8 +78,6 @@ public class KitchenActivity extends AppCompatActivity {
         getDrinks();
         Log.i("TEST", "MESSAGE");
 
-        getOrders();
-        getOrderRows();
       
         Date time = GregorianCalendar.getInstance(TimeZone.getDefault()).getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX"); // IMPORTANT PATTERN, DON'T CHANGE
@@ -211,72 +209,6 @@ public class KitchenActivity extends AppCompatActivity {
                     // Called on every new observed item
                     @Override
                     public void onNext(Drinks response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
-    public void getOrders() {
-        mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Orders>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(Orders response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
-    public void getReservations() {
-        mAPIService.getReservations().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Reservations>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(Reservations response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
-
-    public void getOrderRows() {
-        mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OrderRows>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(OrderRows response) {
                         showResponse(response.toString());
                         Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
                     }

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        deselected = ContextCompat.getColor(this, R.color.deselected_faded_gray);;
+        deselected = ContextCompat.getColor(this, R.color.deselected_faded_gray);
         selected = ContextCompat.getColor(this, R.color.selected_white);;
 
         enterButton = findViewById(R.id.enterButton);
