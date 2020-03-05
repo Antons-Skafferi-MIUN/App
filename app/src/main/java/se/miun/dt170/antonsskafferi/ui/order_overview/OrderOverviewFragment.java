@@ -23,6 +23,7 @@ import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
+import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
@@ -61,6 +62,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderBongHeaderView orderBongHeaderView;
     private LinearLayout orderBongListLinearLayout;
     private ApiService mAPIService;
+    private int tableID;
 
 
     public static OrderOverviewFragment newInstance() {
@@ -117,10 +119,15 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        int tableID = OrderOverviewFragmentArgs.fromBundle(getArguments()).getTableID();
+        tableID = OrderOverviewFragmentArgs.fromBundle(getArguments()).getTableID();
         String amountString = Integer.toString(tableID);
         TextView textView = orderBongHeaderView.findViewById(R.id.tableNumber);
         textView.setText("Bord " + amountString);
+        fillBongWithOrders();
+    }
+
+    private void fillBongWithOrders() {
+        getOrderRows();
     }
 
 
@@ -164,7 +171,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private void addMenuItemToBong(View v) {
         TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
 
-        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         Item item = new Item(menuItemNameTextView.getText().toString(), null);
         BongItemView bongItemView = new BongItemView(getContext(), item);
         orderBongListLinearLayout.addView(bongItemView, 0);
@@ -200,28 +207,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         startActivity(intent);
     }
 
-    public void getOrders() {
-        mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Orders>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(Orders response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
     public void getOrderRows() {
         mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<OrderRows>() {
@@ -239,13 +224,21 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                     @Override
                     public void onNext(OrderRows response) {
                         showResponse(response.toString());
+                        response.getOrderRows().forEach(orderRow -> {
+                            String orderTableID = orderRow.getOrderId().getTableId().getTableId();
+
+                            if (Integer.parseInt(orderTableID) == tableID) {
+                                addOrderRowToBong(orderRow);
+                            }
+                        });
                         Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
                     }
                 });
     }
 
-    public void showResponse(String response) {
-        // TODO: Do something with response
-        Log.i("Retrofit", response);
+    private void addOrderRowToBong(OrderRow orderRow) {
+        orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        BongItemView bongItemView = new BongItemView(getContext(), orderRow);
+        orderBongListLinearLayout.addView(bongItemView, 0);
     }
 }
