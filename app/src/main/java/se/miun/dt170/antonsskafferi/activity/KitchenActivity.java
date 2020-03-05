@@ -51,52 +51,6 @@ public class KitchenActivity extends AppCompatActivity {
         bongListLayoutContainer = findViewById(R.id.bongListContainer);
 
         getOrderRows();
-
-        // TEMPORARY CODE
-        // Add one bong list
-//        kitchenBongContainerViews.put("1", new KitchenBongContainerView(this, this));
-//        kitchenBongContainerViews.put("2", new KitchenBongContainerView(this, this));
-//        kitchenBongContainerViews.put("3", new KitchenBongContainerView(this, this));
-//        kitchenBongContainerViews.put("4", new KitchenBongContainerView(this, this));
-//        kitchenBongContainerViews.put("5", new KitchenBongContainerView(this, this));
-//        kitchenBongContainerViews.put("6", new KitchenBongContainerView(this, this));
-//        kitchenBongContainerViews.put("7", new KitchenBongContainerView(this, this));
-//        bongListLayoutContainer.addView(kitchenBongContainerViews.get("1"));
-//        bongListLayoutContainer.addView(kitchenBongContainerViews.get("2"));
-//        bongListLayoutContainer.addView(kitchenBongContainerViews.get("3"));
-//        bongListLayoutContainer.addView(kitchenBongContainerViews.get("4"));
-//        bongListLayoutContainer.addView(kitchenBongContainerViews.get("5"));
-//        bongListLayoutContainer.addView(kitchenBongContainerViews.get("6"));
-//        bongListLayoutContainer.addView(kitchenBongContainerViews.get("7"));
-
-        // API testing
-
-        // TEMPORARY EXAMPLE CODE
-//        getFoods();
-//        getDrinks();
-//
-//        getOrders();
-//        getOrderRows();
-
-        // Post
-
-//        DateConverter dateConverter = new DateConverter();
-//        Reservation reservation = new Reservation(new RestaurantTable("2"), "070-98752", dateConverter.getCurrentTime(), "Billy Sallad Test");
-//        postReservation(reservation);
-
-//        Order order = new Order(new RestaurantTable("2"), dateConverter.getCurrentTime());
-//        postOrder(order);
-
-//        getReservations();
-//        //DELETE variables
-//        long delReservationId = 1;
-//        long delOrderId = 1;
-//        long delOrderRowId = 1;
-//
-//        //DELETE method calls
-//        deleteReservation(delReservationId);
-//        deleteOrder(delOrderId);
-//        deleteOrderRow(delOrderRowId);
     }
 
     public void getOrderRows() {
@@ -115,8 +69,6 @@ public class KitchenActivity extends AppCompatActivity {
                     // Called on every new observed item
                     @Override
                     public void onNext(OrderRows response) {
-//                        KitchenBongContainerViews.put("1", new KitchenBongContainerView(this, this));
-
                         response.getOrderRows().forEach(orderRow -> {
                             buildOrder(orderRow.getOrderId());
                             buildOrderRow(orderRow);

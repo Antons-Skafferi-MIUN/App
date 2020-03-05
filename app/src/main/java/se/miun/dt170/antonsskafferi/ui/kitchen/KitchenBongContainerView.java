@@ -45,12 +45,6 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
 
         getOrderRows(order);
 
-        // Populate bong list on changes to the bong list view model
-//        bongListViewModel.bongItems.observe(lifecycle, items -> {
-//            for (Item item : items) {
-//                kitchenBongContainerLinearLayout.addView(new BongItemView(getContext(), item));
-//            }
-//        });
     }
 
     public void getOrderRows(Order order) {
