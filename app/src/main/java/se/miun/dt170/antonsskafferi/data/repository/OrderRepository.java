@@ -39,7 +39,9 @@ public class OrderRepository {
                     }
                     @Override
                     public void onNext(Orders response) {
-                        Log.i("MY ORDER", response.toString());                    }
+                        Log.i("MY ORDER", response.toString());
+                        tableDialogFragment.setTableOrders(response,true);
+                    }
 
                 });
 
@@ -61,7 +63,7 @@ public class OrderRepository {
                     }
                     @Override
                     public void onNext(OrderRows response) {
-                        Log.i("MY ORDER ROWS", response.toString());
+                        Log.i("ERROR IN GET ORDER ROWS", response.toString());
                     }
                 });
     }

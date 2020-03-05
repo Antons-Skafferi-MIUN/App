@@ -51,7 +51,7 @@ public class TableDialogFragment extends DialogFragment {
     private TextView textDisplay;
     private Button cancelButton;
     private String dialogText;
-    private boolean dataIsbeingFetched;
+    private boolean loadingData;
     private Orders orders;
     private OrderRows orderRows;
     private OrderRepository orderRepository;
@@ -73,7 +73,7 @@ public class TableDialogFragment extends DialogFragment {
         popupBookedColor = ContextCompat.getDrawable(this.getContext(),R.drawable.red_button_border);
         cancelButtonColor = ContextCompat.getDrawable(this.getContext(),R.drawable.white_button_border);
         CancelButtonTextColor = ContextCompat.getColor(this.getContext(), R.color.deselected_faded_gray);
-        dataIsbeingFetched = false;
+        loadingData = false;
         LayoutInflater layoutInflater = requireActivity().getLayoutInflater();
         dialogView = layoutInflater.inflate(R.layout.table_dialog_fragment, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -121,9 +121,8 @@ public class TableDialogFragment extends DialogFragment {
         adjustOrderButton();
 
         cancelButton.setOnClickListener(v ->{
+            Log.i("ORDERS TEST", "CANCELBUTTON");
             orderRepository.getOrders(this);
-            orderRepository.getOrderRows(this);
-//            Log.i("ORDERS TEST", orders.toString());
           //get table ID
           //Get all orders related to table.
             //get all order rows related to order
@@ -191,11 +190,12 @@ public class TableDialogFragment extends DialogFragment {
         openOrderButton.setBackground(popupAvailableColor);
     }
 
-    public void setTableOrders(Orders orders) {
+    public void setTableOrders(Orders orders,boolean dataIsbeingFetched) {
         this.orders = orders;
+        this.loadingData = dataIsbeingFetched;
     }
 
-    public void setOrderRows(OrderRows orderRows) {
+    public void setOrderRows(OrderRows orderRows,boolean dataIsbeingFetched) {
         this.orderRows = orderRows;
     }
 
