@@ -22,6 +22,7 @@ public class orderOverviewPopUp extends Activity {
     private ArrayList<String> resultat;
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,7 @@ public class orderOverviewPopUp extends Activity {
 
         confirmbutton = findViewById(R.id.confirm);
         testresultat = findViewById(R.id.resultat);
+
 
         resultat = new ArrayList<>();
         testresultat.setEnabled(false);
