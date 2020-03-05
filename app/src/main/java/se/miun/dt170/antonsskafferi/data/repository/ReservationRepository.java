@@ -14,16 +14,13 @@ import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragment;
 
 public class ReservationRepository {
     private ApiService mAPIService;
-    private MutableLiveData<Reservations> reservations;
 
     public ReservationRepository() {
         mAPIService = ApiUtils.getAPIService();
     }
 
-    public MutableLiveData<Reservations> getReservations(TableOverviewFragment fragmentView) {
-        if (reservations == null) {
-            reservations = new MutableLiveData<>();
-        }
+    public void getReservations(TableOverviewFragment fragmentView) {
+
         mAPIService.getReservations()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -44,7 +41,5 @@ public class ReservationRepository {
                         fragmentView.updateFragment(response);
                     }
                 });
-
-        return reservations;
     }
 }

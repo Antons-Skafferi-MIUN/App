@@ -80,28 +80,31 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         Navigation.findNavController(getView()).navigate(action);
 
     }
-
-    public void updateFragment(Reservations tablesReservations) {
-        //TODO IF THERE ARE MORE RESERVATIONS THAN TABLES WE CANT LOOK AT RESERVE SIZE
+    public void updateFragment(Reservations tablesReservations){
         //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
-        //
-        ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
-        DateConverter date = new DateConverter();
-        for (int tableIndex = 0; tableIndex < reservationsList.size(); tableIndex++) {
-            Reservation reservation = reservationsList.get(tableIndex);
-            RestaurantTable restaurantTable = reservation.getTableId();
-            TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
+        // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
+        // GET ALL TODAYS RESERVATIONS.
+          ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
 
-            if (restaurantTable.getTableStatus().equals("vacant")) {
-                table.removeBooking();
-            } else {
-                table.bookTable();
-            }
-            Log.i("Retrofit RxJava", new Integer(tableIndex).toString());
-            Log.i("GET RESERV DATE", reservation.getReservationDate());
+          DateConverter date = new DateConverter();
+          for(int tableIndex = 0; tableIndex < nrOfTable; tableIndex++){
+              Reservation reservation =  reservationsList.get(tableIndex);
+              RestaurantTable restaurantTable = reservation.getTableId();
+              TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
 
-            table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+              if(restaurantTable.getTableStatus().equals("vacant")){
+                  sharedViewModel.setDialogText("Bord " + table.getTableNr());
+                  table.removeBooking();
+              }
+              else{
+                  table.bookTable();
+                  sharedViewModel.setDialogText("Bokat av: " + reservation.getReservationName() + "\n" + "Kontakt: " + reservation.getReservationPhone());
+              }
+              Log.i("Retrofit RxJava",  new Integer(tableIndex).toString());
+              Log.i("GET RESERV DATE",  reservation.getReservationDate());
 
-        }
+              table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+
+          }
     }
 }
