@@ -11,7 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import se.miun.dt170.antonsskafferi.R;
 
-public class KitchenBongHeaderView extends ConstraintLayout implements View.OnClickListener  {
+public class KitchenBongHeaderView extends ConstraintLayout implements View.OnClickListener {
 
     private View bongHeaderView;
     private CheckBox bongHeaderCheckbox;
@@ -25,8 +25,8 @@ public class KitchenBongHeaderView extends ConstraintLayout implements View.OnCl
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.kitchen_bong_header_view, this, true);
 
-        tableNumber =  bongHeaderView.findViewById(R.id.tableText);
-        orderTime  = bongHeaderView.findViewById(R.id.timeText);
+        tableNumber = bongHeaderView.findViewById(R.id.tableText);
+        orderTime = bongHeaderView.findViewById(R.id.timeText);
         bongHeaderCheckbox = bongHeaderView.findViewById(R.id.foodCheck);
 
         bongHeaderCheckbox.setOnClickListener(this);
@@ -47,8 +47,7 @@ public class KitchenBongHeaderView extends ConstraintLayout implements View.OnCl
             tableNumber.setTextColor(Color.parseColor("#00cc00"));
             orderTime.setTextColor(Color.parseColor("#00cc00"));
             headerClicked = true;
-        }
-        else {
+        } else {
             tableNumber.setTextColor(Color.parseColor("#000000"));
             orderTime.setTextColor(Color.parseColor("#000000"));
             headerClicked = false;

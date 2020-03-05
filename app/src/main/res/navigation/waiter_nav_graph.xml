@@ -16,7 +16,7 @@
         android:id="@+id/orderOverviewFragment"
         android:name="se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment"
 
-        android:label="OrderOverviewFragment" >
+        android:label="OrderOverviewFragment">
         <action
             android:id="@+id/action_orderOverviewFragment_to_foodEditDialog"
             app:destination="@id/foodEditDialog" />
