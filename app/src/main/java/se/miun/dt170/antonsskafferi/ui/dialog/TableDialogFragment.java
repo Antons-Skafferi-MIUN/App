@@ -123,6 +123,23 @@ public class TableDialogFragment extends DialogFragment {
         adjustOrderButton();
 
         cancelButton.setOnClickListener(v ->{
+            final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(this.getContext());
+            confirmationDialog.setTitle("Är du säker på att du vill stänga bordet?")
+
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i("ORDERS TEST", "DELETING ALL");
+
+                }
+            })
+                    .setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dismiss();
+                        }
+                    })
+            .show();
             Log.i("ORDERS TEST", "CANCELBUTTON");
             orderRepository.getOrders(this);
           //get table ID
@@ -189,12 +206,11 @@ public class TableDialogFragment extends DialogFragment {
         openOrderButton.setBackground(popupAvailableColor);
     }
 
-    public void setTableOrders(Orders orders,boolean dataIsbeingFetched) {
+    public void setTableOrders(Orders orders) {
         this.orders = orders;
-        this.loadingData = dataIsbeingFetched;
     }
 
-    public void setOrderRows(OrderRows orderRows,boolean dataIsbeingFetched) {
+    public void setOrderRows(OrderRows orderRows) {
         this.orderRows = orderRows;
     }
 

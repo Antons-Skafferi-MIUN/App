@@ -40,7 +40,7 @@ public class OrderRepository {
                     @Override
                     public void onNext(Orders response) {
                         Log.i("MY ORDER", response.toString());
-                        tableDialogFragment.setTableOrders(response,true);
+                        tableDialogFragment.setTableOrders(response);
                     }
 
                 });
