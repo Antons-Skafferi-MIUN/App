@@ -38,41 +38,41 @@ import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
 public interface ApiService {
 
     // GET METHODS
-    @GET("entity.foods")
+    @GET("entities.foods")
     Observable<Foods> getFoods();
 
-    @GET("entity.drinks")
+    @GET("entities.drinks")
     Observable<Drinks> getDrinks();
 
-    @GET("entity.orders")
+    @GET("entities.orders")
     Observable<Orders> getOrders();
 
-    @GET("entity.restauranttables")
+    @GET("entities.restauranttables")
     Observable<RestaurantTables> getRestaurantTables();
 
-    @GET("entity.reservations")
+    @GET("entities.reservations")
     Observable<Reservations> getReservations();
 
-    @GET("entity.orderrows")
+    @GET("entities.orderrows")
     Observable<OrderRows> getOrderRows();
 
     // POST METHODS
-    @POST("entity.reservations")
+    @POST("entities.reservations")
     Call<Reservation> postReservation(@Body Reservation reservation);
 
-    @POST("entity.orderrows")
+    @POST("entities.orderrows")
     Call<OrderRow> postOrderRow(@Body OrderRow orderRow);
 
-    @POST("entity.orders")
+    @POST("entities.orders")
     Call<Order> postOrder(@Body Order order);
   
     // DELETE METHODS
-    @DELETE("entity.reservations/{reservationId}")
+    @DELETE("entities.reservations/{reservationId}")
     Call<Reservation> deleteReservation(@Path("reservationId") long id);
 
-    @DELETE("entity.orders/{orderId}")
+    @DELETE("entities.orders/{orderId}")
     Call<Order> deleteOrder(@Path("orderId") long id);
 
-    @DELETE("entity.orderrows/{orderRowId}")
+    @DELETE("entities.orderrows/{orderRowId}")
     Call<OrderRow> deleteOrderRow(@Path("orderRowId") long id);
 }
