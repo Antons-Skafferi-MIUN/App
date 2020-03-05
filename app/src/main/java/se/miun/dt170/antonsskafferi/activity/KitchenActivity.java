@@ -92,10 +92,6 @@ public class KitchenActivity extends AppCompatActivity {
 //        long delOrderId = 1;
 //        long delOrderRowId = 1;
 //
-//        //DELETE method calls
-//        deleteReservation(delReservationId);
-//        deleteOrder(delOrderId);
-//        deleteOrderRow(delOrderRowId);
     }
 
     private void postOrder(Order order) {
@@ -141,60 +137,7 @@ public class KitchenActivity extends AppCompatActivity {
         });
     }
 
-    //DELETE Calls
-    private void deleteReservation(long delReservationId) {
-        mAPIService.deleteReservation(delReservationId).enqueue(new Callback<Reservation>() {
-            @Override
-            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
-                if (response.isSuccessful()) {
-                    // TODO: Show success message
-                    Log.i("Retrofit DELETE", "delete submitted to API.");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Reservation> call, Throwable t) {
-                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
-                t.printStackTrace();
-            }
-        });
-    }
-
-    private void deleteOrder(long delOrderId) {
-        mAPIService.deleteOrder(delOrderId).enqueue(new Callback<Order>() {
-            @Override
-            public void onResponse(Call<Order> call, Response<Order> response) {
-                if (response.isSuccessful()) {
-                    // TODO: Show success message
-                    Log.i("Retrofit DELETE", "delete submitted to API.");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Order> call, Throwable t) {
-                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
-                t.printStackTrace();
-            }
-        });
-    }
-
-    private void deleteOrderRow(long delOrderRowId) {
-        mAPIService.deleteOrderRow(delOrderRowId).enqueue(new Callback<OrderRow>() {
-            @Override
-            public void onResponse(Call<OrderRow> call, Response<OrderRow> response) {
-                if (response.isSuccessful()) {
-                    // TODO: Show success message
-                    Log.i("Retrofit DELETE", "delete submitted to API.");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<OrderRow> call, Throwable t) {
-                Log.e("Retrofit DELETE", "Unable to submit delete to API." + t.toString());
-                t.printStackTrace();
-            }
-        });
-    }
 
 
     private void postReservation(Reservation reservation) {

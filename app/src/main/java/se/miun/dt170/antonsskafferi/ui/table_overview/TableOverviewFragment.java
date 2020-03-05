@@ -84,9 +84,17 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
         // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
         // GET ALL TODAYS RESERVATIONS.
-          ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
-
           DateConverter date = new DateConverter();
+          ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
+          ArrayList<Reservation> todaysReservations = new ArrayList<>();
+
+          for(Reservation r : reservationsList){
+            if(date.compareDates(r.getReservationDate(), date.getCurrentTime())){
+                todaysReservations.add(r);
+            }
+          }
+
+
           for(int tableIndex = 0; tableIndex < nrOfTable; tableIndex++){
               Reservation reservation =  reservationsList.get(tableIndex);
               RestaurantTable restaurantTable = reservation.getTableId();
