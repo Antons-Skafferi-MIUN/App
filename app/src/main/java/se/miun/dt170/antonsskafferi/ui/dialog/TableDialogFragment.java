@@ -2,7 +2,6 @@ package se.miun.dt170.antonsskafferi.ui.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -57,9 +56,9 @@ public class TableDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        popupAvailableColor = ContextCompat.getDrawable(this.getContext(),R.drawable.green_button_border);
-        popupBookedColor = ContextCompat.getDrawable(this.getContext(),R.drawable.red_button_border);
-        cancelButtonColor = ContextCompat.getDrawable(this.getContext(),R.drawable.white_button_border);
+        popupAvailableColor = ContextCompat.getDrawable(this.getContext(), R.drawable.green_button_border);
+        popupBookedColor = ContextCompat.getDrawable(this.getContext(), R.drawable.red_button_border);
+        cancelButtonColor = ContextCompat.getDrawable(this.getContext(), R.drawable.white_button_border);
 
         LayoutInflater layoutInflater = requireActivity().getLayoutInflater();
         dialogView = layoutInflater.inflate(R.layout.table_dialog_fragment, null);
@@ -99,14 +98,14 @@ public class TableDialogFragment extends DialogFragment {
         textDisplay = dialogView.findViewById(R.id.dialogTextDisplay);
         cancelButton = dialogView.findViewById(R.id.cancelButton);
 
-        textDisplay.setText("Bord " + Integer.toString(table.getTableNr()));
+        textDisplay.setText("Bord " + table.getTableNr());
         cancelButton.setBackground(cancelButtonColor);
 
         adjustBookingButton();
         adjustOrderButton();
 
-        cancelButton.setOnClickListener(v ->{
-          this.dismiss();
+        cancelButton.setOnClickListener(v -> {
+            this.dismiss();
         });
         openOrderButton.setOnClickListener(v -> {
             NavDirections action = TableDialogFragmentDirections.actionTableDialogFragmentToOrderOverviewFragment();
@@ -115,59 +114,56 @@ public class TableDialogFragment extends DialogFragment {
 
         bookingButton.setOnClickListener(v -> {
             table.setTableBooked(!table.isTableBooked());
-            if(table.isTableBooked()){
-            final AlertDialog.Builder enterTimeDialog = new AlertDialog.Builder(this.getContext());
-            final EditText time = new EditText(this.getContext());
-            time.setInputType(InputType.TYPE_CLASS_NUMBER);
-            enterTimeDialog.setTitle("Enter the time for expected customer arrival")
-                    .setView(time)
-                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            table.setArrivalTime(time.getText().toString());
-                            adjustBookingButton();
-                        }
-                    })
-                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            table.setTableBooked(false);
-                            adjustBookingButton();
-                        }
-                    })
-                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            table.setTableBooked(false);
-                            adjustBookingButton();
-                        }
-                    })
-                    .show();
-            }
-            else{
+            if (table.isTableBooked()) {
+                final AlertDialog.Builder enterTimeDialog = new AlertDialog.Builder(this.getContext());
+                final EditText time = new EditText(this.getContext());
+                time.setInputType(InputType.TYPE_CLASS_NUMBER);
+                enterTimeDialog.setTitle("Enter the time for expected customer arrival")
+                        .setView(time)
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                table.setArrivalTime(time.getText().toString());
+                                adjustBookingButton();
+                            }
+                        })
+                        .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                table.setTableBooked(false);
+                                adjustBookingButton();
+                            }
+                        })
+                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                table.setTableBooked(false);
+                                adjustBookingButton();
+                            }
+                        })
+                        .show();
+            } else {
                 adjustBookingButton();
             }
         });
     }
 
-    private void adjustBookingButton(){
-        if(!table.isTableBooked()){ //table is available.
+    private void adjustBookingButton() {
+        if (!table.isTableBooked()) { //table is available.
             bookingButton.setBackground(popupAvailableColor); //change to popup
             bookingButton.setText("Boka Bord");
             table.removeBooking();
-        }
-        else{
+        } else {
             bookingButton.setBackground(popupBookedColor);
             bookingButton.setText("Avboka Bord");
             table.bookTable();
         }
     }
 
-    private void adjustOrderButton(){
+    private void adjustOrderButton() {
         openOrderButton.setText("Ta en order");
         openOrderButton.setBackground(popupAvailableColor);
     }
-
 
 
 }

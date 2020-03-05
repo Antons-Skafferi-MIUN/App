@@ -1,6 +1,9 @@
 package se.miun.dt170.antonsskafferi.data.repository;
+
 import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -13,7 +16,7 @@ public class ReservationRepository {
     private ApiService mAPIService;
     private MutableLiveData<Reservations> reservations;
 
-    public ReservationRepository(){
+    public ReservationRepository() {
         mAPIService = ApiUtils.getAPIService();
     }
 
@@ -34,6 +37,7 @@ public class ReservationRepository {
                     public void onError(Throwable e) {
                         Log.i("ERROR IN getReservationS", e.toString());
                     }
+
                     // Called on every new observed item
                     @Override
                     public void onNext(Reservations response) {

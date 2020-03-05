@@ -2,6 +2,7 @@ package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong;
 
 import android.content.Context;
 import android.util.AttributeSet;
+<<<<<<< HEAD
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -16,6 +17,11 @@ import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 
+=======
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+>>>>>>> 0c88b07208d941800493a11cb6fbf9c3200663e0
 public class OrderBongContainerView extends ConstraintLayout {
     private ApiService mAPIService;
     private OrderBongHeaderView orderBongHeaderView;

@@ -1,28 +1,11 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar;
 
 import android.content.Context;
-import android.graphics.Paint;
-import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.ViewModelProviders;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 
 public class NavbarView extends ConstraintLayout {
