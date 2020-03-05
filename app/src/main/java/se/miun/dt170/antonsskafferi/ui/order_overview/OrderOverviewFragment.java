@@ -63,7 +63,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                              @Nullable Bundle savedInstanceState) {
 
         View orderOverviewFragmentView = inflater.inflate(R.layout.order_overview_fragment, container, false);
-        orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         menuContainerView = orderOverviewFragmentView.findViewById(R.id.menuContainerView);
         menuContainerLayout = orderOverviewFragmentView.findViewById(R.id.menuContainerLayout);
         orderBongContainerView = orderOverviewFragmentView.findViewById(R.id.orderBongContainerView);
@@ -71,6 +70,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         laCarteButton = navbarView.findViewById(R.id.laCarteButton);
         drinkButton = navbarView.findViewById(R.id.drinkButton);
         orderBongListView = orderBongContainerView.findViewById(R.id.orderBongListView);
+        orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         orderBongButtonsView = orderBongContainerView.findViewById(R.id.orderbongbuttons);
         sendButton = orderBongButtonsView.findViewById(R.id.sendButton);
         sendButton.setOnClickListener(this);
@@ -144,12 +144,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void addMenuItemToBong(View v) {
         TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
-<<<<<<< HEAD
-        Item item = new Item(menuItemNameTextView.getText().toString(),null);
-=======
+
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         Item item = new Item(menuItemNameTextView.getText().toString(), null);
->>>>>>> 0c88b07208d941800493a11cb6fbf9c3200663e0
         BongItemView bongItemView = new BongItemView(getContext(), item);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
