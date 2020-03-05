@@ -7,8 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.flexbox.FlexboxLayout;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -74,15 +78,7 @@ public class KitchenActivity extends AppCompatActivity {
         getFoods();
         getDrinks();
         Log.i("TEST", "MESSAGE");
-      
-        Date time = GregorianCalendar.getInstance(TimeZone.getDefault()).getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX"); // IMPORTANT PATTERN, DON'T CHANGE
-        String formattedTime = simpleDateFormat.format(time);
-        Reservation reservation = new Reservation("070-98752", new RestaurantTable("1"), formattedTime, "Billy Sallad Test");
-        postReservation(reservation);
 
-
-        // Post
 
         DateConverter dateConverter = new DateConverter();
         Reservation reservation = new Reservation(new RestaurantTable("2"), "070-98752", dateConverter.getCurrentTime(), "Billy Sallad Test");
@@ -91,7 +87,6 @@ public class KitchenActivity extends AppCompatActivity {
         Order order = new Order(new RestaurantTable("2"), dateConverter.getCurrentTime());
         postOrder(order);
 
-        getReservations();
 //        //DELETE variables
 //        long delReservationId = 1;
 //        long delOrderId = 1;
