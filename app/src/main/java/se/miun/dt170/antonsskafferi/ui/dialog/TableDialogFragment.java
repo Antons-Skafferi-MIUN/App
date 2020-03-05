@@ -195,8 +195,6 @@ public class TableDialogFragment extends DialogFragment {
                         Log.i("onCancel", "on cancel was pressed");
                     }
                 });
-                myDialog.getWindow().setSoftInputMode(
-                        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 myDialog.show();
                 myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         |WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
