@@ -9,11 +9,19 @@ public class Order {
     @Element(name = "orderTime")
     private String orderTime;
 
-    @Element(name = "orderId")
-    private String orderId;
+    @Element(name = "orderId", required = false)
+    private String orderId; // auto-increment
 
     @Element(name = "tableId")
     private RestaurantTable tableId;
+
+    public Order() {
+    }
+
+    public Order(String orderTime, RestaurantTable tableId) {
+        this.orderTime = orderTime;
+        this.tableId = tableId;
+    }
 
     public String getOrderTime() {
         return orderTime;

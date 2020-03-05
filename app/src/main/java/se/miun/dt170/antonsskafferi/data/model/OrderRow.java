@@ -15,11 +15,33 @@ public class OrderRow {
     @Element(name = "foodId", required = false)
     private Food foodId;
 
-    @Element(name = "orderRowId")
-    private String orderRowId;
+    @Element(name = "orderRowId", required = false)
+    private String orderRowId; // auto-increment
 
     @Element(name = "orderChange", required = false)
     private String orderChange;
+
+    public OrderRow() {
+    }
+
+    /**
+     * @param drinkId
+     * @param orderId
+     * @param foodId
+     * @param orderChange
+     */
+    public OrderRow(Drink drinkId, Order orderId, Food foodId, String orderChange) {
+        this.drinkId = drinkId;
+        this.orderId = orderId;
+        this.foodId = foodId;
+        this.orderChange = orderChange;
+    }
+
+    public OrderRow(Drink drinkId, Order orderId, Food foodId) {
+        this.drinkId = drinkId;
+        this.orderId = orderId;
+        this.foodId = foodId;
+    }
 
     public Drink getDrinkId() {
         return drinkId;

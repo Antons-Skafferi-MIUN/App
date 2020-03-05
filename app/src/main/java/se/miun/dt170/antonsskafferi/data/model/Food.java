@@ -6,17 +6,24 @@ import org.simpleframework.xml.Root;
 @Root(name = "foods")
 public class Food {
 
-    @Element(name = "foodPrice")
+    @Element(name = "foodPrice", required = false)
     private String foodPrice;
 
-    @Element(name = "foodName")
+    @Element(name = "foodName", required = false)
     private String foodName;
 
     @Element(name = "foodId")
     private String foodId;
 
-    @Element(name = "foodCategory")
+    @Element(name = "foodCategory", required = false)
     private String foodCategory;
+
+    public Food() {
+    }
+
+    public Food(String foodId) {
+        this.foodId = foodId;
+    }
 
     public String getFoodPrice() {
         return foodPrice;
