@@ -10,16 +10,18 @@ import java.util.Date;
 public class DateConverter {
     SimpleDateFormat formatHHMM;
     SimpleDateFormat formatYYYYMMDD;
+    SimpleDateFormat standard;
 
     public DateConverter() {
         formatHHMM = new SimpleDateFormat("HH:mm"); // MMMM for full month name
         formatYYYYMMDD = new SimpleDateFormat("yyyy-MM-dd"); // MMMM for full month name
+        standard = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
     }
+
 
     public String getCurrentTime() {
         Date time = GregorianCalendar.getInstance(TimeZone.getDefault()).getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX"); // IMPORTANT PATTERN, DON'T CHANGE
-        String currentTime = simpleDateFormat.format(time);
+        String currentTime = standard.format(time);
         return currentTime;
     }
 
@@ -27,7 +29,7 @@ public class DateConverter {
         Date date = null;
 
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(dateString);
+            date = standard.parse(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -38,7 +40,7 @@ public class DateConverter {
     public String formatYYYYMMDD(String dateString) {
         Date date = null;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").parse(dateString);
+            date = standard.parse(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -54,5 +56,29 @@ public class DateConverter {
      */
     public boolean compareDates(String dateOne, String dateTwo) {
         return formatYYYYMMDD(dateOne).equals(formatYYYYMMDD(dateTwo));
+    }
+    public String YYYYMMDDParser(int year, int month, int day){
+        String parsedString = Integer.toString(year) + "-";
+        if(month < 10){
+            parsedString += "0";
+        }
+        parsedString += Integer.toString(month) + "-";
+        if (day < 10){
+            parsedString += "0";
+        }
+        parsedString += Integer.toString(day);
+        return parsedString;
+    }
+    public String HHMMParser(int hour, int minute){
+        String parsedString = "";
+        if(hour < 10){
+            parsedString += "0";
+        }
+        parsedString += Integer.toString(hour) + ":";
+        if (minute < 10){
+            parsedString += "0";
+        }
+        parsedString += Integer.toString(minute);
+        return parsedString;
     }
 }
