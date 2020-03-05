@@ -7,12 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.flexbox.FlexboxLayout;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,25 +71,15 @@ public class KitchenActivity extends AppCompatActivity {
                     public void onNext(OrderRows response) {
                         response.getOrderRows().forEach(orderRow -> {
                             buildOrder(orderRow.getOrderId());
-                            buildOrderRow(orderRow);
                         });
-
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
                     }
                 });
     }
 
     private void buildOrder(Order order) {
-        if (null == kitchenBongContainerViews.putIfAbsent(order.getOrderId(), new KitchenBongContainerView(this, this, order))) {
-            Log.d("Building order", order.toString());
+        if (null == kitchenBongContainerViews.putIfAbsent(order.getOrderId(), new KitchenBongContainerView(this, order))) {
             bongListLayoutContainer.addView(kitchenBongContainerViews.get(order.getOrderId()));
         }
-    }
-
-    public void buildOrderRow(OrderRow orderRow) {
-        Log.d("Building orderRow", orderRow.toString());
-
     }
 
     private void postOrder(Order order) {
