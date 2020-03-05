@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -144,7 +145,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menuItemView:
-                addMenuItemToBong(v);
+                addMenuItemToBong((MenuItemView) v);
                 break;
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
@@ -170,11 +171,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    private void addMenuItemToBong(View v) {
-        TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
+    private void addMenuItemToBong(MenuItemView menuItemView) {
+        //TextView menuItemNameTextView = menuItemView.findViewById(R.id.menuItemName);
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        Food food = new Food(menuItemNameTextView.getText().toString());
-        BongItemView bongItemView = new BongItemView(getContext(), food, null);
+        //Food food = new Food(menuItemView.getFood().getFoodId());
+        BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getFood(), null);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
 
@@ -237,9 +238,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     }
 
     private void addOrderRowToBong(OrderRow orderRow) {
-        //orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        Food food = new Food(orderRow.getFoodId().getFoodName());
-        BongItemView bongItemView = new BongItemView(getContext(), food, orderRow.getOrderChange());
+        BongItemView bongItemView = new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange());
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
 }
