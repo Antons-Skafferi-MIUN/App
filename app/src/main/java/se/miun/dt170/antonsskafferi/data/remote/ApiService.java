@@ -3,10 +3,7 @@ package se.miun.dt170.antonsskafferi.data.remote;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.DELETE;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -57,6 +54,13 @@ public interface ApiService {
     Observable<OrderRows> getOrderRows();
 
     // POST METHODS
+
+    /**
+     * Posts a reservation to the database.
+     *
+     * @param reservation object should NOT include a reservationID, because it's auto-increment
+     * @return posted reservation in a response-body (including the assigned auto-increment ID)
+     */
     @POST("entities.reservations")
     Call<Reservation> postReservation(@Body Reservation reservation);
 

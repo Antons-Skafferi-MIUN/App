@@ -1,10 +1,14 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.jetbrains.annotations.NotNull;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(name = "foods")
 public class Food {
+
+    @Element(name = "foodId")
+    private String foodId;
 
     @Element(name = "foodPrice", required = false)
     private String foodPrice;
@@ -12,16 +16,21 @@ public class Food {
     @Element(name = "foodName", required = false)
     private String foodName;
 
-    @Element(name = "foodId")
-    private String foodId;
-
     @Element(name = "foodCategory", required = false)
     private String foodCategory;
 
+    /**
+     * Only used for serialization of XML to object for Retrofit!
+     */
     public Food() {
     }
 
-    public Food(String foodId) {
+    /**
+     * Use this constructor when you're doing a POST request.
+     *
+     * @param foodId
+     */
+    public Food(@NotNull String foodId) {
         this.foodId = foodId;
     }
 

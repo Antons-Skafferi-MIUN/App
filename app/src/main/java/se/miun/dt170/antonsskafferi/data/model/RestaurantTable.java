@@ -6,21 +6,29 @@ import org.simpleframework.xml.Root;
 @Root(name = "restaurantTables")
 public class RestaurantTable {
 
+    @Element(name = "tableId")
+    private String tableId;
+
     @Element(name = "tableAvailableSeats", required = false)
     private String tableAvailableSeats;
 
     @Element(name = "tableTotalSeats", required = false)
     private String tableTotalSeats;
 
-    @Element(name = "tableId")
-    private String tableId;
-
     @Element(name = "tableStatus", required = false)
     private String tableStatus;
 
+    /**
+     * Only used for serialization of XML to object for Retrofit!
+     */
     public RestaurantTable() {
     }
 
+    /**
+     * Use this constructor when you're doing a POST request.
+     *
+     * @param tableId
+     */
     public RestaurantTable(String tableId) {
         this.tableId = tableId;
     }
