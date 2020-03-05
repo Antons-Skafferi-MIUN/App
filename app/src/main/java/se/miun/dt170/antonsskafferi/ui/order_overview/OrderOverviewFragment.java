@@ -90,7 +90,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         // API Calls
         getFoods();
 
-        setMenuItemListener();
+        //setMenuItemListener();
 
         /*TextView textView = new TextView(getContext());
         textView.setText("Test");
@@ -101,14 +101,17 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void setMenuItemListener() {
         ViewGroup menuContainer = (ViewGroup) menuContainerLayout;
+        Toast.makeText(getActivity(), "children: " + menuContainer.getChildCount(), Toast.LENGTH_SHORT).show();
 
         for (int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++) {
             ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
+            Toast.makeText(getActivity(), "Looping through categories", Toast.LENGTH_SHORT).show();
 
             for (int menuItemIndex = 0; menuItemIndex < menuCategory.getChildCount(); menuItemIndex++) {
                 if (menuCategory.getChildAt(menuItemIndex) instanceof MenuItemView) {
                     MenuItemView menuItemView = (MenuItemView) menuCategory.getChildAt(menuItemIndex);
                     menuItemView.setOnClickListener(this);
+                    Toast.makeText(getActivity(), "Listener set", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -166,7 +169,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 .subscribe(new Subscriber<Foods>() {
                     @Override
                     public void onCompleted() {
-
+                        setMenuItemListener();
                     }
 
                     @Override
@@ -187,6 +190,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                     }
 
     });
+
     }
 
 
