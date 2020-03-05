@@ -24,8 +24,10 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.activity.KitchenActivity;
 import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
+import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
@@ -133,10 +135,15 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
                 //fill food
+                menuContainerLayout.removeAllViews();
+                getFoods();
                 break;
             case R.id.drinkButton:
                 Toast.makeText(getActivity(), "DRINKS", Toast.LENGTH_SHORT).show();
                 //fill drinks
+                menuContainerLayout.removeAllViews();
+                getDrinks();
+
                 break;
 
             //Add cases for edit/remove/send and add to bong
@@ -180,6 +187,30 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                     }
 
     });
+    }
+
+
+    public void getDrinks() {
+        mAPIService.getDrinks().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Drinks>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Retrofit RxJava", e.toString());
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(Drinks response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                        menuContainerView.createDrinkCategories(response.getDrinks());
+                    }
+                });
     }
 
 

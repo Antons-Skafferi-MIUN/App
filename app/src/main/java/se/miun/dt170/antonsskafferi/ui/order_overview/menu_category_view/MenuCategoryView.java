@@ -13,6 +13,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.ArrayList;
 
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.model.Drink;
 import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 
@@ -22,7 +23,7 @@ public class MenuCategoryView extends LinearLayout {
         super(context, attributeSet);
     }
 
-
+    //Fills Alacarte
    public MenuCategoryView(@NonNull Context context, String categoryName, ArrayList<Food>internalFoodList){
        super(context);
 
@@ -40,6 +41,28 @@ public class MenuCategoryView extends LinearLayout {
        }
 
    }
+
+    //Fills drinks
+    public MenuCategoryView(@NonNull Context context, String categoryName, String temp, ArrayList<Drink>internalFoodList){
+        super(context);
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.menu_category_view, this, true);
+
+        TextView textView = this.findViewById(R.id.menuCategoryNameTextView);
+        textView.setText(categoryName);
+
+        //Add menu items from foodList
+        for (Drink drinkItem : internalFoodList){
+            MenuItemView menuItemView = new MenuItemView(getContext(), drinkItem.getDrinkName(), drinkItem.getDrinkPrice());
+            FlexboxLayout menuContainerLayout = this.findViewById(R.id.menuCategoryFlexbox);
+            menuContainerLayout.addView(menuItemView);
+        }
+
+    }
+
+
+
 
     public MenuCategoryView(@NonNull Context context, String categoryName) {
         super(context);

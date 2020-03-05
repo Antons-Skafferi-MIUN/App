@@ -32,4 +32,25 @@ public class MenuItemView extends CardView {
 
         setId(R.id.menuItemView);
     }
+
+    public MenuItemView(@NonNull Context context, String drinkItemName, String drinktemPrice, String drinktemType) {
+        super(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.menu_item_view, this, true);
+
+        TextView menuItemNameTextView = this.findViewById(R.id.menuItemName);
+        menuItemNameTextView.setText(drinkItemName);
+
+        TextView menuItemPriceTextView = this.findViewById(R.id.menuItemPrice);
+        menuItemPriceTextView.setText(drinktemPrice);
+
+        //TEMP if we want to show type of bottle in menu also
+        //TextView menuItemTypeTextView = this.findViewById(R.id.menuItemType);
+        //menuItemTypeTextView.setText(drinktemType);
+
+        setId(R.id.menuItemView);
+    }
+
+
+
 }
