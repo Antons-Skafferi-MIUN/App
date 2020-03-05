@@ -132,7 +132,8 @@ public class TableDialogFragment extends DialogFragment {
         });
 
         openOrderButton.setOnClickListener(v -> {
-            NavDirections action = TableDialogFragmentDirections.actionTableDialogFragmentToOrderOverviewFragment();
+            int tableNr = table.getTableNr();
+            NavDirections action = TableDialogFragmentDirections.actionTableDialogFragmentToOrderOverviewFragment().setTableID(tableNr);
             Navigation.findNavController(parent.getView()).navigate(action);
         });
 
@@ -192,6 +193,11 @@ public class TableDialogFragment extends DialogFragment {
     public void setTableOrders(Orders orders,boolean dataIsbeingFetched) {
         this.orders = orders;
         this.loadingData = dataIsbeingFetched;
+        Log.d("Orders", orders.toString());
+    }
+
+    public Orders getTableOrders() {
+        return orders;
     }
 
     public void setOrderRows(OrderRows orderRows,boolean dataIsbeingFetched) {

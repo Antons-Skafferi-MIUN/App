@@ -2,6 +2,7 @@ package se.miun.dt170.antonsskafferi.ui.order_overview;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
+import se.miun.dt170.antonsskafferi.data.model.OrderRows;
+import se.miun.dt170.antonsskafferi.data.model.Orders;
+import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
@@ -51,7 +58,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderBongContainerView orderBongContainerView;
     private OrderBongButtonsView orderBongButtonsView;
     private OrderBongListView orderBongListView;
+    private OrderBongHeaderView orderBongHeaderView;
     private LinearLayout orderBongListLinearLayout;
+    private ApiService mAPIService;
 
 
     public static OrderOverviewFragment newInstance() {
@@ -66,6 +75,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         menuContainerView = orderOverviewFragmentView.findViewById(R.id.menuContainerView);
         menuContainerLayout = orderOverviewFragmentView.findViewById(R.id.menuContainerLayout);
         orderBongContainerView = orderOverviewFragmentView.findViewById(R.id.orderBongContainerView);
+        orderBongHeaderView = orderBongContainerView.findViewById(R.id.orderBongHeaderView);
         navbarView = orderOverviewFragmentView.findViewById(R.id.navbarView);
         laCarteButton = navbarView.findViewById(R.id.laCarteButton);
         drinkButton = navbarView.findViewById(R.id.drinkButton);
@@ -104,6 +114,15 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         laCarteButton.setOnClickListener(this);
         drinkButton.setOnClickListener(this);
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        int tableID = OrderOverviewFragmentArgs.fromBundle(getArguments()).getTableID();
+        String amountString = Integer.toString(tableID);
+        TextView textView = orderBongHeaderView.findViewById(R.id.tableNumber);
+        textView.setText("Bord " + amountString);
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -181,5 +200,52 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         startActivity(intent);
     }
 
+    public void getOrders() {
+        mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Orders>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Retrofit RxJava", e.toString());
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(Orders response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
+    }
+
+    public void getOrderRows() {
+        mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<OrderRows>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Retrofit RxJava", e.toString());
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(OrderRows response) {
+                        showResponse(response.toString());
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
+    }
+
+    public void showResponse(String response) {
+        // TODO: Do something with response
+        Log.i("Retrofit", response);
+    }
 }
