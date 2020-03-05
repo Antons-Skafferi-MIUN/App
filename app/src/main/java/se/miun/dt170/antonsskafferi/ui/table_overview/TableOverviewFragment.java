@@ -52,6 +52,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
             TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
             table.setup(tableIndex + 1);
+
             Button tempButton = table.findViewById(R.id.tableButton);
             tempButton.setOnClickListener(this);
             //TODO ADD TABLES IN LSIT FOR EASY ACCESS LATER.
@@ -80,31 +81,31 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         Navigation.findNavController(getView()).navigate(action);
 
     }
-    public void updateFragment(Reservations tablesReservations){
+
+    public void updateFragment(Reservations tablesReservations) {
         //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
         // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
         // GET ALL TODAYS RESERVATIONS.
-          ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
+        ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
 
-          DateConverter date = new DateConverter();
-          for(int tableIndex = 0; tableIndex < nrOfTable; tableIndex++){
-              Reservation reservation =  reservationsList.get(tableIndex);
-              RestaurantTable restaurantTable = reservation.getTableId();
-              TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
+        DateConverter date = new DateConverter();
+        for (int tableIndex = 0; tableIndex < nrOfTable; tableIndex++) {
+            Reservation reservation = reservationsList.get(tableIndex);
+            RestaurantTable restaurantTable = reservation.getTableId();
+            TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
 
-              if(restaurantTable.getTableStatus().equals("vacant")){
-                  sharedViewModel.setDialogText("Bord " + table.getTableNr());
-                  table.removeBooking();
-              }
-              else{
-                  table.bookTable();
-                  sharedViewModel.setDialogText("Bokat av: " + reservation.getReservationName() + "\n" + "Kontakt: " + reservation.getReservationPhone());
-              }
-              Log.i("Retrofit RxJava",  new Integer(tableIndex).toString());
-              Log.i("GET RESERV DATE",  reservation.getReservationDate());
+            if (restaurantTable.getTableStatus().equals("vacant")) {
+                sharedViewModel.setDialogText("Bord " + table.getTableNr());
+                table.removeBooking();
+            } else {
+                table.bookTable();
+                sharedViewModel.setDialogText("Bokat av: " + reservation.getReservationName() + "\n" + "Kontakt: " + reservation.getReservationPhone());
+            }
+            Log.i("Retrofit RxJava", new Integer(tableIndex).toString());
+            Log.i("GET RESERV DATE", reservation.getReservationDate());
 
-              table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+            table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
 
-          }
+        }
     }
 }

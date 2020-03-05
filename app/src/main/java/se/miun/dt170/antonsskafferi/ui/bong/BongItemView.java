@@ -9,12 +9,11 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.util.stream.Collectors;
-
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.Item;
+import se.miun.dt170.antonsskafferi.data.model.Food;
 
 public class BongItemView extends ConstraintLayout implements View.OnClickListener {
     private boolean itemClicked = false;
@@ -26,7 +25,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         super(context, attributeSet);
     }
 
-    public BongItemView(@NonNull Context context, Item item) {
+    public BongItemView(@NonNull Context context, Food item, @Nullable String orderChange) {
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -36,13 +35,11 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         foodNameText = findViewById(R.id.foodNameText);
         extraText = findViewById(R.id.extraText);
 
-        foodNameText.setText(item.getName());
+        foodNameText.setText(item.getFoodName());
 
         // Populate extra text
-        if (item.getExtras() != null) {
-            String extraString = item.getExtras().stream().collect(Collectors.joining("\n"));
-            extraText.setVisibility(VISIBLE);
-            extraText.setText(extraString);
+        if (orderChange != null) {
+            extraText.setText(orderChange);
         }
 
         checkBox.setOnClickListener(this);
