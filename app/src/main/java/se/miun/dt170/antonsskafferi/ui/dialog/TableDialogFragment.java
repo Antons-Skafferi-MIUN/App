@@ -130,8 +130,6 @@ public class TableDialogFragment extends DialogFragment {
         adjustOrderButton();
 
         cancelButton.setOnClickListener(v -> {
-
-
             final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(this.getContext());
             confirmationDialog.setTitle("Är du säker på att du vill rensa ordern?")
                     .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
@@ -249,7 +247,6 @@ public class TableDialogFragment extends DialogFragment {
 
                     }
                 });
-
 
                 layout.addView(name);
                 layout.addView(phoneNumber);
