@@ -32,10 +32,10 @@ public class Reservation {
     /**
      * Use this constructor when you're doing a POST request.
      *
-     * @param tableId a {@link RestaurantTable} with only an ID as it's constructor
-     * @param reservationDate use {@link se.miun.dt170.antonsskafferi.data.DateConverter} getCurrentTime() formatted as ISO-8601
+     * @param tableId          a {@link RestaurantTable} with only an ID as it's constructor
+     * @param reservationDate  use {@link se.miun.dt170.antonsskafferi.data.DateConverter} getCurrentTime() formatted as ISO-8601
      * @param reservationPhone customer phone number
-     * @param reservationName customer name
+     * @param reservationName  customer name
      */
     public Reservation(@NotNull RestaurantTable tableId, @NotNull String reservationDate, @NotNull String reservationPhone, @Nullable String reservationName) {
         this.tableId = tableId;

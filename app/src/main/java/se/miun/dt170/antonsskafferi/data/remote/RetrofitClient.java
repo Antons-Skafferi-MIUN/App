@@ -8,7 +8,7 @@ public class RetrofitClient {
 
     private static Retrofit retrofit = null;
 
-    private RetrofitClient(){
+    private RetrofitClient() {
 
     }
 

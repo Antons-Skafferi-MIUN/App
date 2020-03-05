@@ -32,9 +32,9 @@ public class OrderRow {
     /**
      * Use this constructor when you're doing a POST request.
      *
-     * @param orderId a {@link Order} with only it's ID in it's constructor
-     * @param drinkId a {@link Drink} with only it's ID in it's constructor
-     * @param foodId a {@link Food} with only it's ID in it's constructor
+     * @param orderId     a {@link Order} with only it's ID in it's constructor
+     * @param drinkId     a {@link Drink} with only it's ID in it's constructor
+     * @param foodId      a {@link Food} with only it's ID in it's constructor
      * @param orderChange a string of changes to the order
      */
     public OrderRow(@NotNull Order orderId, @Nullable Drink drinkId, @Nullable Food foodId, @Nullable String orderChange) {
