@@ -23,11 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:visibility="gone"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/foodNameText"
         app:layout_constraintTop_toBottomOf="@+id/foodNameText"
-        tools:text="- Svartpeppar" />
+        tools:text="" />
 
     <ImageView
         android:id="@+id/delimiterImageView"
