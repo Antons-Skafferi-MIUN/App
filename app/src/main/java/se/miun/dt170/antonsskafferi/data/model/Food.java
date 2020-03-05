@@ -34,6 +34,12 @@ public class Food {
         this.foodId = foodId;
     }
 
+    public Food(String foodId, String foodPrice, String foodName, String foodCategory) {
+        this.foodId = foodId;
+        this.foodPrice = foodPrice;
+        this.foodName = foodName;
+        this.foodCategory = foodCategory;
+    }
 
     public String getFoodPrice() {
         return foodPrice;
