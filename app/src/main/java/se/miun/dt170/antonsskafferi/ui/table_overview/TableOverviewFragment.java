@@ -90,19 +90,20 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     public void updateFragment(Reservations tablesReservations){
         //TODO IF THERE ARE MORE RESERVATIONS THAN TABLES WE CANT LOOK AT RESERVE SIZE
         //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
-        //
+        // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
           ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
           DateConverter date = new DateConverter();
           for(int tableIndex = 0; tableIndex < reservationsList.size(); tableIndex++){
               Reservation reservation =  reservationsList.get(tableIndex);
               RestaurantTable restaurantTable = reservation.getTableId();
               TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
-
               if(restaurantTable.getTableStatus().equals("vacant")){
+                  sharedViewModel.setDialogText("Bord " + table.getTableNr());
                   table.removeBooking();
               }
               else{
                   table.bookTable();
+                  sharedViewModel.setDialogText("Bokat av: " + reservation.getReservationName() + "\n" + "Kontakt: " + reservation.getReservationPhone());
               }
               Log.i("Retrofit RxJava",  new Integer(tableIndex).toString());
               Log.i("GET RESERV DATE",  reservation.getReservationDate());

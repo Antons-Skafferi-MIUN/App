@@ -46,6 +46,7 @@ public class TableDialogFragment extends DialogFragment {
     private Drawable cancelButtonColor;
     private TextView textDisplay;
     private Button cancelButton;
+    private String dialogText;
 
 
     @Override
@@ -73,6 +74,7 @@ public class TableDialogFragment extends DialogFragment {
         //TODO THIS OBSERVER SEEEM TO FAIL TO OBSERVE.
         MutableLiveData<TableView> mutableTable = sharedViewModel.getTable();
         table = mutableTable.getValue(); // TEMP FIX
+        dialogText = sharedViewModel.getDialogText();
         mutableTable.observe(this, new Observer<TableView>() {
             @Override
             public void onChanged(TableView s) {
@@ -99,7 +101,7 @@ public class TableDialogFragment extends DialogFragment {
         textDisplay = dialogView.findViewById(R.id.dialogTextDisplay);
         cancelButton = dialogView.findViewById(R.id.cancelButton);
 
-        textDisplay.setText("Bord " + Integer.toString(table.getTableNr()));
+        textDisplay.setText(dialogText);
         cancelButton.setBackground(cancelButtonColor);
 
         adjustBookingButton();
