@@ -21,12 +21,12 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
+import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
-import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
+import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
@@ -61,8 +61,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderBongListView orderBongListView;
     private OrderBongHeaderView orderBongHeaderView;
     private LinearLayout orderBongListLinearLayout;
-    private ApiService mAPIService;
     private int tableID;
+    private ApiService mAPIService;
 
 
     public static OrderOverviewFragment newInstance() {
@@ -73,6 +73,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        mAPIService = ApiUtils.getAPIService();
         View orderOverviewFragmentView = inflater.inflate(R.layout.order_overview_fragment, container, false);
         menuContainerView = orderOverviewFragmentView.findViewById(R.id.menuContainerView);
         menuContainerLayout = orderOverviewFragmentView.findViewById(R.id.menuContainerLayout);
@@ -99,6 +100,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void setMenuItemListener() {
         ViewGroup menuContainer = menuContainerLayout;
+
 
         for (int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++) {
             ViewGroup menuCategory = menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
@@ -170,10 +172,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void addMenuItemToBong(View v) {
         TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
-
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        Item item = new Item(menuItemNameTextView.getText().toString(), null);
-        BongItemView bongItemView = new BongItemView(getContext(), item);
+        Food food = new Food(menuItemNameTextView.getText().toString());
+        BongItemView bongItemView = new BongItemView(getContext(), food, null);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
 
@@ -223,7 +224,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                     // Called on every new observed item
                     @Override
                     public void onNext(OrderRows response) {
-                        showResponse(response.toString());
                         response.getOrderRows().forEach(orderRow -> {
                             String orderTableID = orderRow.getOrderId().getTableId().getTableId();
 
@@ -237,8 +237,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     }
 
     private void addOrderRowToBong(OrderRow orderRow) {
-        orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        BongItemView bongItemView = new BongItemView(getContext(), orderRow);
+        //orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        Food food = new Food(orderRow.getFoodId().getFoodName());
+        BongItemView bongItemView = new BongItemView(getContext(), food, orderRow.getOrderChange());
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
 }

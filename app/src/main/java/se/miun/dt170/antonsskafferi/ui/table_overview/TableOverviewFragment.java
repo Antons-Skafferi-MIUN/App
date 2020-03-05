@@ -52,6 +52,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
             TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
             table.setup(tableIndex + 1);
+
             Button tempButton = table.findViewById(R.id.tableButton);
             tempButton.setOnClickListener(this);
             //TODO ADD TABLES IN LSIT FOR EASY ACCESS LATER.
@@ -80,13 +81,22 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         Navigation.findNavController(getView()).navigate(action);
 
     }
-    public void updateFragment(Reservations tablesReservations){
+
+    public void updateFragment(Reservations tablesReservations) {
         //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
         // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
         // GET ALL TODAYS RESERVATIONS.
-          ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
-
           DateConverter date = new DateConverter();
+          ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
+          ArrayList<Reservation> todaysReservations = new ArrayList<>();
+
+          for(Reservation r : reservationsList){
+            if(date.compareDates(r.getReservationDate(), date.getCurrentTime())){
+                todaysReservations.add(r);
+            }
+          }
+
+
           for(int tableIndex = 0; tableIndex < nrOfTable; tableIndex++){
               Reservation reservation =  reservationsList.get(tableIndex);
               RestaurantTable restaurantTable = reservation.getTableId();

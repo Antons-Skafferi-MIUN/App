@@ -34,6 +34,7 @@ public class Food {
         this.foodId = foodId;
     }
 
+
     public String getFoodPrice() {
         return foodPrice;
     }

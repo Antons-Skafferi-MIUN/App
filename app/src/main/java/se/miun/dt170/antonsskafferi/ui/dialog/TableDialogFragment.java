@@ -25,8 +25,18 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import java.util.ArrayList;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
+import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
+import se.miun.dt170.antonsskafferi.data.model.Order;
+import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.repository.OrderRepository;
@@ -51,10 +61,11 @@ public class TableDialogFragment extends DialogFragment {
     private TextView textDisplay;
     private Button cancelButton;
     private String dialogText;
-    private boolean loadingData;
+    private boolean isDone;
     private Orders orders;
     private OrderRows orderRows;
     private OrderRepository orderRepository;
+    private DeleteWrapper deleteWrapper;
 
 
 
@@ -73,8 +84,7 @@ public class TableDialogFragment extends DialogFragment {
         popupBookedColor = ContextCompat.getDrawable(this.getContext(),R.drawable.red_button_border);
         cancelButtonColor = ContextCompat.getDrawable(this.getContext(),R.drawable.white_button_border);
         CancelButtonTextColor = ContextCompat.getColor(this.getContext(), R.color.deselected_faded_gray);
-        loadingData = false;
-
+        deleteWrapper = new DeleteWrapper();
         LayoutInflater layoutInflater = requireActivity().getLayoutInflater();
         dialogView = layoutInflater.inflate(R.layout.table_dialog_fragment, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -123,12 +133,88 @@ public class TableDialogFragment extends DialogFragment {
         adjustOrderButton();
 
         cancelButton.setOnClickListener(v ->{
-            Log.i("ORDERS TEST", "CANCELBUTTON");
-            orderRepository.getOrders(this);
-          //get table ID
-          //Get all orders related to table.
-            //get all order rows related to order
-            //delete all order rows for each order
+            orderRepository.getOrders()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Orders>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onNext(Orders orders) {
+                    Log.i("ORDERS TEST", orders.toString());
+                    ArrayList<Order> allOrders = orders.getOrders();
+
+                    for(Order order : allOrders) {
+                        int orderTableID = Integer.parseInt(order.getTableId().getTableId());
+                        if(orderTableID == table.getTableNr()) //this order belongs to this table
+                        {
+                            int currentorder = orderTableID;
+                            Log.i("Current Table: ",Integer.toString(table.getTableNr()));
+                            Log.i("Current Order: ",Integer.toString(currentorder));
+                            orderRepository.getOrderRows()
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Subscriber<OrderRows>() {
+                                        @Override
+                                        public void onCompleted() {
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            Log.i("ERROR IN GET ORDER ROWS", e.toString());
+                                        }
+                                        @Override
+                                        public void onNext(OrderRows orderrows) {
+                                            ArrayList<OrderRow> allOrderRows = orderrows.getOrderRows();
+                                            for(OrderRow orderRow : allOrderRows){
+                                                int orderRowOrderID = Integer.parseInt(orderRow.getOrderId().getOrderId());
+                                                if(orderRowOrderID == currentorder){ //if the or
+                                                    Log.i("Deleting ROW: ", orderRow.getOrderRowId());
+                                                    deleteWrapper.deleteOrderRow(orderRowOrderID);
+                                                };
+                                            }
+                                            deleteWrapper.deleteOrder(currentorder);
+                                        }
+                                    });
+                        }
+                    }
+
+                    }
+            });
+
+            final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(this.getContext());
+            confirmationDialog.setTitle("Är du säker på att du vill stänga bordet?")
+
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i("ORDERS TEST", "DELETING ALL");
+
+                    //get table ID
+                    //Get all orders related to table.
+                    //get all order rows related to order
+                    //delete all order rows for each order
+
+                }
+            })
+                    .setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dismiss();
+                        }
+                    })
+            .show();
+
+
+
         });
 
         openOrderButton.setOnClickListener(v -> {
@@ -190,18 +276,23 @@ public class TableDialogFragment extends DialogFragment {
         openOrderButton.setBackground(popupAvailableColor);
     }
 
-    public void setTableOrders(Orders orders,boolean dataIsbeingFetched) {
+    public void setTableOrders(Orders orders) {
         this.orders = orders;
-        this.loadingData = dataIsbeingFetched;
-        Log.d("Orders", orders.toString());
     }
 
-    public Orders getTableOrders() {
-        return orders;
-    }
-
-    public void setOrderRows(OrderRows orderRows,boolean dataIsbeingFetched) {
+    public void setOrderRows(OrderRows orderRows) {
         this.orderRows = orderRows;
+    }
+
+    public Action0 waiting(){
+        isDone = false;
+        Log.i("ORDERS TEST", "WAITING");
+        return null;
+    }
+    public Action0 done(){
+        Log.i("ORDERS TEST", "DONE");
+        isDone = true;
+        return null;
     }
 
 
