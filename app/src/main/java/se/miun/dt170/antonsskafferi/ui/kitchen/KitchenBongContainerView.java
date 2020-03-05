@@ -31,7 +31,7 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
         super(context, attrs);
     }
 
-    public KitchenBongContainerView(Context context, LifecycleOwner lifecycle, Order order) {
+    public KitchenBongContainerView(Context context, Order order) {
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,11 +40,9 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
         mAPIService = ApiUtils.getAPIService();
 
         kitchenBongContainerLinearLayout = findViewById(R.id.kitchenBongContainerLinearLayout);
-
         kitchenBongContainerLinearLayout.addView(new KitchenBongHeaderView(getContext(), order));
 
         getOrderRows(order);
-
     }
 
     public void getOrderRows(Order order) {
@@ -64,7 +62,6 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
                     @Override
                     public void onNext(OrderRows response) {
                         response.getOrderRows().forEach(orderRow -> {
-                            Log.d("Building BongItem", "Getting bong items");
                             buildOrderRow(orderRow, order);
                         });
                     }
@@ -73,7 +70,6 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
 
     private void buildOrderRow(OrderRow orderRow, Order thisOrder) {
         if (orderRow.getOrderId().getOrderId().equals(thisOrder.getOrderId())) {
-            Log.d("Building BongItem", "Adding bong items");
             kitchenBongContainerLinearLayout.addView(new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange()));
         }
     }

@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
+import rx.Single;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.Order;
@@ -98,7 +99,7 @@ public interface ApiService {
      * @param id reservation ID
      * @return a confirmation text in response-body
      */
-    @DELETE("entity.reservations/{reservationId}")
+    @DELETE("entities.reservations/{reservationId}")
     Call<Reservation> deleteReservation(@Path("reservationId") long id);
 
     /**
@@ -107,7 +108,7 @@ public interface ApiService {
      * @param id order ID
      * @return a confirmation text in response-body
      */
-    @DELETE("entity.orders/{orderId}")
+    @DELETE("entities.orders/{orderId}")
     Call<Order> deleteOrder(@Path("orderId") long id);
 
     /**
@@ -116,6 +117,6 @@ public interface ApiService {
      * @param id orderRow ID
      * @return a confirmation text in response-body
      */
-    @DELETE("entity.orderrows/{orderRowId}")
+    @DELETE("entities.orderrows/{orderRowId}")
     Call<OrderRow> deleteOrderRow(@Path("orderRowId") long id);
 }
