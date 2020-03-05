@@ -23,22 +23,6 @@ public class OrderRepository {
     public Observable<OrderRows> getOrderRows() {
 
         return mAPIService.getOrderRows();
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Subscriber<OrderRows>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.i("ERROR IN GET ORDER ROWS", e.toString());
-//                    }
-//                    @Override
-//                    public void onNext(OrderRows response) {
-//                        Log.i("ERROR IN GET ORDER ROWS", response.toString());
-//                    }
-//                });
+
     }
 }

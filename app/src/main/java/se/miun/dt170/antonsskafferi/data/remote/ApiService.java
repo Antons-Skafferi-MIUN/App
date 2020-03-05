@@ -39,22 +39,22 @@ public interface ApiService {
 
     // GET METHODS
 
-    @GET("entities.foods")
+    @GET("entity.foods")
     Observable<Foods> getFoods();
 
-    @GET("entities.drinks")
+    @GET("entity.drinks")
     Observable<Drinks> getDrinks();
 
-    @GET("entities.orders")
+    @GET("entity.orders")
     Observable<Orders> getOrders();
 
-    @GET("entities.restauranttables")
+    @GET("entity.restauranttables")
     Observable<RestaurantTables> getRestaurantTables();
 
-    @GET("entities.reservations")
+    @GET("entity.reservations")
     Observable<Reservations> getReservations();
 
-    @GET("entities.orderrows")
+    @GET("entity.orderrows")
     Observable<OrderRows> getOrderRows();
 
 
@@ -66,7 +66,7 @@ public interface ApiService {
      * @param reservation object should NOT include a reservationID, because it's auto-increment
      * @return posted {@link Reservation} in a response-body (including the assigned auto-increment ID)
      */
-    @POST("entities.reservations")
+    @POST("entity.reservations")
     Call<Reservation> postReservation(@Body Reservation reservation);
 
 
@@ -79,7 +79,7 @@ public interface ApiService {
      * @param orderRow object should NOT include a OrderRowID, because it's auto-increment
      * @return posted {@link OrderRow} in a response-body (including the assigned auto-increment ID)
      */
-    @POST("entities.orderrows")
+    @POST("entity.orderrows")
     Call<OrderRow> postOrderRow(@Body OrderRow orderRow);
 
     /**
@@ -88,7 +88,7 @@ public interface ApiService {
      * @param order object should NOT include a OrderID, because it's auto-increment
      * @return posts {@link Order} in a response-body (including the assigned auto-increment ID)
      */
-    @POST("entities.orders")
+    @POST("entity.orders")
     Call<Order> postOrder(@Body Order order);
 
     // DELETE METHODS
