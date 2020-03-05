@@ -15,11 +15,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <include
-            layout="@layout/kitchen_bong_header_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

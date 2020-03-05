@@ -32,6 +32,8 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
 
         LinearLayout kitchenBongContainerLinearLayout = findViewById(R.id.kitchenBongContainerLinearLayout);
 
+        kitchenBongContainerLinearLayout.addView(new KitchenBongHeaderView(getContext(), order));
+
         // Populate bong list on changes to the bong list view model
         bongListViewModel.bongItems.observe(lifecycle, items -> {
             for (Item item : items) {
