@@ -52,6 +52,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
             TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
             table.setup(tableIndex + 1);
+
             Button tempButton = table.findViewById(R.id.tableButton);
             tempButton.setOnClickListener(this);
             //TODO ADD TABLES IN LSIT FOR EASY ACCESS LATER.
@@ -80,7 +81,8 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         Navigation.findNavController(getView()).navigate(action);
 
     }
-    public void updateFragment(Reservations tablesReservations){
+
+    public void updateFragment(Reservations tablesReservations) {
         //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
         // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
         // GET ALL TODAYS RESERVATIONS.
