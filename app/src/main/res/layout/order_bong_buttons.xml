@@ -2,7 +2,6 @@
 <se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,33 +11,33 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:contentDescription="@null"
-        app:layout_constraintEnd_toStartOf="@+id/deletebutton"
+        app:layout_constraintEnd_toStartOf="@+id/editButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/add" />
 
     <ImageButton
-        android:id="@+id/deletebutton"
+        android:id="@+id/editButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:contentDescription="@null"
-        app:layout_constraintEnd_toStartOf="@+id/editbutton"
+        app:layout_constraintEnd_toStartOf="@+id/deleteButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/sendButton"
         app:layout_constraintTop_toTopOf="@+id/sendButton"
-        app:srcCompat="@drawable/delete" />
+        app:srcCompat="@drawable/edit" />
 
     <ImageButton
-        android:id="@+id/editbutton"
+        android:id="@+id/deleteButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/deletebutton"
-        app:layout_constraintTop_toTopOf="@+id/deletebutton"
-        app:srcCompat="@drawable/edit" />
+        app:layout_constraintStart_toEndOf="@+id/editButton"
+        app:layout_constraintTop_toTopOf="@+id/editButton"
+        app:srcCompat="@drawable/delete" />
 
 
 </se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView>

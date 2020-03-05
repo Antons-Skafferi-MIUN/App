@@ -1,7 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +19,11 @@ import androidx.lifecycle.ViewModelProviders;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.Item;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
-import se.miun.dt170.antonsskafferi.databinding.OrderBongButtonsBinding;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.orderOverviewPopUp;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
@@ -42,13 +42,14 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private Button laCarteButton;
     private Button drinkButton;
     private ImageButton sendButton;
+    private ImageButton editButton;
+    private ImageButton deleteButton;
     private MenuContainerView menuContainerView;
     private LinearLayout menuContainerLayout;
     private NavbarView navbarView;
     private OrderBongContainerView orderBongContainerView;
     private OrderBongButtonsView orderBongButtonsView;
     private OrderBongListView orderBongListView;
-
 
 
     public static OrderOverviewFragment newInstance() {
@@ -70,6 +71,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         orderBongButtonsView = orderBongContainerView.findViewById(R.id.orderbongbuttons);
         sendButton = orderBongButtonsView.findViewById(R.id.sendButton);
         sendButton.setOnClickListener(this);
+        editButton = orderBongButtonsView.findViewById(R.id.editButton);
+        editButton.setOnClickListener(this);
+        deleteButton = orderBongButtonsView.findViewById(R.id.deleteButton);
+        deleteButton.setOnClickListener(this);
         setNavbarListener();
         menuContainerView.addCategory("Testkategori");
         setMenuItemListener();
@@ -78,10 +83,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     }
 
     private void setMenuItemListener() {
-        ViewGroup menuContainer = (ViewGroup) menuContainerLayout;
+        ViewGroup menuContainer = menuContainerLayout;
 
-        for(int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++){
-            ViewGroup menuCategory = (ViewGroup) menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
+        for (int categoryIndex = 0; categoryIndex < menuContainer.getChildCount(); categoryIndex++) {
+            ViewGroup menuCategory = menuContainer.getChildAt(categoryIndex).findViewById(R.id.menuCategoryFlexbox);
 
             for (int menuItemIndex = 0; menuItemIndex < menuCategory.getChildCount(); menuItemIndex++) {
                 if (menuCategory.getChildAt(menuItemIndex) instanceof MenuItemView) {
@@ -108,7 +113,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menuItemView:
-                    addMenuItemToBong(v);
+                addMenuItemToBong(v);
                 break;
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
@@ -121,7 +126,15 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
             case R.id.sendButton:
                 Toast.makeText(getActivity(), "SEND", Toast.LENGTH_SHORT).show();
                 break;
-                //Add cases for edit/remove/send and add to bong
+            //Add cases for edit/remove/send and add to bong
+            case R.id.editButton:
+                Toast.makeText(getActivity(), "EDIT", Toast.LENGTH_SHORT).show();
+                popupWindow(v);
+                break;
+            case R.id.deleteButton:
+                Toast.makeText(getActivity(), "DELETE", Toast.LENGTH_SHORT).show();
+                removeAllItemFromBong(orderBongListView);
+                break;
 
         }
     }
@@ -129,7 +142,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private void addMenuItemToBong(View v) {
         TextView menuItemNameTextView = v.findViewById(R.id.menuItemName);
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        Item item = new Item(menuItemNameTextView.getText().toString(),null);
+        Item item = new Item(menuItemNameTextView.getText().toString(), null);
         BongItemView bongItemView = new BongItemView(getContext(), item);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
@@ -137,4 +150,20 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private void sendOrder() {
 
     }
+
+    //remove all items from bong list
+    private void removeAllItemFromBong(View v) {
+        LinearLayout orderBongListLinearLayout = v.findViewById(R.id.orderBongListLinearLayout);
+        orderBongListLinearLayout.removeAllViews();
+
+    }
+
+
+    private void popupWindow(View v) {
+        //startActivity(new Intent(OrderOverviewFragment.this,orderOverviewPopUp.class));
+        Intent intent = new Intent(OrderOverviewFragment.this.getContext(), orderOverviewPopUp.class);
+        startActivity(intent);
+    }
+
+
 }

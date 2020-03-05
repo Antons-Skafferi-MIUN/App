@@ -74,6 +74,7 @@ public class TableDialogFragment extends DialogFragment {
         cancelButtonColor = ContextCompat.getDrawable(this.getContext(),R.drawable.white_button_border);
         CancelButtonTextColor = ContextCompat.getColor(this.getContext(), R.color.deselected_faded_gray);
         loadingData = false;
+
         LayoutInflater layoutInflater = requireActivity().getLayoutInflater();
         dialogView = layoutInflater.inflate(R.layout.table_dialog_fragment, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -114,6 +115,7 @@ public class TableDialogFragment extends DialogFragment {
         cancelButton = dialogView.findViewById(R.id.cancelButton);
 
         textDisplay.setText(dialogText);
+
         cancelButton.setBackground(cancelButtonColor);
         cancelButton.setTextColor(CancelButtonTextColor);
 
@@ -127,7 +129,6 @@ public class TableDialogFragment extends DialogFragment {
           //Get all orders related to table.
             //get all order rows related to order
             //delete all order rows for each order
-
         });
 
         openOrderButton.setOnClickListener(v -> {
@@ -137,55 +138,53 @@ public class TableDialogFragment extends DialogFragment {
 
         bookingButton.setOnClickListener(v -> {
             table.setTableBooked(!table.isTableBooked());
-            if(table.isTableBooked()){
-            final AlertDialog.Builder enterTimeDialog = new AlertDialog.Builder(this.getContext());
-            final EditText time = new EditText(this.getContext());
-            time.setInputType(InputType.TYPE_CLASS_NUMBER);
-            enterTimeDialog.setTitle("Enter the time for expected customer arrival")
-                    .setView(time)
-                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            table.setArrivalTime(time.getText().toString());
-                            adjustBookingButton();
-                        }
-                    })
-                    .setNegativeButton("no", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            table.setTableBooked(false);
-                            adjustBookingButton();
-                        }
-                    })
-                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            table.setTableBooked(false);
-                            adjustBookingButton();
-                        }
-                    })
-                    .show();
-            }
-            else{
+            if (table.isTableBooked()) {
+                final AlertDialog.Builder enterTimeDialog = new AlertDialog.Builder(this.getContext());
+                final EditText time = new EditText(this.getContext());
+                time.setInputType(InputType.TYPE_CLASS_NUMBER);
+                enterTimeDialog.setTitle("Enter the time for expected customer arrival")
+                        .setView(time)
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                table.setArrivalTime(time.getText().toString());
+                                adjustBookingButton();
+                            }
+                        })
+                        .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                table.setTableBooked(false);
+                                adjustBookingButton();
+                            }
+                        })
+                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                table.setTableBooked(false);
+                                adjustBookingButton();
+                            }
+                        })
+                        .show();
+            } else {
                 adjustBookingButton();
             }
         });
     }
 
-    private void adjustBookingButton(){
-        if(!table.isTableBooked()){ //table is available.
+    private void adjustBookingButton() {
+        if (!table.isTableBooked()) { //table is available.
             bookingButton.setBackground(popupAvailableColor); //change to popup
             bookingButton.setText("Boka Bord");
             table.removeBooking();
-        }
-        else{
+        } else {
             bookingButton.setBackground(popupBookedColor);
             bookingButton.setText("Avboka Bord");
             table.bookTable();
         }
     }
 
-    private void adjustOrderButton(){
+    private void adjustOrderButton() {
         openOrderButton.setText("Ta en order");
         openOrderButton.setBackground(popupAvailableColor);
     }
@@ -198,7 +197,6 @@ public class TableDialogFragment extends DialogFragment {
     public void setOrderRows(OrderRows orderRows,boolean dataIsbeingFetched) {
         this.orderRows = orderRows;
     }
-
 
 
 }

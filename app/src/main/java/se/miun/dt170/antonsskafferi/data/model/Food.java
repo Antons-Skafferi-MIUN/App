@@ -1,22 +1,38 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.jetbrains.annotations.NotNull;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(name = "foods")
 public class Food {
 
-    @Element(name = "foodPrice")
-    private String foodPrice;
-
-    @Element(name = "foodName")
-    private String foodName;
-
     @Element(name = "foodId")
     private String foodId;
 
-    @Element(name = "foodCategory")
+    @Element(name = "foodPrice", required = false)
+    private String foodPrice;
+
+    @Element(name = "foodName", required = false)
+    private String foodName;
+
+    @Element(name = "foodCategory", required = false)
     private String foodCategory;
+
+    /**
+     * Only used for serialization of XML to object for Retrofit!
+     */
+    public Food() {
+    }
+
+    /**
+     * Use this constructor when you're doing a POST request.
+     *
+     * @param foodId
+     */
+    public Food(@NotNull String foodId) {
+        this.foodId = foodId;
+    }
 
     public String getFoodPrice() {
         return foodPrice;

@@ -11,12 +11,10 @@ public class TableDialogSharedViewModel extends ViewModel {
 
     private MutableLiveData<TableView> table = new MutableLiveData<>();
 
-    public void setTable(TableView table) {
-        this.table.setValue(table);
-    }
     public MutableLiveData<TableView> getTable() {
         return table;
     }
+
 
     public String getDialogText() {
         return dialogText;
@@ -25,4 +23,9 @@ public class TableDialogSharedViewModel extends ViewModel {
     public void setDialogText(String dialogText) {
         this.dialogText = dialogText;
     }
+
+    public void setTable(TableView table) {
+        this.table.setValue(table);
+    }
+
 }

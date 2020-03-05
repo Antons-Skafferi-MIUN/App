@@ -1,25 +1,48 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(name = "orderRows")
 public class OrderRow {
 
-    @Element(name = "drinkId", required = false)
-    private Drink drinkId;
+    @Element(name = "orderRowId", required = false)
+    private String orderRowId; // auto-increment, don't specify this in constructor!
 
     @Element(name = "orderId")
     private Order orderId;
 
+    @Element(name = "drinkId", required = false)
+    private Drink drinkId;
+
     @Element(name = "foodId", required = false)
     private Food foodId;
 
-    @Element(name = "orderRowId")
-    private String orderRowId;
-
     @Element(name = "orderChange", required = false)
     private String orderChange;
+
+    /**
+     * Only used for serialization of XML to object for Retrofit!
+     */
+    public OrderRow() {
+    }
+
+    /**
+     * Use this constructor when you're doing a POST request.
+     *
+     * @param orderId     a {@link Order} with only it's ID in it's constructor
+     * @param drinkId     a {@link Drink} with only it's ID in it's constructor
+     * @param foodId      a {@link Food} with only it's ID in it's constructor
+     * @param orderChange a string of changes to the order
+     */
+    public OrderRow(@NotNull Order orderId, @Nullable Drink drinkId, @Nullable Food foodId, @Nullable String orderChange) {
+        this.orderId = orderId;
+        this.drinkId = drinkId;
+        this.foodId = foodId;
+        this.orderChange = orderChange;
+    }
 
     public Drink getDrinkId() {
         return drinkId;
