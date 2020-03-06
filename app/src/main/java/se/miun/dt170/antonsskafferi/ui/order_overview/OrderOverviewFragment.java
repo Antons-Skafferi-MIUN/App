@@ -1,15 +1,22 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+
+import java.util.ArrayList;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -65,6 +74,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private int tableID;
     private ApiService mAPIService;
 
+    ListView lv;
+    ArrayAdapter<String> adapter;
+    ArrayList<String> data = new ArrayList<String>();
+    SparseBooleanArray mCheckStates ;
 
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
@@ -198,8 +211,29 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     //remove all items from bong list
     private void removeAllItemFromBong(View v) {
         LinearLayout orderBongListLinearLayout = v.findViewById(R.id.orderBongListLinearLayout);
-        orderBongListLinearLayout.removeAllViews();
-
+        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
+            View bongView = orderBongListLinearLayout.getChildAt(i);
+            if (bongView instanceof BongItemView) {
+                Log.d("BONG", "Checkbox is found");
+                //((BongItemView) bongView);
+                int colorComp = -6228832;
+                int color = 0;
+                Drawable background = bongView.getBackground();
+                if (background instanceof ColorDrawable) {
+                    color = ((ColorDrawable) background).getColor();
+                    //CheckBox checkBoxChild = (CheckBox) bongView;
+                    Log.d("Color", Integer.toString(color));
+                }
+                if (colorComp == color){
+                    Log.d("Checkbox", "working!");
+                    orderBongListLinearLayout.removeViewAt(i);
+                }
+//                if (checkBoxChild.isChecked()) {
+//                    Log.d("Checkbox", "working!");
+//                    orderBongListLinearLayout.removeViewAt(i);
+//                }
+            }  //etc. If it fails anywhere, just return false.
+        }
     }
 
 
