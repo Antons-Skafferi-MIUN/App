@@ -5,15 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_margin="20dp">
 
-    <LinearLayout
+    <include
         android:id="@+id/kitchenBongContainerLinearLayout"
+        layout="@layout/bong_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 </se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView>
