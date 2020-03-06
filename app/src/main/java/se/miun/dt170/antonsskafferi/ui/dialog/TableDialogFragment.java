@@ -110,7 +110,6 @@ public class TableDialogFragment extends DialogFragment {
         tableDialogViewModel = new ViewModelProvider(requireActivity()).
                 get(TableDialogViewModel.class);
         // TEST
-        tableDialogViewModel.clearCurrentOrderFromDatabase();
 
         parent = getParentFragment();
         openOrderButton = dialogView.findViewById(R.id.openOrderButton);
@@ -132,42 +131,7 @@ public class TableDialogFragment extends DialogFragment {
                     .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            orderRepository.getOrderRows()
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new Subscriber<OrderRows>() {
-                                        @Override
-                                        public void onCompleted() {
-
-                                        }
-
-                                        @Override
-                                        public void onError(Throwable e) {
-
-                                        }
-
-                                        @Override
-                                        public void onNext(OrderRows orderRows) {
-                                            Log.i("ORDER ROW ", "AT TOP");
-                                            ArrayList<OrderRow> allOrderRows = orderRows.getOrderRows();
-                                            int orderID = -1;
-                                            for (OrderRow orderRow : allOrderRows) {
-                                                int orderRowTableID = Integer.parseInt(orderRow.getOrderId().getTableId().getTableId());
-                                                if (orderRowTableID == table.getTableNr()) {
-                                                    orderID = Integer.parseInt(orderRow.getOrderId().getOrderId());
-                                                    Log.i("ORDER ID", orderRow.getOrderId().getOrderId());
-                                                    Log.i("ORDER TABLE", orderRow.getOrderId().getTableId().getTableId());
-                                                    deleteWrapper.deleteOrderRow(orderRowTableID);
-                                                }
-                                                ;
-                                            }
-                                            if (orderID != -1) {
-                                                deleteWrapper.deleteOrder(orderID);
-                                            }
-                                        }
-
-                                    });
-
+                            tableDialogViewModel.clearCurrentOrderFromDatabase(table.getTableNr());
                         }
                     })
                     .setNegativeButton("Nej", new DialogInterface.OnClickListener() {
@@ -177,8 +141,6 @@ public class TableDialogFragment extends DialogFragment {
                         }
                     })
                     .show();
-
-
         });
 
         openOrderButton.setOnClickListener(v -> {
@@ -224,7 +186,6 @@ public class TableDialogFragment extends DialogFragment {
             table.bookTable();
         }
     }
-
     private void adjustOrderButton() {
         openOrderButton.setText("Ta en order");
         openOrderButton.setBackground(popupAvailableColor);
