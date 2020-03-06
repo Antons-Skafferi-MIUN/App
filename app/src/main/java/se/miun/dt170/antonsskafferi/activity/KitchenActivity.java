@@ -82,6 +82,8 @@ public class KitchenActivity extends AppCompatActivity {
         }
     }
 
+    public void buildOrderRow(OrderRow orderRow) {
+        Log.d("Building orderRow", orderRow.toString());
     private void postOrder(Order order) {
         mAPIService.postOrder(order).enqueue(new Callback<Order>() {
             @Override

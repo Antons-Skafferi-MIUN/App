@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -32,12 +31,15 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
-import se.miun.dt170.antonsskafferi.data.model.Food;
+import se.miun.dt170.antonsskafferi.data.model.Drinks;
+import se.miun.dt170.antonsskafferi.data.model.Foods;
+import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
+import se.miun.dt170.antonsskafferi.ui.order_overview.menu_category_view.MenuCategoryView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongHeaderView;
@@ -64,15 +66,17 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private ImageButton editButton;
     private ImageButton deleteButton;
     private MenuContainerView menuContainerView;
+    private MenuCategoryView menuCategoryView;
     private LinearLayout menuContainerLayout;
     private NavbarView navbarView;
     private OrderBongContainerView orderBongContainerView;
-    private OrderBongButtonsView orderBongButtonsView;
     private OrderBongListView orderBongListView;
+    private OrderBongButtonsView orderBongButtonsView;
+    private ApiService mAPIService;
+    ArrayList<String> categorylist;
     private OrderBongHeaderView orderBongHeaderView;
     private LinearLayout orderBongListLinearLayout;
     private int tableID;
-    private ApiService mAPIService;
 
     ListView lv;
     ArrayAdapter<String> adapter;
@@ -106,8 +110,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         deleteButton = orderBongButtonsView.findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
         setNavbarListener();
-        menuContainerView.addCategory("Testkategori");
-        setMenuItemListener();
+        categorylist = new ArrayList<String>();
+
+        getFoods();
 
         return orderOverviewFragmentView;
     }
@@ -163,10 +168,14 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
                 //fill food
+                menuContainerLayout.removeAllViews();
+                getFoods();
                 break;
             case R.id.drinkButton:
                 Toast.makeText(getActivity(), "DRINKS", Toast.LENGTH_SHORT).show();
                 //fill drinks
+                menuContainerLayout.removeAllViews();
+                getDrinks();
                 break;
             case R.id.sendButton:
                 sendOrder(v);
@@ -180,17 +189,72 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 Toast.makeText(getActivity(), "DELETE", Toast.LENGTH_SHORT).show();
                 removeAllItemFromBong(orderBongListView);
                 break;
-
         }
     }
 
     private void addMenuItemToBong(MenuItemView menuItemView) {
-        //TextView menuItemNameTextView = menuItemView.findViewById(R.id.menuItemName);
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        //Food food = new Food(menuItemView.getFood().getFoodId());
-        BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getFood(), null);
+        BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getMenuItem(), null);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
+
+
+    // Temporary location for getting food from database
+    public void getFoods() {
+        mAPIService.getFoods().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Foods>() {
+                    @Override
+                    public void onCompleted() {
+                        setMenuItemListener();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        Log.e("error", "onError: " + e.toString());
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(Foods response) {
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+
+                        ArrayList<MenuItem> menuItemResponsList = new ArrayList<>(response.getFoods());
+
+                        //Start sorting the foodobjects
+                        menuContainerView.createMenuCategories(menuItemResponsList);
+                    }
+
+                });
+
+    }
+
+
+    public void getDrinks() {
+        mAPIService.getDrinks().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Drinks>() {
+                    @Override
+                    public void onCompleted() {
+                        setMenuItemListener();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Retrofit RxJava", e.toString());
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(Drinks response) {
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                        ArrayList<MenuItem> menuItemResponsList = new ArrayList<>(response.getDrinks());
+
+                        //Start sorting the foodobjects
+                        menuContainerView.createMenuCategories(menuItemResponsList);
+                    }
+                });
+    }
+
 
     private void sendOrder(View v) {
         OrderBongHeaderView orderBongHeaderView = orderBongContainerView.findViewById(R.id.orderBongHeaderView);
@@ -199,7 +263,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         TextView orderNumber = orderBongHeaderView.findViewById(R.id.orderNumber);
         TextView time = orderBongHeaderView.findViewById(R.id.time);
 
-        ViewGroup orderRows = (ViewGroup) orderBongListLinearLayout;
+        ViewGroup orderRows = orderBongListLinearLayout;
 
         for (int orderRowIndex = 0; orderRowIndex < orderRows.getChildCount(); orderRowIndex++) {
             //TextView
@@ -275,4 +339,5 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         BongItemView bongItemView = new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange());
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
+
 }
