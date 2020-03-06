@@ -33,13 +33,11 @@ public class PostWrapper {
                     Log.i("Retrofit POST", "order post submitted to API.");
 
                     // Post a new OrderRow using the new OrderID
-                    //OrderRow orderRow = new OrderRow(response.body(), null, new Food("3"), null);
-                    //postOrderRow(orderRow);
-
                     menuItems.forEach(menuItem -> {
                         OrderRow orderRow = null;
 
                         if (menuItem.getTypeOfMenuItem().equals("Food")) {
+                            //TODO FIX ORDER CHANGE
                             orderRow = new OrderRow(response.body(), null, new Food(menuItem.getId()), null);
                         } else if (menuItem.getTypeOfMenuItem().equals("Drink")) {
                             orderRow = new OrderRow(response.body(), new Drink(menuItem.getId()), null, null);

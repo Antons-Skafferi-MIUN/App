@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
@@ -19,9 +20,11 @@ import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
  */
 public class TableDialogViewModel extends ViewModel {
     private ApiService mAPIService;
+    private DeleteWrapper deleteWrapper;
 
     public TableDialogViewModel(){
         mAPIService = ApiUtils.getAPIService();
+        deleteWrapper = new DeleteWrapper();
     }
 
     public void clearCurrentOrderFromDatabase(int tableNr){
@@ -50,11 +53,11 @@ public class TableDialogViewModel extends ViewModel {
                                 orderID = Integer.parseInt(orderRow.getOrderId().getOrderId());
                                 Log.i("ORDER ID", orderRow.getOrderId().getOrderId());
                                 Log.i("ORDER TABLE", orderRow.getOrderId().getTableId().getTableId());
-                                //deleteWrapper.deleteOrderRow(orderRowTableID);
+                                deleteWrapper.deleteOrderRow(orderRowTableID);
                             }
                         }
                         if (orderID != -1) {
-                            // deleteWrapper.deleteOrder(orderID);
+                            deleteWrapper.deleteOrder(orderID);
                         }
                     }
 
