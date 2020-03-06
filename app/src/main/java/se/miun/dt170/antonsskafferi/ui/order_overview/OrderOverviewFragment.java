@@ -18,15 +18,21 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
+import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
+import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
@@ -67,6 +73,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderBongButtonsView orderBongButtonsView;
     private ApiService mAPIService;
     ArrayList<String> categorylist;
+    List<MenuItem> menuItemList;
     private OrderBongHeaderView orderBongHeaderView;
     private LinearLayout orderBongListLinearLayout;
     private int tableID;
@@ -81,6 +88,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                              @Nullable Bundle savedInstanceState) {
 
         mAPIService = ApiUtils.getAPIService();
+        menuItemList = new ArrayList<>();
         View orderOverviewFragmentView = inflater.inflate(R.layout.order_overview_fragment, container, false);
         menuContainerView = orderOverviewFragmentView.findViewById(R.id.menuContainerView);
         menuContainerLayout = orderOverviewFragmentView.findViewById(R.id.menuContainerLayout);
@@ -185,6 +193,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getMenuItem(), null);
         orderBongListLinearLayout.addView(bongItemView, 0);
+        menuItemList.add(menuItemView.getMenuItem());
     }
 
 
@@ -252,13 +261,13 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         TextView orderNumber = orderBongHeaderView.findViewById(R.id.orderNumber);
         TextView time = orderBongHeaderView.findViewById(R.id.time);
 
-        ViewGroup orderRows = orderBongListLinearLayout;
+        OrderRows orderRows = new OrderRows();
 
-        for (int orderRowIndex = 0; orderRowIndex < orderRows.getChildCount(); orderRowIndex++) {
-            //TextView
-        }
+        menuItemList.forEach(menuItem -> {
+            OrderRow orderRow = new OrderRow();
+        });
 
-        Toast.makeText(getActivity(), waiterName.getText(), Toast.LENGTH_SHORT).show();
+        Order order = new Order();
     }
 
     //remove all items from bong list
@@ -267,7 +276,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         orderBongListLinearLayout.removeAllViews();
 
     }
-
 
     private void popupWindow(View v) {
         //startActivity(new Intent(OrderOverviewFragment.this,orderOverviewPopUp.class));
@@ -306,6 +314,49 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private void addOrderRowToBong(OrderRow orderRow) {
         BongItemView bongItemView = new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange());
         orderBongListLinearLayout.addView(bongItemView, 0);
+    }
+
+    private void postOrder(Order order) {
+        mAPIService.postOrder(order).enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit POST", response.body().toString());
+                    Log.i("Retrofit POST", "order post submitted to API.");
+
+                    // Post a new OrderRow using the new OrderID
+                    OrderRow orderRow = new OrderRow(response.body(), null, new Food("3"), null);
+                    postOrderRow(orderRow);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Order> call, Throwable t) {
+                Log.e("Retrofit POST", "Unable to submit order post to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void postOrderRow(OrderRow orderRow) {
+        mAPIService.postOrderRow(orderRow).enqueue(new Callback<OrderRow>() {
+            @Override
+            public void onResponse(Call<OrderRow> call, Response<OrderRow> response) {
+
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit POST", response.body().toString());
+                    Log.i("Retrofit POST", "order post submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderRow> call, Throwable t) {
+                Log.e("Retrofit POST", "Unable to submit order post to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
     }
 
 }
