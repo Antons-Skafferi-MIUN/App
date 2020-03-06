@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="25"
+            android:padding="25dp"
             android:text="Bord n "
             android:textColor="#000000"
             android:textSize="24sp"
@@ -30,7 +30,7 @@
 
         <Button
             android:id="@+id/bookingButton"
-            android:layout_width="256dp"
+            android:layout_width="0dp"
             android:layout_height="81dp"
             android:background="@drawable/green_button_border"
             android:text="Boka"
@@ -44,7 +44,7 @@
 
         <Button
             android:id="@+id/openOrderButton"
-            android:layout_width="256dp"
+            android:layout_width="0dp"
             android:layout_height="81dp"
             android:background="@drawable/green_button_border"
             android:text="Öppna bord / Ta order"
@@ -55,7 +55,7 @@
 
         <Button
             android:id="@+id/cancelButton"
-            android:layout_width="256dp"
+            android:layout_width="0dp"
             android:layout_height="81dp"
             android:background="@drawable/green_button_border"
             android:text="Rensa bord"

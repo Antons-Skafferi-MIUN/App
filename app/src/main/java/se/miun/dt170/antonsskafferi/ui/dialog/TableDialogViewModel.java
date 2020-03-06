@@ -20,11 +20,11 @@ import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 public class TableDialogViewModel extends ViewModel {
     private ApiService mAPIService;
 
-    public TableDialogViewModel(){
+    public TableDialogViewModel() {
         mAPIService = ApiUtils.getAPIService();
     }
 
-    public void clearCurrentOrderFromDatabase(int tableNr){
+    public void clearCurrentOrderFromDatabase(int tableNr) {
         mAPIService.getOrderRows()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

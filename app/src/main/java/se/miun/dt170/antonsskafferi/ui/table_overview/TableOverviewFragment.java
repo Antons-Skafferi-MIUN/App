@@ -27,14 +27,13 @@ import se.miun.dt170.antonsskafferi.data.repository.TableRepository;
 
 /**
  * This is the fullscreen fragment for showing available tables.
- * Contains several {@link se.miun.dtableButtont170.antonsskafferi.ui.table_overview.TableView}.
  */
 public class TableOverviewFragment extends Fragment implements Button.OnClickListener {
 
     private TableOverviewViewModel mViewModel;
     private View fragmentView;
     private TableDialogSharedViewModel sharedViewModel;
-    private int nrOfTable;
+    private int numberOfTables;
 
     public static TableOverviewFragment newInstance() {
         return new TableOverviewFragment();
@@ -47,8 +46,8 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
         fragmentView = inflater.inflate(R.layout.table_overview_fragment, container, false);
         ViewGroup parent = fragmentView.findViewById(R.id.TableOverviewLayout);
-        nrOfTable = parent.getChildCount();
-        for (int tableIndex = 0; tableIndex < nrOfTable; tableIndex++) { // for each child apply a listener to the childs tableButton
+        numberOfTables = parent.getChildCount();
+        for (int tableIndex = 0; tableIndex < numberOfTables; tableIndex++) { // for each child apply a listener to the childs tableButton
 
             TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
             table.setup(tableIndex + 1);
@@ -85,36 +84,46 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     public void updateFragment(Reservations tablesReservations) {
         //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
         // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
-        // GET ALL TODAYS RESERVATIONS.
-          DateConverter date = new DateConverter();
-          ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
-          ArrayList<Reservation> todaysReservations = new ArrayList<>();
+        DateConverter date = new DateConverter();
+        ArrayList<Reservation> todaysReservations = new ArrayList<>();
+        Log.d("Reservation Repo", "" + tablesReservations.getReservations().size());
 
-          for(Reservation r : reservationsList){
-            if(date.compareDates(r.getReservationDate(), date.getCurrentTime())){
-                todaysReservations.add(r);
+        // Find today's reservations
+        tablesReservations.getReservations().forEach(reservation -> {
+            if (date.compareDates(reservation.getReservationDate(), date.getCurrentTime())) {
+                Log.d("Reservation", String.format("Today's reservation: %s", reservation.toString()));
+                todaysReservations.add(reservation);
             }
-          }
+        });
 
+        todaysReservations.forEach(reservation -> {
+            TableView table = fragmentView.findViewById(R.id.table1 + Integer.parseInt(reservation.getTableId().getTableId()));
+            if(reservation.getTableId().getTableStatus().equals("vacant")) {
+                sharedViewModel.setDialogText("Bord " + table.getTableNr());
+                table.removeBooking();
+            } else {
+                table.bookTable();
+                sharedViewModel.setDialogText(String.format("Bokat av: %s\nKontakt: %s", reservation.getReservationName(), reservation.getReservationPhone()));
+            }
+            table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+        });
 
-          for(int tableIndex = 0; tableIndex < nrOfTable; tableIndex++){
-              Reservation reservation =  reservationsList.get(tableIndex);
-              RestaurantTable restaurantTable = reservation.getTableId();
-              TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
-
-              if(restaurantTable.getTableStatus().equals("vacant")){
-                  sharedViewModel.setDialogText("Bord " + table.getTableNr());
-                  table.removeBooking();
-              }
-              else{
-                  table.bookTable();
-                  sharedViewModel.setDialogText("Bokat av: " + reservation.getReservationName() + "\n" + "Kontakt: " + reservation.getReservationPhone());
-              }
-              Log.i("Retrofit RxJava",  new Integer(tableIndex).toString());
-              Log.i("GET RESERV DATE",  reservation.getReservationDate());
-
-              table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
-
-          }
+//        for (int tableIndex = 0; tableIndex < numberOfTables; tableIndex++) {
+//            Reservation reservation = todaysReservations.get(tableIndex);
+//            RestaurantTable restaurantTable = reservation.getTableId();
+//            TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
+//
+//            if (restaurantTable.getTableStatus().equals("vacant")) {
+//                sharedViewModel.setDialogText("Bord " + table.getTableNr());
+//                table.removeBooking();
+//            } else {
+//                table.bookTable();
+//                sharedViewModel.setDialogText("Bokat av: " + reservation.getReservationName() + "\n" + "Kontakt: " + reservation.getReservationPhone());
+//            }
+//            Log.i("Retrofit RxJava", new Integer(tableIndex).toString());
+//            Log.i("GET RESERV DATE", reservation.getReservationDate());
+//
+//            table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+//        }
     }
 }

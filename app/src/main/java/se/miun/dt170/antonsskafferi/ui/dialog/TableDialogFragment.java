@@ -1,9 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.dialog;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
@@ -13,11 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,23 +20,16 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import java.util.ArrayList;
+
 import java.util.Calendar;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
-import se.miun.dt170.antonsskafferi.data.model.OrderRow;
-import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.repository.OrderRepository;
-import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewViewModel;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableView;
 
 /**
@@ -169,9 +156,9 @@ public class TableDialogFragment extends DialogFragment {
                 });
                 myDialog.show();
                 myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                        |WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-    } else {
-        adjustBookingButton();
+                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+            } else {
+                adjustBookingButton();
             }
         });
     }
@@ -187,11 +174,11 @@ public class TableDialogFragment extends DialogFragment {
             table.bookTable();
         }
     }
+
     private void adjustOrderButton() {
         openOrderButton.setText("Ta en order");
         openOrderButton.setBackground(popupAvailableColor);
     }
-
 }
 
 
