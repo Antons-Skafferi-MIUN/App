@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 
-public class ClearOrderDialog extends AlertDialog.Builder {
+public class ClearOrderDialog extends AlertDialog {
     public ClearOrderDialog(Context context) {
         super(context);
     }

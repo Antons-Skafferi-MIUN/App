@@ -26,6 +26,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
@@ -41,6 +42,7 @@ import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.repository.OrderRepository;
+import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewViewModel;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableView;
 
 /**
@@ -67,6 +69,7 @@ public class TableDialogFragment extends DialogFragment {
     private Calendar calender;
     private Context context;
     private MutableLiveData<TableView> mutableTable;
+    private TableDialogViewModel tableDialogViewModel;
 
 
     @Override
@@ -103,6 +106,12 @@ public class TableDialogFragment extends DialogFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        tableDialogViewModel = new ViewModelProvider(requireActivity()).
+                get(TableDialogViewModel.class);
+        // TEST
+        tableDialogViewModel.clearCurrentOrderFromDatabase();
+
         parent = getParentFragment();
         openOrderButton = dialogView.findViewById(R.id.openOrderButton);
         bookingButton = dialogView.findViewById(R.id.bookingButton);
