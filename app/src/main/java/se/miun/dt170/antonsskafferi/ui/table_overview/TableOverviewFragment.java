@@ -1,18 +1,15 @@
 package se.miun.dt170.antonsskafferi.ui.table_overview;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
@@ -26,9 +23,6 @@ import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
-import se.miun.dt170.antonsskafferi.data.model.RestaurantTables;
-import se.miun.dt170.antonsskafferi.data.remote.ApiService;
-import se.miun.dt170.antonsskafferi.data.repository.ReservationRepository;
 import se.miun.dt170.antonsskafferi.data.repository.TableRepository;
 
 /**
@@ -38,7 +32,7 @@ import se.miun.dt170.antonsskafferi.data.repository.TableRepository;
 public class TableOverviewFragment extends Fragment implements Button.OnClickListener {
 
     private TableOverviewViewModel mViewModel;
-    private View fragmentView;;
+    private View fragmentView;
     private TableDialogSharedViewModel sharedViewModel;
     private int nrOfTable;
 
@@ -52,12 +46,13 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
 
         fragmentView = inflater.inflate(R.layout.table_overview_fragment, container, false);
-        ViewGroup parent = (ViewGroup) fragmentView.findViewById(R.id.TableOverviewLayout);
+        ViewGroup parent = fragmentView.findViewById(R.id.TableOverviewLayout);
         nrOfTable = parent.getChildCount();
-        for(int tableIndex = 0; tableIndex < nrOfTable; tableIndex++){ // for each child apply a listener to the childs tableButton
+        for (int tableIndex = 0; tableIndex < nrOfTable; tableIndex++) { // for each child apply a listener to the childs tableButton
 
-            TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
-            table.setup(tableIndex+1);
+            TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
+            table.setup(tableIndex + 1);
+
             Button tempButton = table.findViewById(R.id.tableButton);
             tempButton.setOnClickListener(this);
             //TODO ADD TABLES IN LSIT FOR EASY ACCESS LATER.
@@ -68,10 +63,10 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TableRepository reservations =  new TableRepository();
+        TableRepository reservations = new TableRepository();
         reservations.getRestaurantTables(this);
 
-       // Log.i("RESERVATIONS IN TABLEOVERVIEWFRAGMENT", reservations.getValue().toString());
+        // Log.i("RESERVATIONS IN TABLEOVERVIEWFRAGMENT", reservations.getValue().toString());
 
         mViewModel = ViewModelProviders.of(this).get(TableOverviewViewModel.class);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TableDialogSharedViewModel.class);
@@ -87,22 +82,33 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
     }
 
-    public void updateFragment(Reservations tablesReservations){
-        //TODO IF THERE ARE MORE RESERVATIONS THAN TABLES WE CANT LOOK AT RESERVE SIZE
+    public void updateFragment(Reservations tablesReservations) {
         //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
-        //
-          ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
+        // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
+        // GET ALL TODAYS RESERVATIONS.
           DateConverter date = new DateConverter();
-          for(int tableIndex = 0; tableIndex < reservationsList.size(); tableIndex++){
+          ArrayList<Reservation> reservationsList = tablesReservations.getReservations();
+          ArrayList<Reservation> todaysReservations = new ArrayList<>();
+
+          for(Reservation r : reservationsList){
+            if(date.compareDates(r.getReservationDate(), date.getCurrentTime())){
+                todaysReservations.add(r);
+            }
+          }
+
+
+          for(int tableIndex = 0; tableIndex < nrOfTable; tableIndex++){
               Reservation reservation =  reservationsList.get(tableIndex);
               RestaurantTable restaurantTable = reservation.getTableId();
               TableView table = (TableView) fragmentView.findViewById(R.id.table1 + tableIndex);
 
               if(restaurantTable.getTableStatus().equals("vacant")){
+                  sharedViewModel.setDialogText("Bord " + table.getTableNr());
                   table.removeBooking();
               }
               else{
                   table.bookTable();
+                  sharedViewModel.setDialogText("Bokat av: " + reservation.getReservationName() + "\n" + "Kontakt: " + reservation.getReservationPhone());
               }
               Log.i("Retrofit RxJava",  new Integer(tableIndex).toString());
               Log.i("GET RESERV DATE",  reservation.getReservationDate());

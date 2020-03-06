@@ -1,16 +1,13 @@
 package se.miun.dt170.antonsskafferi.ui.bong;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+
+import androidx.annotation.Nullable;
 
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.Item;
 
 /**
  * This is the container for the list of {@link BongItemView}.
@@ -18,6 +15,10 @@ import se.miun.dt170.antonsskafferi.data.Item;
  * Displayed in the {@link se.miun.dt170.antonsskafferi.activity.KitchenActivity}.
  */
 public class BongListView extends LinearLayout {
+
+    public BongListView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+    }
 
     public BongListView(Context context) {
         super(context);

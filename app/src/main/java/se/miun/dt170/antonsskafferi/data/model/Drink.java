@@ -1,10 +1,11 @@
 package se.miun.dt170.antonsskafferi.data.model;
 
+import org.jetbrains.annotations.NotNull;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(name = "drinks")
-public class Drink {
+public class Drink implements MenuItem {
 
     @Element(name = "drinkId")
     private String drinkId;
@@ -21,11 +22,27 @@ public class Drink {
     @Element(name = "drinkName", required = false)
     private String drinkName;
 
+    /**
+     * Only used for serialization of XML to object for Retrofit!
+     */
     public Drink() {
     }
 
-    public Drink(String drinkId) {
+    /**
+     * Use this constructor when you're doing a POST request.
+     *
+     * @param drinkId
+     */
+    public Drink(@NotNull String drinkId) {
         this.drinkId = drinkId;
+    }
+
+    public Drink(String drinkId, String drinkType, String drinkPrice, String drinkCategory, String drinkName) {
+        this.drinkId = drinkId;
+        this.drinkType = drinkType;
+        this.drinkPrice = drinkPrice;
+        this.drinkCategory = drinkCategory;
+        this.drinkName = drinkName;
     }
 
     public String getDrinkId() {
@@ -71,5 +88,20 @@ public class Drink {
     @Override
     public String toString() {
         return "ClassPojo [drinkId = " + drinkId + ", drinkType = " + drinkType + ", drinkPrice = " + drinkPrice + ", drinkCategory = " + drinkCategory + ", drinkName = " + drinkName + "]";
+    }
+
+    @Override
+    public String getName() {
+        return drinkName;
+    }
+
+    @Override
+    public String getPrice() {
+        return drinkPrice;
+    }
+
+    @Override
+    public String getCategory() {
+        return drinkCategory;
     }
 }
