@@ -39,11 +39,13 @@ public class KitchenActivity extends AppCompatActivity {
     private Map<String, KitchenBongContainerView> kitchenBongContainerViews;
     private ApiService mAPIService;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kitchen);
-
+getLifecycle();
         kitchenBongContainerViews = new HashMap<>();
         mAPIService = ApiUtils.getAPIService();
 
