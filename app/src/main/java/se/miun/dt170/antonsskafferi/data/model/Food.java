@@ -88,4 +88,9 @@ public class Food implements MenuItem {
     public String getPrice() {
         return foodPrice;
     }
+
+    @Override
+    public String getCategory() {
+        return foodCategory;
+    }
 }
