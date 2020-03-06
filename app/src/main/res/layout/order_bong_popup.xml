@@ -7,6 +7,12 @@
     android:padding="5dp"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="397dp"
+        android:layout_height="wrap_content"
+        android:hint="Bokstäver"
+        android:textColor="#FFFFFF"/>
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
