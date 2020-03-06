@@ -5,7 +5,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(name = "foods")
-public class Food {
+public class Food implements MenuItem {
 
     @Element(name = "foodId")
     private String foodId;
@@ -34,6 +34,13 @@ public class Food {
         this.foodId = foodId;
     }
 
+    //TODO Remove this function when reading from database is implemented
+    public Food(String foodId, String foodPrice, String foodName, String foodCategory) {
+        this.foodId = foodId;
+        this.foodPrice = foodPrice;
+        this.foodName = foodName;
+        this.foodCategory = foodCategory;
+    }
 
     public String getFoodPrice() {
         return foodPrice;
@@ -70,5 +77,20 @@ public class Food {
     @Override
     public String toString() {
         return "ClassPojo [foodPrice = " + foodPrice + ", foodName = " + foodName + ", foodId = " + foodId + ", foodCategory = " + foodCategory + "]";
+    }
+
+    @Override
+    public String getName() {
+        return foodName;
+    }
+
+    @Override
+    public String getPrice() {
+        return foodPrice;
+    }
+
+    @Override
+    public String getCategory() {
+        return foodCategory;
     }
 }

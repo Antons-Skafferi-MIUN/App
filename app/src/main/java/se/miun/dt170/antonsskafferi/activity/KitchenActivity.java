@@ -7,12 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.flexbox.FlexboxLayout;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,25 +71,82 @@ public class KitchenActivity extends AppCompatActivity {
                     public void onNext(OrderRows response) {
                         response.getOrderRows().forEach(orderRow -> {
                             buildOrder(orderRow.getOrderId());
-                            buildOrderRow(orderRow);
                         });
-
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
                     }
                 });
     }
 
     private void buildOrder(Order order) {
-        if (null == kitchenBongContainerViews.putIfAbsent(order.getOrderId(), new KitchenBongContainerView(this, this, order))) {
-            Log.d("Building order", order.toString());
+        if (null == kitchenBongContainerViews.putIfAbsent(order.getOrderId(), new KitchenBongContainerView(this, order))) {
             bongListLayoutContainer.addView(kitchenBongContainerViews.get(order.getOrderId()));
         }
     }
 
     public void buildOrderRow(OrderRow orderRow) {
         Log.d("Building orderRow", orderRow.toString());
+    private void postOrder(Order order) {
+        mAPIService.postOrder(order).enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit POST", response.body().toString());
+                    Log.i("Retrofit POST", "order post submitted to API.");
 
+                    // Post a new OrderRow using the new OrderID
+                    OrderRow orderRow = new OrderRow(response.body(), null, new Food("3"), null);
+                    postOrderRow(orderRow);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Order> call, Throwable t) {
+                Log.e("Retrofit POST", "Unable to submit order post to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void postOrderRow(OrderRow orderRow) {
+        mAPIService.postOrderRow(orderRow).enqueue(new Callback<OrderRow>() {
+            @Override
+            public void onResponse(Call<OrderRow> call, Response<OrderRow> response) {
+
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit POST", response.body().toString());
+                    Log.i("Retrofit POST", "order post submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderRow> call, Throwable t) {
+                Log.e("Retrofit POST", "Unable to submit order post to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+
+
+    private void postReservation(Reservation reservation) {
+        mAPIService.postReservation(reservation).enqueue(new Callback<Reservation>() {
+            @Override
+            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                if (response.isSuccessful()) {
+                    // TODO: Show success message
+                    Log.i("Retrofit POST", response.body().toString());
+                    Log.i("Retrofit POST", "reservation post submitted to API.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Reservation> call, Throwable t) {
+                Log.e("Retrofit POST", "Unable to submit post to API." + t.toString());
+                t.printStackTrace();
+            }
+        });
     }
 
     // Temporary location for getting food from database

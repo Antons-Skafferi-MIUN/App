@@ -20,6 +20,10 @@
         <action
             android:id="@+id/action_orderOverviewFragment_to_foodEditDialog"
             app:destination="@id/foodEditDialog" />
+        <argument
+            android:name="tableID"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
     <dialog
