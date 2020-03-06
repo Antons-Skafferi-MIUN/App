@@ -172,10 +172,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     }
 
     private void addMenuItemToBong(MenuItemView menuItemView) {
-        //TextView menuItemNameTextView = menuItemView.findViewById(R.id.menuItemName);
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        //Food food = new Food(menuItemView.getFood().getFoodId());
-        BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getFood(), null);
+        BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getMenuItem(), null);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
 

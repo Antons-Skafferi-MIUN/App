@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 import com.google.android.flexbox.FlexboxLayout;
 
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.model.Drink;
 import se.miun.dt170.antonsskafferi.data.model.Food;
+import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 
 public class MenuCategoryView extends LinearLayout {
@@ -30,20 +32,16 @@ public class MenuCategoryView extends LinearLayout {
         textView.setText(categoryName);
 
         Food food = new Food("1", "129", "Lasagne", "Mat");
+        Drink drink = new Drink("2", "79", "Skräp", "Oboy", "Dryck");
 
         MenuItemView menuItemView = new MenuItemView(getContext(), food);
+        MenuItemView menuItemView1 = new MenuItemView(getContext(), drink);
         FlexboxLayout menuContainerLayout = this.findViewById(R.id.menuCategoryFlexbox);
         menuContainerLayout.addView(menuItemView);
-
-        /*MenuItemView menuItemView = new MenuItemView(getContext(), "Test", "Test");
-        FlexboxLayout menuContainerLayout = this.findViewById(R.id.menuCategoryFlexbox);
-        menuContainerLayout.addView(menuItemView);
-
-        MenuItemView menuItemView2 = new MenuItemView(getContext(), "Test2", "Test2");
-        menuContainerLayout.addView(menuItemView2);*/
+        menuContainerLayout.addView(menuItemView1);
     }
 
-    public void addMenuItem(String menuItemName, String menuItemPrice) {
+    public void addMenuItem(MenuItem menuItem) {
         //MenuItemView menuItemView = new MenuItemView(getContext(), menuItemName, menuItemPrice);
 
         //MenuCategoryView menuCategoryView = new MenuCategoryView(getContext(), categoryName);

@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Food;
+import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 
 public class BongItemView extends ConstraintLayout implements View.OnClickListener {
     private boolean itemClicked = false;
@@ -25,7 +26,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         super(context, attributeSet);
     }
 
-    public BongItemView(@NonNull Context context, Food item, @Nullable String orderChange) {
+    public BongItemView(@NonNull Context context, MenuItem menuItem, @Nullable String orderChange) {
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -35,7 +36,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         foodNameText = findViewById(R.id.foodNameText);
         extraText = findViewById(R.id.extraText);
 
-        foodNameText.setText(item.getFoodName());
+        foodNameText.setText(menuItem.getName());
 
         // Populate extra text
         if (orderChange != null) {
