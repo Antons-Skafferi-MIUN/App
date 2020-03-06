@@ -40,22 +40,5 @@ public class MenuCategoryView extends LinearLayout {
            FlexboxLayout menuContainerLayout = this.findViewById(R.id.menuCategoryFlexbox);
            menuContainerLayout.addView(menuItemView);
        }
-
    }
-
-
-
-
-    public MenuCategoryView(@NonNull Context context, String categoryName) {
-        super(context);
-
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.menu_category_view, this, true);
-
-        TextView textView = this.findViewById(R.id.menuCategoryNameTextView);
-        textView.setText(categoryName);
-    }
-
-
-
 }

@@ -37,6 +37,7 @@ public class MenuContainerView extends ScrollView {
 
     public void createMenuCategories(ArrayList<MenuItem> internalItemList) {
 
+        categoryList.clear();
         // Go through the food list
         for (MenuItem menuItem : internalItemList) {
             // Get the current category
@@ -66,6 +67,7 @@ public class MenuContainerView extends ScrollView {
             // Create a category based on the current category name and all it's food
             addCategory(category, internalFoodList);
         }
+
     }
 
 //
