@@ -75,11 +75,13 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         bongListView = (BongListView) this.getParent();
 
         if (!itemClicked) {
+            this.setBackgroundColor(Color.parseColor("#a0f4a0"));
             foodNameText.setTextColor(Color.parseColor("#00cc00"));
             extraText.setTextColor(Color.parseColor("#00cc00"));
             itemClicked = true;
             bongListView.raiseCheckedItems();
         } else {
+            this.setBackgroundColor(Color.parseColor("#FFFFFF"));
             foodNameText.setTextColor(Color.parseColor("#000000"));
             extraText.setTextColor(Color.parseColor("#000000"));
             itemClicked = false;
@@ -90,8 +92,6 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
             grandParent = (KitchenBongContainerView) bongListView.getParent();
             grandParent.setVisibility(View.GONE);
         }
-
-        Toast.makeText(getContext(), bongListView.getCheckedItems().toString() + " " + bongListView.getNumberOfItems(), Toast.LENGTH_SHORT).show();
     }
 }
 

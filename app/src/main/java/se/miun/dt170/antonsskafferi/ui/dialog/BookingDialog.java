@@ -132,9 +132,9 @@ public class BookingDialog extends AlertDialog {
                     reservation.setReservationPhone(phoneNumber.getText().toString());
                     reservation.setReservationDate(timeString);
                     reservation.setTableId(restaurantTable);
-
                     postWrapper.postReservation(reservation);
                     Log.i("BookingButtonClicked", timeString);
+                    dismiss();
                 }
             }
         });
