@@ -99,4 +99,9 @@ public class Drink implements MenuItem {
     public String getPrice() {
         return drinkPrice;
     }
+
+    @Override
+    public String getCategory() {
+        return drinkCategory;
+    }
 }

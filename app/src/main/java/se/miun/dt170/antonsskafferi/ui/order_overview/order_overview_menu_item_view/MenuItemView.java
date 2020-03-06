@@ -40,4 +40,5 @@ public class MenuItemView extends CardView {
     public MenuItem getMenuItem() {
         return menuItem;
     }
+
 }
