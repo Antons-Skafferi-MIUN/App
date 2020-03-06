@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,6 +35,8 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
+import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Food;
@@ -42,6 +45,7 @@ import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
+import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
@@ -272,13 +276,12 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         TextView orderNumber = orderBongHeaderView.findViewById(R.id.orderNumber);
         TextView time = orderBongHeaderView.findViewById(R.id.time);
 
-        OrderRows orderRows = new OrderRows();
+        DateConverter dateConverter = new DateConverter();
 
-        menuItemList.forEach(menuItem -> {
-            OrderRow orderRow = new OrderRow();
-        });
+        Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
 
-        Order order = new Order();
+        PostWrapper postWrapper = new PostWrapper();
+        postWrapper.postOrder(order, menuItemList);
     }
 
     //remove all items from bong list
