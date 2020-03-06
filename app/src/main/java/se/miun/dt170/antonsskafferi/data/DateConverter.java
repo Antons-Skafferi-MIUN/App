@@ -17,8 +17,15 @@ public class DateConverter {
         formatYYYYMMDD = new SimpleDateFormat("yyyy-MM-dd"); // MMMM for full month name
         standard = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
     }
-
-
+    public String formatStandard(String dateString){
+        Date date = null;
+        try {
+            date = standard.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return standard.format(date);
+    }
     public String getCurrentTime() {
         Date time = GregorianCalendar.getInstance(TimeZone.getDefault()).getTime();
         String currentTime = standard.format(time);
@@ -27,7 +34,6 @@ public class DateConverter {
 
     public String formatHHMM(String dateString) {
         Date date = null;
-
         try {
             date = standard.parse(dateString);
         } catch (ParseException e) {
