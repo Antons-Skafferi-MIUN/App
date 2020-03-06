@@ -104,4 +104,14 @@ public class Drink implements MenuItem {
     public String getCategory() {
         return drinkCategory;
     }
+
+    @Override
+    public String getId() {
+        return drinkId;
+    }
+
+    @Override
+    public String getTypeOfMenuItem() {
+        return "Drink";
+    }
 }

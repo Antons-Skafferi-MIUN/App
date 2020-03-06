@@ -93,4 +93,14 @@ public class Food implements MenuItem {
     public String getCategory() {
         return foodCategory;
     }
+
+    @Override
+    public String getId() {
+        return foodId;
+    }
+
+    @Override
+    public String getTypeOfMenuItem() {
+        return "Food";
+    }
 }

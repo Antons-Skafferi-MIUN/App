@@ -4,4 +4,6 @@ public interface MenuItem {
     String getName();
     String getPrice();
     String getCategory();
+    String getId();
+    String getTypeOfMenuItem();
 }

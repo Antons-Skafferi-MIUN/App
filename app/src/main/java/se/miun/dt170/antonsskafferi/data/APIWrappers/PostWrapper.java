@@ -2,12 +2,17 @@ package se.miun.dt170.antonsskafferi.data.APIWrappers;
 
 import android.util.Log;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import se.miun.dt170.antonsskafferi.data.model.Drink;
 import se.miun.dt170.antonsskafferi.data.model.Food;
+import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
+import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
@@ -18,7 +23,7 @@ public class PostWrapper {
         mAPIService = ApiUtils.getAPIService();
     }
 
-    public void postOrder(Order order) {
+    public void postOrder(Order order, List<MenuItem> menuItems) {
         mAPIService.postOrder(order).enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Call<Order> call, Response<Order> response) {
@@ -28,8 +33,20 @@ public class PostWrapper {
                     Log.i("Retrofit POST", "order post submitted to API.");
 
                     // Post a new OrderRow using the new OrderID
-                    OrderRow orderRow = new OrderRow(response.body(), null, new Food("3"), null);
-                    postOrderRow(orderRow);
+                    //OrderRow orderRow = new OrderRow(response.body(), null, new Food("3"), null);
+                    //postOrderRow(orderRow);
+
+                    menuItems.forEach(menuItem -> {
+                        OrderRow orderRow = null;
+
+                        if (menuItem.getTypeOfMenuItem().equals("Food")) {
+                            orderRow = new OrderRow(response.body(), null, new Food(menuItem.getId()), null);
+                        } else if (menuItem.getTypeOfMenuItem().equals("Drink")) {
+                            orderRow = new OrderRow(response.body(), new Drink(menuItem.getId()), null, null);
+                        }
+
+                        postOrderRow(orderRow);
+                    });
                 }
             }
 
