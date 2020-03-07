@@ -57,7 +57,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     public void onClick(View view) {
         if (view.getId() == R.id.checkBox) {
             try {
-                BongListView bongListView = (BongListView) view.getParent().getParent().getParent();
+                //BongListView bongListView = (BongListView) view.getParent().getParent().getParent();
                 setItemClicked();
             }
             catch (Exception e) { }
@@ -72,7 +72,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void setItemClicked() {
-        bongListView = (BongListView) this.getParent();
+        //bongListView = (BongListView) this.getParent();
 
         if (!itemClicked) {
             this.setBackgroundColor(Color.parseColor("#a0f4a0"));
