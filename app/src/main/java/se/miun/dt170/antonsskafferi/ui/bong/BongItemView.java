@@ -57,7 +57,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     public void onClick(View view) {
         if (view.getId() == R.id.checkBox) {
             try {
-                BongListView bongListView = (BongListView) view.getParent().getParent().getParent();
+                //BongListView bongListView = (BongListView) view.getParent().getParent().getParent();
                 setItemClicked();
             }
             catch (Exception e) { }
@@ -72,18 +72,18 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void setItemClicked() {
-        bongListView = (BongListView) this.getParent();
+        //bongListView = (BongListView) this.getParent();
 
         if (!itemClicked) {
-            this.setBackgroundColor(Color.parseColor("#a0f4a0"));
-            foodNameText.setTextColor(Color.parseColor("#00cc00"));
+            this.setBackgroundColor(Color.parseColor("#a0f4a0")); //light green
+            foodNameText.setTextColor(Color.parseColor("#00cc00")); //green
             extraText.setTextColor(Color.parseColor("#00cc00"));
             itemClicked = true;
             bongListView.raiseCheckedItems();
         } else {
             this.setBackgroundColor(Color.parseColor("#FFFFFF"));
-            foodNameText.setTextColor(Color.parseColor("#000000"));
-            extraText.setTextColor(Color.parseColor("#000000"));
+            foodNameText.setTextColor(Color.parseColor("#808080")); //grey
+            extraText.setTextColor(Color.parseColor("#808080"));
             itemClicked = false;
             bongListView.reduceCheckedItems();
         }

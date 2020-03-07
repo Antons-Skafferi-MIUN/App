@@ -199,7 +199,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.deleteButton:
                 Toast.makeText(getActivity(), "DELETE", Toast.LENGTH_SHORT).show();
-                removeAllItemFromBong(orderBongListView);
+                removeItemFromBongList(orderBongListView);
                 break;
         }
     }
@@ -284,31 +284,32 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         postWrapper.postOrder(order, menuItemList);
     }
 
-    //remove all items from bong list
-    private void removeAllItemFromBong(View v) {
+    //remove clicked items from bong list
+    private void removeItemFromBongList(View v) {
         LinearLayout orderBongListLinearLayout = v.findViewById(R.id.orderBongListLinearLayout);
+        ArrayList<Integer> checkedBongItems = new ArrayList<Integer>();
         for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
             if (bongView instanceof BongItemView) {
-                Log.d("BONG", "Checkbox is found");
-                //((BongItemView) bongView);
-                int colorComp = -6228832;
-                int color = 0;
+                int colorCompаre = -6228832;
+                int backgroundColor = 0;
                 Drawable background = bongView.getBackground();
                 if (background instanceof ColorDrawable) {
-                    color = ((ColorDrawable) background).getColor();
-                    //CheckBox checkBoxChild = (CheckBox) bongView;
-                    Log.d("Color", Integer.toString(color));
+                    backgroundColor = ((ColorDrawable) background).getColor();
+                    Log.d("Color", Integer.toString(backgroundColor));
                 }
-                if (colorComp == color){
-                    Log.d("Checkbox", "working!");
-                    orderBongListLinearLayout.removeViewAt(i);
+                if (colorCompаre == backgroundColor){
+                    checkedBongItems.add(i);
+                    //orderBongListLinearLayout.removeViewAt(i);
                 }
-//                if (checkBoxChild.isChecked()) {
-//                    Log.d("Checkbox", "working!");
-//                    orderBongListLinearLayout.removeViewAt(i);
-//                }
-            }  //etc. If it fails anywhere, just return false.
+            }
+        }
+        for (int index : checkedBongItems){
+            Log.i("Member name: ", Integer.toString(index));
+            try {
+                orderBongListLinearLayout.removeViewAt(index);
+            }
+            catch (Exception e) { }
         }
     }
 
