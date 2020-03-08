@@ -6,6 +6,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ public class orderOverviewPopUp extends Activity {
     private Button confirmbutton;
     private TextView testresultat;
     private ArrayList<String> resultat;
+    private EditText edit;
 
 
 
@@ -40,6 +42,8 @@ public class orderOverviewPopUp extends Activity {
         //test
         extrapotatis = findViewById(R.id.extraPotatis);
         allergigluten = findViewById(R.id.allergiGluten);
+        edit = findViewById(R.id.editText);
+
 
         confirmbutton = findViewById(R.id.confirm);
         testresultat = findViewById(R.id.resultat);
@@ -47,6 +51,8 @@ public class orderOverviewPopUp extends Activity {
 
         resultat = new ArrayList<>();
         testresultat.setEnabled(false);
+
+
 
         extrapotatis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,11 +64,11 @@ public class orderOverviewPopUp extends Activity {
             }
         });
 
-        allergigluten.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+       allergigluten.setOnClickListener(new View.OnClickListener() {
+        @Override
+           public void onClick(View v) {
                 if (allergigluten.isChecked())
-                    resultat.add("- Allergi/Gluten");
+                   resultat.add("- Allergi/Gluten");
                 else
                     resultat.remove("- Allergi/Gluten");
             }
@@ -71,6 +77,9 @@ public class orderOverviewPopUp extends Activity {
         confirmbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String descpr = edit.getText().toString();
+                resultat.add(descpr);
+
                 StringBuilder stringBuilder = new StringBuilder();
                 for(String s: resultat)
                     stringBuilder.append(s).append("\n");

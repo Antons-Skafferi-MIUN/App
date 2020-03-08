@@ -21,10 +21,11 @@ import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
+import se.miun.dt170.antonsskafferi.ui.bong.BongListView;
 
 public class KitchenBongContainerView extends CardView implements LifecycleObserver {
 
-    private LinearLayout kitchenBongContainerLinearLayout;
+    private BongListView kitchenBongContainerLinearLayout;
     private ApiService mAPIService;
 
     public KitchenBongContainerView(Context context, @Nullable AttributeSet attrs) {
@@ -71,6 +72,7 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
     private void buildOrderRow(OrderRow orderRow, Order thisOrder) {
         if (orderRow.getOrderId().getOrderId().equals(thisOrder.getOrderId())) {
             kitchenBongContainerLinearLayout.addView(new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange()));
+            kitchenBongContainerLinearLayout.raiseNumberOfItems();
         }
     }
 }
