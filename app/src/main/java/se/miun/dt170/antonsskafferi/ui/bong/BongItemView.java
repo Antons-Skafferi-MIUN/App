@@ -1,9 +1,12 @@
 package se.miun.dt170.antonsskafferi.ui.bong;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewParent;
@@ -18,10 +21,15 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import java.util.List;
+
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
+import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 
 public class BongItemView extends ConstraintLayout implements View.OnClickListener {
     private boolean itemClicked = false;
@@ -29,7 +37,9 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private TextView extraText;
     private CheckBox checkBox;
     private BongListView bongListView;
+    private OrderBongListView orderBongListView;
     private KitchenBongContainerView grandParent;
+    private String currentActivity;
 
 
     public BongItemView(Context context, AttributeSet attributeSet) {
@@ -78,17 +88,20 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void setItemClicked() {
-        bongListView = (BongListView) this.getParent();
+
+        //bongListView = (BongListView) this.getParent();
 
         if (!itemClicked) {
-            this.setBackgroundColor(Color.parseColor("#a0f4a0")); //light green
-            foodNameText.setTextColor(Color.parseColor("#00cc00")); //green
-            extraText.setTextColor(Color.parseColor("#00cc00"));
+            this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item_selected));
+            //this.setBackgroundColor(Color.parseColor("#a0f4a0")); //light green
+            //foodNameText.setTextColor(Color.parseColor("#00cc00")); //green
+            foodNameText.setTextColor(Color.parseColor("#c18a0b")); //green
+            extraText.setTextColor(Color.parseColor("#c18a0b"));
             itemClicked = true;
             bongListView.raiseCheckedItems();
         } else {
 
-            this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_shadow));
+            this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item));
             //this.setBackgroundColor(Color.parseColor("@drawable/bg_shadow"));
             foodNameText.setTextColor(Color.parseColor("#808080")); //grey
             extraText.setTextColor(Color.parseColor("#808080"));

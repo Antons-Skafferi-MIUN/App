@@ -167,7 +167,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
         waiterName = this.getActivity().getIntent().getStringExtra("DISPLAY_NAME");
         TextView waitername = orderBongHeaderView.findViewById(R.id.waiterName);
-        waitername.setText(waiterName);
+        waitername.setText("Servitör: " + waiterName);
 
     }
 

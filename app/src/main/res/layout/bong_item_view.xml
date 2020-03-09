@@ -50,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="1"
+        android:buttonTint="@color/checkbox_yellowbrown"
         android:gravity="right|center"
         android:layoutDirection="rtl"
         app:layout_constraintEnd_toEndOf="parent"
