@@ -39,22 +39,22 @@ public interface ApiService {
 
 
     // GET METHODS
-    @GET("entity.foods")
+    @GET("entities.foods")
     Observable<Foods> getFoods();
 
-    @GET("entity.drinks")
+    @GET("entities.drinks")
     Observable<Drinks> getDrinks();
 
-    @GET("entity.orders")
+    @GET("entities.orders")
     Observable<Orders> getOrders();
 
-    @GET("entity.restauranttables")
+    @GET("entities.restauranttables")
     Observable<RestaurantTables> getRestaurantTables();
 
-    @GET("entity.reservations")
+    @GET("entities.reservations")
     Observable<Reservations> getReservations();
 
-    @GET("entity.orderrows")
+    @GET("entities.orderrows")
     Observable<OrderRows> getOrderRows();
 
 
@@ -65,7 +65,7 @@ public interface ApiService {
      * @param reservation object should NOT include a reservationID, because it's auto-increment
      * @return posted {@link Reservation} in a response-body (including the assigned auto-increment ID)
      */
-    @POST("entity.reservations")
+    @POST("entities.reservations")
     Call<Reservation> postReservation(@Body Reservation reservation);
 
 
@@ -78,7 +78,7 @@ public interface ApiService {
      * @param orderRow object should NOT include a OrderRowID, because it's auto-increment
      * @return posted {@link OrderRow} in a response-body (including the assigned auto-increment ID)
      */
-    @POST("entity.orderrows")
+    @POST("entities.orderrows")
     Call<OrderRow> postOrderRow(@Body OrderRow orderRow);
 
     /**
@@ -87,7 +87,7 @@ public interface ApiService {
      * @param order object should NOT include a OrderID, because it's auto-increment
      * @return posts {@link Order} in a response-body (including the assigned auto-increment ID)
      */
-    @POST("entity.orders")
+    @POST("entities.orders")
     Call<Order> postOrder(@Body Order order);
 
     // DELETE METHODS
@@ -97,7 +97,7 @@ public interface ApiService {
      * @param id reservation ID
      * @return a confirmation text in response-body
      */
-    @DELETE("entity.reservations/{reservationId}")
+    @DELETE("entities.reservations/{reservationId}")
     Call<Reservation> deleteReservation(@Path("reservationId") long id);
 
     /**
@@ -106,7 +106,7 @@ public interface ApiService {
      * @param id order ID
      * @return a confirmation text in response-body
      */
-    @DELETE("entity.orders/{orderId}")
+    @DELETE("entities.orders/{orderId}")
     Call<Order> deleteOrder(@Path("orderId") long id);
 
     /**
@@ -115,6 +115,6 @@ public interface ApiService {
      * @param id orderRow ID
      * @return a confirmation text in response-body
      */
-    @DELETE("entity.orderrows/{orderRowId}")
+    @DELETE("entities.orderrows/{orderRowId}")
     Call<OrderRow> deleteOrderRow(@Path("orderRowId") long id);
 }
