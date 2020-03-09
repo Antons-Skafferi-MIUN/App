@@ -2,6 +2,7 @@ package se.miun.dt170.antonsskafferi.ui.bong;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Food;
@@ -44,6 +46,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         extraText = findViewById(R.id.extraText);
 
         foodNameText.setText(menuItem.getName());
+        this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_shadow));
 
         // Populate extra text
         if (orderChange != null) {
@@ -72,7 +75,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void setItemClicked() {
-        //bongListView = (BongListView) this.getParent();
+        bongListView = (BongListView) this.getParent();
 
         if (!itemClicked) {
             this.setBackgroundColor(Color.parseColor("#a0f4a0")); //light green
@@ -81,7 +84,9 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
             itemClicked = true;
             bongListView.raiseCheckedItems();
         } else {
-            this.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+            this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_shadow));
+            //this.setBackgroundColor(Color.parseColor("@drawable/bg_shadow"));
             foodNameText.setTextColor(Color.parseColor("#808080")); //grey
             extraText.setTextColor(Color.parseColor("#808080"));
             itemClicked = false;
