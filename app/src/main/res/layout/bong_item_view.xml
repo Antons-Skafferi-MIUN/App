@@ -6,13 +6,16 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_shadow"
     android:padding="8dp">
+
 
     <TextView
         android:id="@+id/foodNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Pasta Carbonara" />
@@ -29,6 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/foodNameText"
         tools:text="" />
 
+    <!--
     <ImageView
         android:id="@+id/delimiterImageView"
         android:layout_width="0dp"
@@ -38,6 +42,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/extraText"
         app:srcCompat="?attr/colorButtonNormal" />
+
+-->
 
     <CheckBox
         android:id="@+id/checkBox"
