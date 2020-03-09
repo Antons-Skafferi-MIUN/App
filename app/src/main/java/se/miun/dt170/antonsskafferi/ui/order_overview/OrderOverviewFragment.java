@@ -324,7 +324,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 999 && resultCode == orderOverviewPopUp.RESULT_OK){
             TextView textView = orderBongHeaderView.findViewById(R.id.tableNumber);
-            textView.setText(data.getStringExtra("EXTRA"));
+            textView.setText(data.getStringExtra("EXTRA")); //detta \r bara f;r att testa att str\ngen kommer fram till bongen
 
         }
     }
