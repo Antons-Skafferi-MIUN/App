@@ -72,7 +72,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void setItemClicked() {
-        //bongListView = (BongListView) this.getParent();
+        bongListView = (BongListView) this.getParent();
 
         if (!itemClicked) {
             this.setBackgroundColor(Color.parseColor("#a0f4a0")); //light green
