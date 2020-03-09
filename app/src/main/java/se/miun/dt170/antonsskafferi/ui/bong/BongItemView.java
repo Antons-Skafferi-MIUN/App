@@ -29,6 +29,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private BongListView bongListView;
     private KitchenBongContainerView grandParent;
 
+
     public BongItemView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }
@@ -47,11 +48,13 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
 
         // Populate extra text
         if (orderChange != null) {
+
             extraText.setText(orderChange);
         }
         checkBox.setOnClickListener(this);
-
     }
+
+
 
     @Override
     public void onClick(View view) {

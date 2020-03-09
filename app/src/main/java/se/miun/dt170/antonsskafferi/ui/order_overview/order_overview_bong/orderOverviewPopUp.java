@@ -1,6 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -77,19 +78,31 @@ public class orderOverviewPopUp extends Activity {
         confirmbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String descpr = edit.getText().toString();
-                resultat.add(descpr);
+                String extratext1 = "";
+                extratext1 = resulttostring();
+                //testresultat.setText(extratext1);
+                //testresultat.setEnabled(false);
 
-                StringBuilder stringBuilder = new StringBuilder();
-                for(String s: resultat)
-                    stringBuilder.append(s).append("\n");
-
-                testresultat.setText(stringBuilder.toString());
-                testresultat.setEnabled(false);
+                Intent i = new Intent();
+                i.putExtra("EXTRA", extratext1);
+                setResult(RESULT_OK,i);
+                finish();
 
             }
         });
-
-
     }
+
+    public String resulttostring() {
+        String descpr = edit.getText().toString();
+        if (!descpr.isEmpty())
+            resultat.add("- " + descpr);
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String s: resultat)
+            stringBuilder.append(s).append("\n");
+        String extratext;
+        extratext = stringBuilder.toString();
+
+        return extratext;
+    }
+
 }
