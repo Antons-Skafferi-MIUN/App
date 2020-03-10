@@ -24,6 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,6 +62,7 @@ import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.orderO
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
+import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragmentDirections;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -285,18 +288,15 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
 
     private void sendOrder(View v) {
-        OrderBongHeaderView orderBongHeaderView = orderBongContainerView.findViewById(R.id.orderBongHeaderView);
-        TextView waiterName = orderBongHeaderView.findViewById(R.id.waiterName);
-        TextView tableNumber = orderBongHeaderView.findViewById(R.id.tableNumber);
-        TextView orderNumber = orderBongHeaderView.findViewById(R.id.orderNumber);
-        TextView time = orderBongHeaderView.findViewById(R.id.time);
-
         DateConverter dateConverter = new DateConverter();
 
         Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
 
         PostWrapper postWrapper = new PostWrapper();
         postWrapper.postOrder(order, menuItemList);
+
+        NavDirections action = OrderOverviewFragmentDirections.actionOrderOverviewFragmentToTableOverviewFragment();
+        Navigation.findNavController(getView()).navigate(action);
     }
 
     //reverse arrayList items
@@ -408,48 +408,4 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         BongItemView bongItemView = new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange());
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
-
-    private void postOrder(Order order) {
-        mAPIService.postOrder(order).enqueue(new Callback<Order>() {
-            @Override
-            public void onResponse(Call<Order> call, Response<Order> response) {
-                if (response.isSuccessful()) {
-                    // TODO: Show success message
-                    Log.i("Retrofit POST", response.body().toString());
-                    Log.i("Retrofit POST", "order post submitted to API.");
-
-                    // Post a new OrderRow using the new OrderID
-                    OrderRow orderRow = new OrderRow(response.body(), null, new Food("3"), null);
-                    postOrderRow(orderRow);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Order> call, Throwable t) {
-                Log.e("Retrofit POST", "Unable to submit order post to API." + t.toString());
-                t.printStackTrace();
-            }
-        });
-    }
-
-    private void postOrderRow(OrderRow orderRow) {
-        mAPIService.postOrderRow(orderRow).enqueue(new Callback<OrderRow>() {
-            @Override
-            public void onResponse(Call<OrderRow> call, Response<OrderRow> response) {
-
-                if (response.isSuccessful()) {
-                    // TODO: Show success message
-                    Log.i("Retrofit POST", response.body().toString());
-                    Log.i("Retrofit POST", "order post submitted to API.");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<OrderRow> call, Throwable t) {
-                Log.e("Retrofit POST", "Unable to submit order post to API." + t.toString());
-                t.printStackTrace();
-            }
-        });
-    }
-
 }

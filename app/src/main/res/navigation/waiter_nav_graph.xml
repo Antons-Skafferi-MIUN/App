@@ -24,6 +24,11 @@
             android:name="tableID"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_orderOverviewFragment_to_tableOverviewFragment"
+            app:destination="@id/tableOverviewFragment"
+            app:popUpTo="@id/tableOverviewFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <dialog
