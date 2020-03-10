@@ -345,10 +345,13 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 }
                 if (colorCompаre == backgroundColor){
                     startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(),orderOverviewPopUp.class),999);
-                    List<TextView> textViewsReverse = reverse(textViews);
-                    Log.d("Text", textViewsReverse.get(i).getText().toString());
-                    textViewsReverse.get(i).setText(extra);
-                    Log.d("Text", textViewsReverse.get(i).getText().toString());
+                    try{
+                        List<TextView> textViewsReverse = reverse(textViews);
+                        Log.d("Text", textViewsReverse.get(i).getText().toString());
+                        textViewsReverse.get(i).setText(extra);
+                        Log.d("Text", textViewsReverse.get(i).getText().toString());
+                    }
+                    catch (Exception e) {}
                 }
             }
         }
