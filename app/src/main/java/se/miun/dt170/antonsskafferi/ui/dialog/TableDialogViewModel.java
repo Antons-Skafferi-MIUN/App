@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,10 +23,12 @@ import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 public class TableDialogViewModel extends ViewModel {
     private ApiService mAPIService;
     private DeleteWrapper deleteWrapper;
+    Map<Integer, ArrayList<OrderRow> > map;
 
     public TableDialogViewModel(){
         mAPIService = ApiUtils.getAPIService();
         deleteWrapper = new DeleteWrapper();
+        map = new HashMap<Integer, ArrayList<OrderRow>>();
     }
 
     public void clearCurrentOrderFromDatabase(int tableNr){
@@ -46,17 +50,28 @@ public class TableDialogViewModel extends ViewModel {
                     public void onNext(OrderRows orderRows) {
                         Log.i("ORDER ROW ", "AT TOP");
                         ArrayList<OrderRow> allOrderRows = orderRows.getOrderRows();
+
+
                         int orderID = -1;
                         for (OrderRow orderRow : allOrderRows) {
-                            int orderRowTableID = Integer.parseInt(orderRow.getOrderId().getTableId().getTableId());
-                            if (orderRowTableID == tableNr) {
-                                orderID = Integer.parseInt(orderRow.getOrderId().getOrderId());
+                            int tableThatContainsOrderRow = Integer.parseInt(orderRow.getOrderId().getTableId().getTableId());
+                            int orderRowID;
+
+                            if (tableThatContainsOrderRow == tableNr) {
+                                orderID = Integer.parseInt(orderRow.getOrderId().getOrderId()); //order ID that belongs to the current order row.
+                                map.put(orderID,null);
+                                orderRowID = Integer.parseInt(orderRow.getOrderRowId()); // ID of the current orderrow
                                 Log.i("ORDER ID", orderRow.getOrderId().getOrderId());
-                                Log.i("ORDER TABLE", orderRow.getOrderId().getTableId().getTableId());
-                                deleteWrapper.deleteOrderRow(orderRowTableID);
+                                Log.i("DELETING ORDER ROW", orderRow.getOrderRowId());
+                                deleteWrapper.deleteOrderRow(orderRowID);
+                            }
+                            for (Map.Entry<Integer, ArrayList<OrderRow> > entry : map.entrySet()) {
+                                Integer key = entry.getKey();
+                                Log.i("HASHMAP TEST " , key.toString());
                             }
                         }
                         if (orderID != -1) {
+                            Log.i("DELETING ORDER","" + orderID);
                             deleteWrapper.deleteOrder(orderID);
                         }
                     }
