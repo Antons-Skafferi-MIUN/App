@@ -90,6 +90,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private void setItemClicked() {
 
         if (!itemClicked) {
+            //Fix the correct backgound later
             //this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item_selected));
             this.setBackgroundColor(Color.parseColor("#a0f4a0")); //light green
             //foodNameText.setTextColor(Color.parseColor("#00cc00")); //green
