@@ -288,15 +288,16 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
 
     private void sendOrder(View v) {
-        DateConverter dateConverter = new DateConverter();
+        if (menuItemList.size() > 0) {
+            DateConverter dateConverter = new DateConverter();
+            Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
 
-        Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
+            PostWrapper postWrapper = new PostWrapper();
+            postWrapper.postOrder(order, menuItemList);
 
-        PostWrapper postWrapper = new PostWrapper();
-        postWrapper.postOrder(order, menuItemList);
-
-        NavDirections action = OrderOverviewFragmentDirections.actionOrderOverviewFragmentToTableOverviewFragment();
-        Navigation.findNavController(getView()).navigate(action);
+            NavDirections action = OrderOverviewFragmentDirections.actionOrderOverviewFragmentToTableOverviewFragment();
+            Navigation.findNavController(getView()).navigate(action);
+        }
     }
 
     //reverse arrayList items
@@ -322,6 +323,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 if (colorCompаre == backgroundColor){
                     try {
                         orderBongListLinearLayout.removeViewAt(i);
+                        menuItemList.remove(((BongItemView) bongView).getMenuItem());
                     }
                     catch (Exception e) { }
                 }
@@ -407,6 +409,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void addOrderRowToBong(OrderRow orderRow) {
         BongItemView bongItemView = new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange());
+        CheckBox checkBox = bongItemView.findViewById(R.id.checkBox);
+        checkBox.setVisibility(View.GONE);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
 }

@@ -41,6 +41,12 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private KitchenBongContainerView grandParent;
     private String currentActivity;
 
+    public MenuItem getMenuItem() {
+        return menuItem;
+    }
+
+    private MenuItem menuItem;
+
 
     public BongItemView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -55,6 +61,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         checkBox = findViewById(R.id.checkBox);
         foodNameText = findViewById(R.id.foodNameText);
         extraText = findViewById(R.id.extraText);
+        this.menuItem = menuItem;
 
         foodNameText.setText(menuItem.getName());
         this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_shadow));
