@@ -64,6 +64,8 @@ import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_v
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragmentDirections;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 /**
  * This is the fullscreen fragment for taking a order
  * Contains a {@link OrderOverviewBongHeaderFragment} above the bong list to the right.
@@ -93,6 +95,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderBongHeaderView orderBongHeaderView;
     private LinearLayout orderBongListLinearLayout;
     private int tableID;
+    private String waiterName;
+
 
     List<TextView> textViews = new ArrayList<>();
     List<CheckBox> checkBoxes = new ArrayList<>();
@@ -129,6 +133,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
         getFoods();
 
+        fillBongWithOrders();
+
+
         return orderOverviewFragmentView;
     }
 
@@ -159,7 +166,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         String amountString = Integer.toString(tableID);
         TextView textView = orderBongHeaderView.findViewById(R.id.tableNumber);
         textView.setText("Bord " + amountString);
-        fillBongWithOrders();
+
+        waiterName = this.getActivity().getIntent().getStringExtra("DISPLAY_NAME");
+        TextView waitername = orderBongHeaderView.findViewById(R.id.waiterName);
+        waitername.setText("Servitör: " + waiterName);
+
     }
 
     private void fillBongWithOrders() {
