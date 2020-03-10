@@ -140,12 +140,8 @@ public class TableDialogFragment extends DialogFragment {
             table.setTableBooked(!table.isTableBooked());
             if (table.isTableBooked()) {
                 final BookingDialog myDialog = new BookingDialog(context);
-                myDialog.setBookingButton("Boka", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.i("onBooking", "POST to database");
-                    }
-                });
+                myDialog.setBookingButton("Boka", table.getTableNr());
+
                 myDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) { //gets called when back button is pressed or pressed outside

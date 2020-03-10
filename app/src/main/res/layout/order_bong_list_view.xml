@@ -3,12 +3,18 @@
     android:id="@+id/orderBongListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:elevation="2dp"
+    android:background="#ffffff">
+
 
     <LinearLayout
         android:id="@+id/orderBongListLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" />
+        android:orientation="vertical"/>
+
+
+
 
 </se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView>

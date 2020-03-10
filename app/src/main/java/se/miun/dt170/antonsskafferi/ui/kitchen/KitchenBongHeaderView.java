@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Order;
+import se.miun.dt170.antonsskafferi.ui.bong.BongListView;
 
 public class KitchenBongHeaderView extends ConstraintLayout implements View.OnClickListener {
 
@@ -21,6 +22,8 @@ public class KitchenBongHeaderView extends ConstraintLayout implements View.OnCl
     private TextView tableNumber;
     private TextView orderTime;
     private boolean headerClicked = false;
+    private BongListView bongListView;
+    private KitchenBongContainerView grandParent;
 
     public KitchenBongHeaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,6 +52,9 @@ public class KitchenBongHeaderView extends ConstraintLayout implements View.OnCl
         switch (v.getId()) {
             case R.id.foodCheck:
                 setHeaderClicked();
+                bongListView = (BongListView) this.getParent();
+                grandParent = (KitchenBongContainerView) bongListView.getParent();
+                grandParent.setVisibility(View.GONE);
                 break;
 
         }

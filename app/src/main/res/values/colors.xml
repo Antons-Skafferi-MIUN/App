@@ -37,4 +37,5 @@
     <color name="kitchen_overview_background">#f3f3f3</color>
     <color name="kitchen_overview_card_background">#fefefe</color>
     <color name="kitchen_overview_checkbox">#b7ffd6</color>
+    <color name="checkbox_yellowbrown">#C98429</color>
 </resources>

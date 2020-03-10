@@ -1,11 +1,13 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,6 +22,7 @@ public class orderOverviewPopUp extends Activity {
     private Button confirmbutton;
     private TextView testresultat;
     private ArrayList<String> resultat;
+    private EditText edit;
 
 
 
@@ -40,6 +43,8 @@ public class orderOverviewPopUp extends Activity {
         //test
         extrapotatis = findViewById(R.id.extraPotatis);
         allergigluten = findViewById(R.id.allergiGluten);
+        edit = findViewById(R.id.editText);
+
 
         confirmbutton = findViewById(R.id.confirm);
         testresultat = findViewById(R.id.resultat);
@@ -47,6 +52,8 @@ public class orderOverviewPopUp extends Activity {
 
         resultat = new ArrayList<>();
         testresultat.setEnabled(false);
+
+
 
         extrapotatis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,11 +65,11 @@ public class orderOverviewPopUp extends Activity {
             }
         });
 
-        allergigluten.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+       allergigluten.setOnClickListener(new View.OnClickListener() {
+        @Override
+           public void onClick(View v) {
                 if (allergigluten.isChecked())
-                    resultat.add("- Allergi/Gluten");
+                   resultat.add("- Allergi/Gluten");
                 else
                     resultat.remove("- Allergi/Gluten");
             }
@@ -71,16 +78,31 @@ public class orderOverviewPopUp extends Activity {
         confirmbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StringBuilder stringBuilder = new StringBuilder();
-                for(String s: resultat)
-                    stringBuilder.append(s).append("\n");
+                String extratext1 = "";
+                extratext1 = resulttostring();
+                //testresultat.setText(extratext1);
+                //testresultat.setEnabled(false);
 
-                testresultat.setText(stringBuilder.toString());
-                testresultat.setEnabled(false);
+                Intent i = new Intent();
+                i.putExtra("EXTRA", extratext1);
+                setResult(RESULT_OK,i);
+                finish();
 
             }
         });
-
-
     }
+
+    public String resulttostring() {
+        String descpr = edit.getText().toString();
+        if (!descpr.isEmpty())
+            resultat.add("- " + descpr);
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String s: resultat)
+            stringBuilder.append(s).append("\n");
+        String extratext;
+        extratext = stringBuilder.toString();
+
+        return extratext;
+    }
+
 }

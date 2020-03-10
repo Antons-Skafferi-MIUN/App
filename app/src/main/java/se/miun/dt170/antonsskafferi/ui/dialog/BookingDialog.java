@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -15,9 +17,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.Calendar;
 
+import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
 import se.miun.dt170.antonsskafferi.data.DateConverter;
+import se.miun.dt170.antonsskafferi.data.model.Reservation;
+import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
 
 public class BookingDialog extends AlertDialog {
     private EditText name;
@@ -32,7 +40,10 @@ public class BookingDialog extends AlertDialog {
     private TimePickerDialog timePickerDialog;
     private DateConverter dateConverter;
     private Button bookingButton;
-
+    private PostWrapper postWrapper;
+    private TimePicker timePickerView;
+// https://stackoverflow.com/questions/35599203/disable-specific-dates-of-day-in-android-date-picker
+    // can be used to mark specific dates.
 
     public BookingDialog(Context context) {
         super(context);
@@ -45,6 +56,7 @@ public class BookingDialog extends AlertDialog {
         dateConverter = new DateConverter();
         calender = Calendar.getInstance();
         bookingButton = new Button(context);
+        postWrapper = new PostWrapper();
     }
 
     @Override
@@ -70,8 +82,11 @@ public class BookingDialog extends AlertDialog {
     }
 
     private void addDatePickerDialog(){
+        //TODO MAKE IT IMPOSSIBLE TO BOOK DATES BAXCK IN TIME.
         date = (view, year, month, dayOfMonth) -> {
-            dateButton.setText(dateConverter.YYYYMMDDParser(year,month,dayOfMonth));
+            String selectedDate = dateConverter.YYYYMMDDParser(year,month,dayOfMonth);
+            dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_green));
+
         };
     }
     private void addDateButtonListener(){
@@ -79,6 +94,7 @@ public class BookingDialog extends AlertDialog {
             datePickerDialog = new DatePickerDialog(context, date, calender
                     .get(Calendar.YEAR), calender.get(Calendar.MONTH),
                     calender.get(Calendar.DAY_OF_MONTH));
+
             datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", datePickerDialog);
             datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Avsluta", datePickerDialog);
             datePickerDialog.show();
@@ -88,10 +104,14 @@ public class BookingDialog extends AlertDialog {
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("timeButton", "I LISTEND");
                 timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         timeButton.setText(dateConverter.HHMMParser(hourOfDay,minute));
+                        timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_green));
+
+                        timePickerView = view;
                     }
                 }, calender.get(Calendar.HOUR_OF_DAY), calender.get(Calendar.MINUTE), true);
 
@@ -102,10 +122,49 @@ public class BookingDialog extends AlertDialog {
             }
         });
     }
-    public void setBookingButton(String buttonText, View.OnClickListener listener) {
+    public void setBookingButton(String buttonText, int tableId) {
         bookingButton.setText(buttonText);
-        bookingButton.setOnClickListener(listener);
+
+        bookingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(TextUtils.isEmpty(phoneNumber.getText().toString())) {
+                    phoneNumber.setError("Fältet får inte vara tomt");
+                }
+                else{
+                    //2020-03-06T11:55:40+01:00
+                    //TODO b
+                    if(timePickerView == null){
+                        timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
+                        return;
+                    }
+                    if(datePickerDialog == null){
+                        dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
+                        return;
+                    }
+                    String date = dateButton.getText().toString();
+                    String time = timeButton.getText().toString();
+
+                    String timeString = date  + "T"
+                            + time +":00+01:00";
+                    timeString = dateConverter.formatStandard(timeString);
+                    if(timeString != "") {
+                        Reservation reservation = new Reservation();
+                        RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
+                        reservation.setReservationDate(timeString);
+                        reservation.setReservationName(name.getText().toString());
+                        reservation.setReservationPhone(phoneNumber.getText().toString());
+                        reservation.setTableId(restaurantTable);
+                        postWrapper.postReservation(reservation);
+                        Log.i("BookingButtonClicked", timeString);
+                        dismiss();
+                    }
+                }
+            }
+        });
         bookingButton.setVisibility(View.VISIBLE);
     }
 
 }
+

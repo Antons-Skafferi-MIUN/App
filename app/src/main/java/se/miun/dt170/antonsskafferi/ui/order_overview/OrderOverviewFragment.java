@@ -1,14 +1,22 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,19 +24,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
+import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
+import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
+import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
+import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
@@ -41,6 +62,9 @@ import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.orderO
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
+import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragmentDirections;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 /**
  * This is the fullscreen fragment for taking a order
@@ -67,10 +91,15 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderBongButtonsView orderBongButtonsView;
     private ApiService mAPIService;
     ArrayList<String> categorylist;
+    List<MenuItem> menuItemList;
     private OrderBongHeaderView orderBongHeaderView;
     private LinearLayout orderBongListLinearLayout;
     private int tableID;
+    private String waiterName;
 
+
+    List<TextView> textViews = new ArrayList<>();
+    List<CheckBox> checkBoxes = new ArrayList<>();
 
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
@@ -81,6 +110,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                              @Nullable Bundle savedInstanceState) {
 
         mAPIService = ApiUtils.getAPIService();
+        menuItemList = new ArrayList<>();
         View orderOverviewFragmentView = inflater.inflate(R.layout.order_overview_fragment, container, false);
         menuContainerView = orderOverviewFragmentView.findViewById(R.id.menuContainerView);
         menuContainerLayout = orderOverviewFragmentView.findViewById(R.id.menuContainerLayout);
@@ -102,6 +132,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         categorylist = new ArrayList<String>();
 
         getFoods();
+
+        fillBongWithOrders();
+
 
         return orderOverviewFragmentView;
     }
@@ -133,7 +166,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         String amountString = Integer.toString(tableID);
         TextView textView = orderBongHeaderView.findViewById(R.id.tableNumber);
         textView.setText("Bord " + amountString);
-        fillBongWithOrders();
+
+        waiterName = this.getActivity().getIntent().getStringExtra("DISPLAY_NAME");
+        TextView waitername = orderBongHeaderView.findViewById(R.id.waiterName);
+        waitername.setText("Servitör: " + waiterName);
+
     }
 
     private void fillBongWithOrders() {
@@ -172,11 +209,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
             //Add cases for edit/remove/send and add to bong
             case R.id.editButton:
                 Toast.makeText(getActivity(), "EDIT", Toast.LENGTH_SHORT).show();
-                popupWindow(v);
+                popupWindow(v, null);
                 break;
             case R.id.deleteButton:
                 Toast.makeText(getActivity(), "DELETE", Toast.LENGTH_SHORT).show();
-                removeAllItemFromBong(orderBongListView);
+                removeItemFromBongList(v);
                 break;
         }
     }
@@ -185,6 +222,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getMenuItem(), null);
         orderBongListLinearLayout.addView(bongItemView, 0);
+        TextView textView = (TextView) bongItemView.findViewById(R.id.extraText);
+        textViews.add(textView);
+        CheckBox checkBox = (CheckBox) bongItemView.findViewById(R.id.checkBox);
+        checkBoxes.add(checkBox);
+        menuItemList.add(menuItemView.getMenuItem());
     }
 
 
@@ -246,33 +288,92 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
 
     private void sendOrder(View v) {
-        OrderBongHeaderView orderBongHeaderView = orderBongContainerView.findViewById(R.id.orderBongHeaderView);
-        TextView waiterName = orderBongHeaderView.findViewById(R.id.waiterName);
-        TextView tableNumber = orderBongHeaderView.findViewById(R.id.tableNumber);
-        TextView orderNumber = orderBongHeaderView.findViewById(R.id.orderNumber);
-        TextView time = orderBongHeaderView.findViewById(R.id.time);
+        DateConverter dateConverter = new DateConverter();
 
-        ViewGroup orderRows = orderBongListLinearLayout;
+        Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
 
-        for (int orderRowIndex = 0; orderRowIndex < orderRows.getChildCount(); orderRowIndex++) {
-            //TextView
+        PostWrapper postWrapper = new PostWrapper();
+        postWrapper.postOrder(order, menuItemList);
+
+        NavDirections action = OrderOverviewFragmentDirections.actionOrderOverviewFragmentToTableOverviewFragment();
+        Navigation.findNavController(getView()).navigate(action);
+    }
+
+    //reverse arrayList items
+    static <T> List<T> reverse(final List<T> list) {
+        final List<T> result = new ArrayList<>(list);
+        Collections.reverse(result);
+        return result;
+    }
+
+    //remove clicked item from bong list - one at time
+    private void removeItemFromBongList(View v) {
+        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
+            View bongView = orderBongListLinearLayout.getChildAt(i);
+            if (bongView instanceof BongItemView) {
+                int colorCompаre = -6228832;
+                int backgroundColor = 0;
+                Drawable background = bongView.getBackground();
+                if (background instanceof ColorDrawable) {
+                    backgroundColor = ((ColorDrawable) background).getColor();
+                    Log.d("Color", Integer.toString(backgroundColor));
+                }
+                if (colorCompаre == backgroundColor){
+                    try {
+                        orderBongListLinearLayout.removeViewAt(i);
+                    }
+                    catch (Exception e) { }
+                }
+            }
         }
-
-        Toast.makeText(getActivity(), waiterName.getText(), Toast.LENGTH_SHORT).show();
+//        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+//        List<CheckBox> checkBoxesReverse = reverse(checkBoxes);
+//        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
+//            View bongView = orderBongListLinearLayout.getChildAt(i);
+//            if (bongView instanceof BongItemView) {
+//                if (checkBoxesReverse.get(i).isChecked()){
+//                    try {
+//                        orderBongListLinearLayout.removeViewAt(i);
+//                    }
+//                    catch (Exception e) { }
+//                }
+//            }
+//        }
     }
 
-    //remove all items from bong list
-    private void removeAllItemFromBong(View v) {
-        LinearLayout orderBongListLinearLayout = v.findViewById(R.id.orderBongListLinearLayout);
-        orderBongListLinearLayout.removeAllViews();
-
+    private void popupWindow(View v, String extra) {
+        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
+            View bongView = orderBongListLinearLayout.getChildAt(i);
+            if (bongView instanceof BongItemView) {
+                int colorCompаre = -6228832;
+                int backgroundColor = 0;
+                Drawable background = bongView.getBackground();
+                if (background instanceof ColorDrawable) {
+                    backgroundColor = ((ColorDrawable) background).getColor();
+                    Log.d("Color", Integer.toString(backgroundColor));
+                }
+                if (colorCompаre == backgroundColor){
+                    startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(),orderOverviewPopUp.class),999);
+                    try {
+                        List<TextView> textViewsReverse = reverse(textViews);
+                        Log.d("Text", textViewsReverse.get(i).getText().toString());
+                        textViewsReverse.get(i).setText(extra);
+                        Log.d("Text", textViewsReverse.get(i).getText().toString());
+                    }
+                    catch (Exception e){}
+                }
+            }
+        }
     }
 
-
-    private void popupWindow(View v) {
-        //startActivity(new Intent(OrderOverviewFragment.this,orderOverviewPopUp.class));
-        Intent intent = new Intent(OrderOverviewFragment.this.getContext(), orderOverviewPopUp.class);
-        startActivity(intent);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 999 && resultCode == orderOverviewPopUp.RESULT_OK){
+            String extraText = data.getStringExtra("EXTRA");
+            popupWindow(null, extraText);
+        }
     }
 
     public void getOrderRows() {
@@ -307,5 +408,4 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         BongItemView bongItemView = new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange());
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
-
 }

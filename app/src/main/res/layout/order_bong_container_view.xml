@@ -6,12 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+
     <include
-        android:id="@+id/orderBongHeaderView"
-        layout="@layout/order_bong_header_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/orderBongHeaderView"
+            layout="@layout/order_bong_header_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/orderBongListView"
@@ -20,6 +22,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/orderbongbuttons"
         app:layout_constraintTop_toBottomOf="@id/orderBongHeaderView" />
+
 
     <include
         android:id="@+id/orderbongbuttons"
