@@ -200,7 +200,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.deleteButton:
                 Toast.makeText(getActivity(), "DELETE", Toast.LENGTH_SHORT).show();
-                removeItemFromBongList(orderBongListView);
+                removeItemFromBongList(v);
                 break;
         }
     }
@@ -287,7 +287,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     //remove clicked items from bong list
     private void removeItemFromBongList(View v) {
-        LinearLayout orderBongListLinearLayout = v.findViewById(R.id.orderBongListLinearLayout);
+        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         ArrayList<Integer> checkedBongItems = new ArrayList<Integer>();
         for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
