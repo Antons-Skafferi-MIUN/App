@@ -83,10 +83,11 @@ public class BookingDialog extends AlertDialog {
 
     private void addDatePickerDialog(){
         //TODO MAKE IT IMPOSSIBLE TO BOOK DATES BAXCK IN TIME.
+
         date = (view, year, month, dayOfMonth) -> {
             String selectedDate = dateConverter.YYYYMMDDParser(year,month,dayOfMonth);
             dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_green));
-
+            dateButton.setText(selectedDate);
         };
     }
     private void addDateButtonListener(){
@@ -134,7 +135,11 @@ public class BookingDialog extends AlertDialog {
                 }
                 else{
                     //2020-03-06T11:55:40+01:00
-                    //TODO b
+                    if(datePickerDialog == null && timePickerView == null){
+                        timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
+                        dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
+                        return;
+                    }
                     if(timePickerView == null){
                         timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
                         return;
@@ -148,6 +153,7 @@ public class BookingDialog extends AlertDialog {
 
                     String timeString = date  + "T"
                             + time +":00+01:00";
+                    Log.i("timeString",timeString);
                     timeString = dateConverter.formatStandard(timeString);
                     if(timeString != "") {
                         Reservation reservation = new Reservation();
