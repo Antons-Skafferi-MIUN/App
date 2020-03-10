@@ -355,7 +355,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                     Log.d("Color", Integer.toString(backgroundColor));
                 }
                 if (colorCompаre == backgroundColor){
-                    startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(),orderOverviewPopUp.class),999);
+                    if (v != null && extra == null){
+                    startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(),orderOverviewPopUp.class),999);}
                     try {
                         List<TextView> textViewsReverse = reverse(textViews);
                         Log.d("Text", textViewsReverse.get(i).getText().toString());
