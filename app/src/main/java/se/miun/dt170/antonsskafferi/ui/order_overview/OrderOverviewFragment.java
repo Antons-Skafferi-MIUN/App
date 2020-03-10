@@ -26,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -90,10 +91,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private LinearLayout orderBongListLinearLayout;
     private int tableID;
 
-    ListView lv;
-    ArrayAdapter<String> adapter;
-    ArrayList<String> data = new ArrayList<String>();
-    SparseBooleanArray mCheckStates ;
+    List<TextView> textViews = new ArrayList<>();
+    List<CheckBox> checkBoxes = new ArrayList<>();
 
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
@@ -209,6 +208,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getMenuItem(), null);
         orderBongListLinearLayout.addView(bongItemView, 0);
+        TextView textView = (TextView) bongItemView.findViewById(R.id.extraText);
+        textViews.add(textView);
+        CheckBox checkBox = (CheckBox) bongItemView.findViewById(R.id.checkBox);
+        checkBoxes.add(checkBox);
         menuItemList.add(menuItemView.getMenuItem());
     }
 
@@ -285,32 +288,27 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         postWrapper.postOrder(order, menuItemList);
     }
 
-    //remove clicked items from bong list
+    //reverse arrayList items
+    static <T> List<T> reverse(final List<T> list) {
+        final List<T> result = new ArrayList<>(list);
+        Collections.reverse(result);
+        return result;
+    }
+
+    //remove clicked item from bong list - one at time
     private void removeItemFromBongList(View v) {
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        ArrayList<Integer> checkedBongItems = new ArrayList<Integer>();
+        List<CheckBox> checkBoxesReverse = reverse(checkBoxes);
         for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
             if (bongView instanceof BongItemView) {
-                int colorCompаre = -6228832;
-                int backgroundColor = 0;
-                Drawable background = bongView.getBackground();
-                if (background instanceof ColorDrawable) {
-                    backgroundColor = ((ColorDrawable) background).getColor();
-                    Log.d("Color", Integer.toString(backgroundColor));
-                }
-                if (colorCompаre == backgroundColor){
-                    checkedBongItems.add(i);
-                    //orderBongListLinearLayout.removeViewAt(i);
+                if (checkBoxesReverse.get(i).isChecked()){
+                    try {
+                        orderBongListLinearLayout.removeViewAt(i);
+                    }
+                    catch (Exception e) { }
                 }
             }
-        }
-        for (int index : checkedBongItems){
-            Log.i("Member name: ", Integer.toString(index));
-            try {
-                orderBongListLinearLayout.removeViewAt(index);
-            }
-            catch (Exception e) { }
         }
     }
 
