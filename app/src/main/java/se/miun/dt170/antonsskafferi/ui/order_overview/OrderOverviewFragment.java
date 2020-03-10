@@ -343,7 +343,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 }
                 catch (Exception e){}
             }
-        }
+        } 
     }
 
     @Override
