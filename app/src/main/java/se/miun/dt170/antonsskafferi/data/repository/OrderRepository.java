@@ -54,4 +54,33 @@ public class OrderRepository {
                 });
         return allOrders;
     }
+    /**
+     * Gets all ordersRows from database and puts them in a MutableLiveData object.
+     *
+     * @return an observerable object containing all ordersRows.
+     */
+    public MutableLiveData<OrderRows> getOrderRows(){
+        Log.i("func","starting func");
+        mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<OrderRows>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.i("func","onComplete");
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i("onError",e.toString());
+
+                    }
+
+                    @Override
+                    public void onNext(OrderRows orderRows) {
+                        Log.i("orderRowRepo",orderRows.toString());
+                        allOrderRows.setValue(orderRows);
+                    }
+                });
+        return allOrderRows;
+    }
 }
