@@ -92,8 +92,8 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         //bongListView = (BongListView) this.getParent();
 
         if (!itemClicked) {
-            this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item_selected));
-            //this.setBackgroundColor(Color.parseColor("#a0f4a0")); //light green
+            //this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item_selected));
+            this.setBackgroundColor(Color.parseColor("#a0f4a0")); //light green
             //foodNameText.setTextColor(Color.parseColor("#00cc00")); //green
             foodNameText.setTextColor(Color.parseColor("#c18a0b")); //green
             extraText.setTextColor(Color.parseColor("#c18a0b"));
@@ -101,8 +101,8 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
             bongListView.raiseCheckedItems();
         } else {
 
-            this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item));
-            //this.setBackgroundColor(Color.parseColor("@drawable/bg_shadow"));
+            //this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item));
+            this.setBackgroundColor(Color.parseColor("#ffffff"));
             foodNameText.setTextColor(Color.parseColor("#808080")); //grey
             extraText.setTextColor(Color.parseColor("#808080"));
             itemClicked = false;
