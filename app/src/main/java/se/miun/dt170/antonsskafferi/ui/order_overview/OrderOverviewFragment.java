@@ -310,63 +310,38 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     //remove clicked item from bong list - one at time
     private void removeItemFromBongList(View v) {
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        List<CheckBox> checkBoxesReverse = reverse(checkBoxes);
         for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
             if (bongView instanceof BongItemView) {
-                int colorCompаre = -6228832;
-                int backgroundColor = 0;
-                Drawable background = bongView.getBackground();
-                if (background instanceof ColorDrawable) {
-                    backgroundColor = ((ColorDrawable) background).getColor();
-                    Log.d("Color", Integer.toString(backgroundColor));
-                }
-                if (colorCompаre == backgroundColor){
                     try {
-                        orderBongListLinearLayout.removeViewAt(i);
-                        menuItemList.remove(((BongItemView) bongView).getMenuItem());
+                        if (checkBoxesReverse.get(i).isChecked()) {
+                            orderBongListLinearLayout.removeViewAt(i);
+                            menuItemList.remove(((BongItemView) bongView).getMenuItem());
+                        }
                     }
                     catch (Exception e) { }
-                }
             }
         }
-//        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-//        List<CheckBox> checkBoxesReverse = reverse(checkBoxes);
-//        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
-//            View bongView = orderBongListLinearLayout.getChildAt(i);
-//            if (bongView instanceof BongItemView) {
-//                if (checkBoxesReverse.get(i).isChecked()){
-//                    try {
-//                        orderBongListLinearLayout.removeViewAt(i);
-//                    }
-//                    catch (Exception e) { }
-//                }
-//            }
-//        }
     }
 
     private void popupWindow(View v, String extra) {
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        List<CheckBox> checkBoxesReverse = reverse(checkBoxes);
         for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
             if (bongView instanceof BongItemView) {
-                int colorCompаre = -6228832;
-                int backgroundColor = 0;
-                Drawable background = bongView.getBackground();
-                if (background instanceof ColorDrawable) {
-                    backgroundColor = ((ColorDrawable) background).getColor();
-                    Log.d("Color", Integer.toString(backgroundColor));
-                }
-                if (colorCompаre == backgroundColor){
-                    if (v != null && extra == null){
-                    startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(),orderOverviewPopUp.class),999);}
-                    try {
-                        List<TextView> textViewsReverse = reverse(textViews);
-                        Log.d("Text", textViewsReverse.get(i).getText().toString());
-                        textViewsReverse.get(i).setText(extra);
-                        Log.d("Text", textViewsReverse.get(i).getText().toString());
+                try{
+                    if (checkBoxesReverse.get(i).isChecked()) {
+                        if (v != null && extra == null) {
+                            startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(), orderOverviewPopUp.class), 999);}
+                            List<TextView> textViewsReverse = reverse(textViews);
+                            Log.d("Text", textViewsReverse.get(i).getText().toString());
+                            textViewsReverse.get(i).setText(extra);
+                            Log.d("Text", textViewsReverse.get(i).getText().toString());
                     }
-                    catch (Exception e){}
                 }
+                catch (Exception e){}
             }
         }
     }
