@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -313,14 +315,20 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
             if (bongView instanceof BongItemView) {
-                int colorCompаre = -6228832;
-                int backgroundColor = 0;
+                String colorCompаre = "597063"; //orange color
+                String backgroundColor = "";
                 Drawable background = bongView.getBackground();
-                if (background instanceof ColorDrawable) {
-                    backgroundColor = ((ColorDrawable) background).getColor();
-                    Log.d("Color", Integer.toString(backgroundColor));
+                if (background instanceof GradientDrawable) {
+                    GradientDrawable gradientDrawable = (GradientDrawable) background;
+                    try{
+                        String colorState = gradientDrawable.getColor().toString();
+                        int colorStateLength = colorState.length();
+                        backgroundColor = colorState.substring(colorStateLength - 7, colorStateLength - 1);
+                        Log.d("Color", backgroundColor);
+                    }
+                    catch (Exception e){}
                 }
-                if (colorCompаre == backgroundColor){
+                if (colorCompаre.equals(backgroundColor)){
                     try {
                         orderBongListLinearLayout.removeViewAt(i);
                         menuItemList.remove(((BongItemView) bongView).getMenuItem());
@@ -349,14 +357,20 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
             if (bongView instanceof BongItemView) {
-                int colorCompаre = -6228832;
-                int backgroundColor = 0;
+                String colorCompаre = "597063"; //orange color
+                String backgroundColor = "";
                 Drawable background = bongView.getBackground();
-                if (background instanceof ColorDrawable) {
-                    backgroundColor = ((ColorDrawable) background).getColor();
-                    Log.d("Color", Integer.toString(backgroundColor));
+                if (background instanceof GradientDrawable) {
+                    GradientDrawable gradientDrawable = (GradientDrawable) background;
+                    try{
+                        String colorState = gradientDrawable.getColor().toString();
+                        int colorStateLength = colorState.length();
+                        backgroundColor = colorState.substring(colorStateLength - 7, colorStateLength - 1);
+                        Log.d("Color", backgroundColor);
+                    }
+                    catch (Exception e){}
                 }
-                if (colorCompаre == backgroundColor){
+                if (colorCompаre.equals(backgroundColor)){
                     if (v != null && extra == null){
                     startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(),orderOverviewPopUp.class),999);}
                     try {
