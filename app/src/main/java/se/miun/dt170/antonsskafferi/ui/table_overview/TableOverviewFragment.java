@@ -22,7 +22,6 @@ import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
-import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
 import se.miun.dt170.antonsskafferi.data.repository.TableRepository;
 
 /**
@@ -47,10 +46,12 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         fragmentView = inflater.inflate(R.layout.table_overview_fragment, container, false);
         ViewGroup parent = fragmentView.findViewById(R.id.TableOverviewLayout);
         numberOfTables = parent.getChildCount();
-        for (int tableIndex = 0; tableIndex < numberOfTables; tableIndex++) { // for each child apply a listener to the childs tableButton
 
+        // for each child apply a listener to the childs tableButton
+        for (int tableIndex = 0; tableIndex < numberOfTables; tableIndex++) {
             TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
             table.setup(tableIndex + 1);
+            table.setDialogText("Bord " + table.getTableNr());
 
             Button tempButton = table.findViewById(R.id.tableButton);
             tempButton.setOnClickListener(this);
@@ -69,16 +70,15 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
         mViewModel = ViewModelProviders.of(this).get(TableOverviewViewModel.class);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TableDialogSharedViewModel.class);
-
     }
 
+    // gets ID for table button.
     @Override
-    public void onClick(View v) { // gets ID for table button.
+    public void onClick(View v) {
         TableView table = (TableView) v.getParent();
         sharedViewModel.setTable(table);
         NavDirections action = TableOverviewFragmentDirections.actionTableOverviewFragmentToTableDialogFragment();
         Navigation.findNavController(getView()).navigate(action);
-
     }
 
     public void updateFragment(Reservations tablesReservations) {
@@ -97,33 +97,10 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         });
 
         todaysReservations.forEach(reservation -> {
-            TableView table = fragmentView.findViewById(R.id.table1 + Integer.parseInt(reservation.getTableId().getTableId()));
-            if(reservation.getTableId().getTableStatus().equals("vacant")) {
-                sharedViewModel.setDialogText("Bord " + table.getTableNr());
-                table.removeBooking();
-            } else {
-                table.bookTable();
-                sharedViewModel.setDialogText(String.format("Bokat av: %s\nKontakt: %s", reservation.getReservationName(), reservation.getReservationPhone()));
-            }
+            TableView table = fragmentView.findViewById(R.id.table1 + (Integer.parseInt(reservation.getTableId().getTableId()) - 1));
+            table.addBookedStatus();
+            table.setDialogText(String.format("Bokat av: %s\nKontakt: %s", reservation.getReservationName(), reservation.getReservationPhone()));
             table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
         });
-
-//        for (int tableIndex = 0; tableIndex < numberOfTables; tableIndex++) {
-//            Reservation reservation = todaysReservations.get(tableIndex);
-//            RestaurantTable restaurantTable = reservation.getTableId();
-//            TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
-//
-//            if (restaurantTable.getTableStatus().equals("vacant")) {
-//                sharedViewModel.setDialogText("Bord " + table.getTableNr());
-//                table.removeBooking();
-//            } else {
-//                table.bookTable();
-//                sharedViewModel.setDialogText("Bokat av: " + reservation.getReservationName() + "\n" + "Kontakt: " + reservation.getReservationPhone());
-//            }
-//            Log.i("Retrofit RxJava", new Integer(tableIndex).toString());
-//            Log.i("GET RESERV DATE", reservation.getReservationDate());
-//
-//            table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
-//        }
     }
 }

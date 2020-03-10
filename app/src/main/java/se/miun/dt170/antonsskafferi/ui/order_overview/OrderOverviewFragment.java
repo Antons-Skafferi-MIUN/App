@@ -1,22 +1,17 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,21 +24,15 @@ import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
 import se.miun.dt170.antonsskafferi.data.DateConverter;
-import se.miun.dt170.antonsskafferi.data.ItemRepository;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
-import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 import se.miun.dt170.antonsskafferi.data.model.Order;
@@ -62,9 +51,6 @@ import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.orderO
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
-import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragmentDirections;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 /**
  * This is the fullscreen fragment for taking a order
@@ -75,7 +61,6 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
  */
 public class OrderOverviewFragment extends Fragment implements View.OnClickListener {
 
-    private ItemRepository itemRepository;
     private OrderOverviewViewModel mViewModel;
     private Button laCarteButton;
     private Button drinkButton;

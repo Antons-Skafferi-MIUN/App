@@ -73,7 +73,7 @@ public class TableDialogFragment extends DialogFragment {
 
         mutableTable = sharedViewModel.getTable();
         table = mutableTable.getValue(); // TEMP FIX
-        dialogText = sharedViewModel.getDialogText();
+        dialogText = table.getDialogText();
 
         LayoutInflater layoutInflater = requireActivity().getLayoutInflater();
         dialogView = layoutInflater.inflate(R.layout.table_dialog_fragment, null);
@@ -163,11 +163,12 @@ public class TableDialogFragment extends DialogFragment {
         if (!table.isTableBooked()) { //table is available.
             bookingButton.setBackground(popupAvailableColor); //change to popup
             bookingButton.setText("Boka Bord");
-            table.removeBooking();
+            table.removeBookedStatus();
+            dismiss();
         } else {
             bookingButton.setBackground(popupBookedColor);
             bookingButton.setText("Avboka Bord");
-            table.bookTable();
+            table.addBookedStatus();
         }
     }
 
