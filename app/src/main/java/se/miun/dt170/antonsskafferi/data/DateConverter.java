@@ -24,7 +24,10 @@ public class DateConverter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return standard.format(date);
+        if(date != null){
+            return standard.format(date);
+        }
+        return "";
     }
     public String getCurrentTime() {
         Date time = GregorianCalendar.getInstance(TimeZone.getDefault()).getTime();
@@ -50,6 +53,8 @@ public class DateConverter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+
         return formatYYYYMMDD.format(date);
     }
 
