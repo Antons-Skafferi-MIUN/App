@@ -21,6 +21,7 @@ import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 public class TableDialogViewModel extends ViewModel {
     private ApiService mAPIService;
     private DeleteWrapper deleteWrapper;
+
     public TableDialogViewModel(){
         mAPIService = ApiUtils.getAPIService();
         deleteWrapper = new DeleteWrapper();
