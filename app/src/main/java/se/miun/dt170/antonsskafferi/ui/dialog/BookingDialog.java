@@ -129,44 +129,41 @@ public class BookingDialog extends AlertDialog {
         bookingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                boolean isInputCorrect = true;
                 if(TextUtils.isEmpty(phoneNumber.getText().toString())) {
                     phoneNumber.setError("Fältet får inte vara tomt");
+                    isInputCorrect = false;
                 }
-                else{
-                    //2020-03-06T11:55:40+01:00
-                    if(datePickerDialog == null && timePickerView == null){
-                        timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
-                        dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
-                        return;
-                    }
-                    if(timePickerView == null){
-                        timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
-                        return;
-                    }
-                    if(datePickerDialog == null){
-                        dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
-                        return;
-                    }
-                    String date = dateButton.getText().toString();
-                    String time = timeButton.getText().toString();
+                //2020-03-06T11:55:40+01:00
+                if(timePickerView == null){
+                    timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
+                    isInputCorrect = false;
+                }
+                if(datePickerDialog == null){
+                    dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
+                    isInputCorrect = false;
+                }
+                if(!isInputCorrect){return;}
 
-                    String timeString = date  + "T"
-                            + time +":00+01:00";
-                    Log.i("timeString",timeString);
-                    timeString = dateConverter.formatStandard(timeString);
-                    if(timeString != "") {
-                        Reservation reservation = new Reservation();
-                        RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
-                        reservation.setReservationDate(timeString);
-                        reservation.setReservationName(name.getText().toString());
-                        reservation.setReservationPhone(phoneNumber.getText().toString());
-                        reservation.setTableId(restaurantTable);
-                        postWrapper.postReservation(reservation);
-                        Log.i("BookingButtonClicked", timeString);
-                        dismiss();
-                    }
+                String date = dateButton.getText().toString();
+                String time = timeButton.getText().toString();
+
+                String timeString = date  + "T"
+                        + time +":00+01:00";
+                Log.i("timeString",timeString);
+                timeString = dateConverter.formatStandard(timeString);
+                if(timeString != "") {
+                    Reservation reservation = new Reservation();
+                    RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
+                    reservation.setReservationDate(timeString);
+                    reservation.setReservationName(name.getText().toString());
+                    reservation.setReservationPhone(phoneNumber.getText().toString());
+                    reservation.setTableId(restaurantTable);
+                    postWrapper.postReservation(reservation);
+                    Log.i("BookingButtonClicked", timeString);
+                    dismiss();
                 }
+
             }
         });
         bookingButton.setVisibility(View.VISIBLE);
