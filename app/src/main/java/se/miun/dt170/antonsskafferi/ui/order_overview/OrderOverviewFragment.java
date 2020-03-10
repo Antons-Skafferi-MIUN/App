@@ -1,5 +1,6 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,6 +28,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -92,10 +94,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private LinearLayout orderBongListLinearLayout;
     private int tableID;
 
-    ListView lv;
-    ArrayAdapter<String> adapter;
-    ArrayList<String> data = new ArrayList<String>();
-    SparseBooleanArray mCheckStates ;
+    List<TextView> textViews = new ArrayList<>();
+    List<CheckBox> checkBoxes = new ArrayList<>();
 
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
@@ -198,11 +198,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
             //Add cases for edit/remove/send and add to bong
             case R.id.editButton:
                 Toast.makeText(getActivity(), "EDIT", Toast.LENGTH_SHORT).show();
-                popupWindow(v);
+                popupWindow(v, null);
                 break;
             case R.id.deleteButton:
                 Toast.makeText(getActivity(), "DELETE", Toast.LENGTH_SHORT).show();
-                removeAllItemFromBong(orderBongListView);
+                removeItemFromBongList(v);
                 break;
         }
     }
@@ -211,6 +211,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
         BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getMenuItem(), null);
         orderBongListLinearLayout.addView(bongItemView, 0);
+        TextView textView = (TextView) bongItemView.findViewById(R.id.extraText);
+        textViews.add(textView);
+        CheckBox checkBox = (CheckBox) bongItemView.findViewById(R.id.checkBox);
+        checkBoxes.add(checkBox);
         menuItemList.add(menuItemView.getMenuItem());
     }
 
@@ -273,49 +277,94 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
 
     private void sendOrder(View v) {
-        DateConverter dateConverter = new DateConverter();
+        if (menuItemList.size() > 0) {
+            DateConverter dateConverter = new DateConverter();
+            Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
 
-        Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
+            PostWrapper postWrapper = new PostWrapper();
+            postWrapper.postOrder(order, menuItemList);
 
-        PostWrapper postWrapper = new PostWrapper();
-        postWrapper.postOrder(order, menuItemList);
-
-        NavDirections action = OrderOverviewFragmentDirections.actionOrderOverviewFragmentToTableOverviewFragment();
-        Navigation.findNavController(getView()).navigate(action);
-    }
-
-    //remove all items from bong list
-    private void removeAllItemFromBong(View v) {
-        LinearLayout orderBongListLinearLayout = v.findViewById(R.id.orderBongListLinearLayout);
-        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
-            View bongView = orderBongListLinearLayout.getChildAt(i);
-            if (bongView instanceof BongItemView) {
-                Log.d("BONG", "Checkbox is found");
-                //((BongItemView) bongView);
-                int colorComp = -6228832;
-                int color = 0;
-                Drawable background = bongView.getBackground();
-                if (background instanceof ColorDrawable) {
-                    color = ((ColorDrawable) background).getColor();
-                    //CheckBox checkBoxChild = (CheckBox) bongView;
-                    Log.d("Color", Integer.toString(color));
-                }
-                if (colorComp == color){
-                    Log.d("Checkbox", "working!");
-                    orderBongListLinearLayout.removeViewAt(i);
-                }
-//                if (checkBoxChild.isChecked()) {
-//                    Log.d("Checkbox", "working!");
-//                    orderBongListLinearLayout.removeViewAt(i);
-//                }
-            }  //etc. If it fails anywhere, just return false.
+            NavDirections action = OrderOverviewFragmentDirections.actionOrderOverviewFragmentToTableOverviewFragment();
+            Navigation.findNavController(getView()).navigate(action);
         }
     }
 
-    private void popupWindow(View v) {
-        //startActivity(new Intent(OrderOverviewFragment.this,orderOverviewPopUp.class));
-        Intent intent = new Intent(OrderOverviewFragment.this.getContext(), orderOverviewPopUp.class);
-        startActivity(intent);
+    //reverse arrayList items
+    static <T> List<T> reverse(final List<T> list) {
+        final List<T> result = new ArrayList<>(list);
+        Collections.reverse(result);
+        return result;
+    }
+
+    //remove clicked item from bong list - one at time
+    private void removeItemFromBongList(View v) {
+        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
+            View bongView = orderBongListLinearLayout.getChildAt(i);
+            if (bongView instanceof BongItemView) {
+                int colorCompаre = -6228832;
+                int backgroundColor = 0;
+                Drawable background = bongView.getBackground();
+                if (background instanceof ColorDrawable) {
+                    backgroundColor = ((ColorDrawable) background).getColor();
+                    Log.d("Color", Integer.toString(backgroundColor));
+                }
+                if (colorCompаre == backgroundColor){
+                    try {
+                        orderBongListLinearLayout.removeViewAt(i);
+                        menuItemList.remove(((BongItemView) bongView).getMenuItem());
+                    }
+                    catch (Exception e) { }
+                }
+            }
+        }
+//        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+//        List<CheckBox> checkBoxesReverse = reverse(checkBoxes);
+//        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
+//            View bongView = orderBongListLinearLayout.getChildAt(i);
+//            if (bongView instanceof BongItemView) {
+//                if (checkBoxesReverse.get(i).isChecked()){
+//                    try {
+//                        orderBongListLinearLayout.removeViewAt(i);
+//                    }
+//                    catch (Exception e) { }
+//                }
+//            }
+//        }
+    }
+
+    private void popupWindow(View v, String extra) {
+        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
+            View bongView = orderBongListLinearLayout.getChildAt(i);
+            if (bongView instanceof BongItemView) {
+                int colorCompаre = -6228832;
+                int backgroundColor = 0;
+                Drawable background = bongView.getBackground();
+                if (background instanceof ColorDrawable) {
+                    backgroundColor = ((ColorDrawable) background).getColor();
+                    Log.d("Color", Integer.toString(backgroundColor));
+                }
+                if (colorCompаre == backgroundColor){
+                    startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(),orderOverviewPopUp.class),999);
+                    try {
+                        List<TextView> textViewsReverse = reverse(textViews);
+                        Log.d("Text", textViewsReverse.get(i).getText().toString());
+                        textViewsReverse.get(i).setText(extra);
+                        Log.d("Text", textViewsReverse.get(i).getText().toString());
+                    }
+                    catch (Exception e){}
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 999 && resultCode == orderOverviewPopUp.RESULT_OK){
+            String extraText = data.getStringExtra("EXTRA");
+            popupWindow(null, extraText);
+        }
     }
 
     public void getOrderRows() {
@@ -348,6 +397,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void addOrderRowToBong(OrderRow orderRow) {
         BongItemView bongItemView = new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange());
+        CheckBox checkBox = bongItemView.findViewById(R.id.checkBox);
+        checkBox.setVisibility(View.GONE);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
 }

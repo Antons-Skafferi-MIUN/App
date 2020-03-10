@@ -17,8 +17,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.Calendar;
 
+import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
 import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
@@ -38,6 +41,7 @@ public class BookingDialog extends AlertDialog {
     private DateConverter dateConverter;
     private Button bookingButton;
     private PostWrapper postWrapper;
+    private TimePicker timePickerView;
 // https://stackoverflow.com/questions/35599203/disable-specific-dates-of-day-in-android-date-picker
     // can be used to mark specific dates.
 
@@ -78,8 +82,11 @@ public class BookingDialog extends AlertDialog {
     }
 
     private void addDatePickerDialog(){
+        //TODO MAKE IT IMPOSSIBLE TO BOOK DATES BAXCK IN TIME.
         date = (view, year, month, dayOfMonth) -> {
-            dateButton.setText(dateConverter.YYYYMMDDParser(year,month,dayOfMonth));
+            String selectedDate = dateConverter.YYYYMMDDParser(year,month,dayOfMonth);
+            dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_green));
+
         };
     }
     private void addDateButtonListener(){
@@ -97,10 +104,14 @@ public class BookingDialog extends AlertDialog {
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("timeButton", "I LISTEND");
                 timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         timeButton.setText(dateConverter.HHMMParser(hourOfDay,minute));
+                        timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_green));
+
+                        timePickerView = view;
                     }
                 }, calender.get(Calendar.HOUR_OF_DAY), calender.get(Calendar.MINUTE), true);
 
@@ -123,18 +134,32 @@ public class BookingDialog extends AlertDialog {
                 }
                 else{
                     //2020-03-06T11:55:40+01:00
-                    String timeString = dateButton.getText().toString() + "T"
-                            + timeButton.getText().toString() +":00+01:00";
-                    Reservation reservation = new Reservation();
-                    RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
-                    reservation.setReservationDate(timeString);
-                    reservation.setReservationName(name.getText().toString());
-                    reservation.setReservationPhone(phoneNumber.getText().toString());
-                    reservation.setReservationDate(timeString);
-                    reservation.setTableId(restaurantTable);
-                    postWrapper.postReservation(reservation);
-                    Log.i("BookingButtonClicked", timeString);
-                    dismiss();
+                    //TODO b
+                    if(timePickerView == null){
+                        timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
+                        return;
+                    }
+                    if(datePickerDialog == null){
+                        dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
+                        return;
+                    }
+                    String date = dateButton.getText().toString();
+                    String time = timeButton.getText().toString();
+
+                    String timeString = date  + "T"
+                            + time +":00+01:00";
+                    timeString = dateConverter.formatStandard(timeString);
+                    if(timeString != "") {
+                        Reservation reservation = new Reservation();
+                        RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
+                        reservation.setReservationDate(timeString);
+                        reservation.setReservationName(name.getText().toString());
+                        reservation.setReservationPhone(phoneNumber.getText().toString());
+                        reservation.setTableId(restaurantTable);
+                        postWrapper.postReservation(reservation);
+                        Log.i("BookingButtonClicked", timeString);
+                        dismiss();
+                    }
                 }
             }
         });

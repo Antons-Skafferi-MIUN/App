@@ -29,6 +29,13 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private BongListView bongListView;
     private KitchenBongContainerView grandParent;
 
+    public MenuItem getMenuItem() {
+        return menuItem;
+    }
+
+    private MenuItem menuItem;
+
+
     public BongItemView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }
@@ -42,22 +49,25 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         checkBox = findViewById(R.id.checkBox);
         foodNameText = findViewById(R.id.foodNameText);
         extraText = findViewById(R.id.extraText);
+        this.menuItem = menuItem;
 
         foodNameText.setText(menuItem.getName());
 
         // Populate extra text
         if (orderChange != null) {
+
             extraText.setText(orderChange);
         }
         checkBox.setOnClickListener(this);
-
     }
+
+
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.checkBox) {
             try {
-                BongListView bongListView = (BongListView) view.getParent().getParent().getParent();
+                //BongListView bongListView = (BongListView) view.getParent().getParent().getParent();
                 setItemClicked();
             }
             catch (Exception e) { }
@@ -72,19 +82,25 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     }
 
     private void setItemClicked() {
-        bongListView = (BongListView) this.getParent();
 
         if (!itemClicked) {
-            this.setBackgroundColor(Color.parseColor("#a0f4a0"));
-            foodNameText.setTextColor(Color.parseColor("#00cc00"));
+            this.setBackgroundColor(Color.parseColor("#a0f4a0")); //light green
+            foodNameText.setTextColor(Color.parseColor("#00cc00")); //green
             extraText.setTextColor(Color.parseColor("#00cc00"));
             itemClicked = true;
             bongListView.raiseCheckedItems();
         } else {
             this.setBackgroundColor(Color.parseColor("#FFFFFF"));
-            foodNameText.setTextColor(Color.parseColor("#000000"));
-            extraText.setTextColor(Color.parseColor("#000000"));
+            foodNameText.setTextColor(Color.parseColor("#808080")); //grey
+            extraText.setTextColor(Color.parseColor("#808080"));
             itemClicked = false;
+            bongListView.reduceCheckedItems();
+        }
+
+        bongListView = (BongListView) this.getParent();
+        if (!itemClicked) {
+            bongListView.raiseCheckedItems();
+        } else {
             bongListView.reduceCheckedItems();
         }
 
