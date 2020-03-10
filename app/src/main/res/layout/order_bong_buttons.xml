@@ -8,36 +8,43 @@
 
     <ImageButton
         android:id="@+id/sendButton"
+        style="@style/Widget.AppCompat.ImageButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginTop="5dp"
         android:contentDescription="@null"
+        android:background="#00000000"
         app:layout_constraintEnd_toStartOf="@+id/editButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/add" />
+        app:srcCompat="@drawable/ic_btn_add" />
+
 
     <ImageButton
         android:id="@+id/editButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginTop="0dp"
         android:contentDescription="@null"
+        android:background="#00000000"
         app:layout_constraintEnd_toStartOf="@+id/deleteButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/sendButton"
         app:layout_constraintTop_toTopOf="@+id/sendButton"
-        app:srcCompat="@drawable/edit" />
+        app:srcCompat="@drawable/ic_btn_edit" />
 
     <ImageButton
         android:id="@+id/deleteButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:contentDescription="@null"
+        android:background="#00000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/editButton"
         app:layout_constraintTop_toTopOf="@+id/editButton"
-        app:srcCompat="@drawable/delete" />
+        app:srcCompat="@drawable/ic_btn_delete" />
 
 
 </se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView>
