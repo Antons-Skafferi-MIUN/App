@@ -273,8 +273,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
 
     private void sendOrder(View v) {
-        OrderBongHeaderView orderBongHeaderView = orderBongContainerView.findViewById(R.id.orderBongHeaderView);
-
         DateConverter dateConverter = new DateConverter();
 
         Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
