@@ -142,7 +142,7 @@ public class orderOverviewPopUp extends Activity {
             @Override
             public void onClick(View v) {
                 String extraTextFinal = "";
-                extraTextFinal = resulttostring();
+                extraTextFinal = resultToString();
                 //testresultat.setText(extratext1);
                 //testresultat.setEnabled(false);
 
@@ -154,7 +154,7 @@ public class orderOverviewPopUp extends Activity {
         });
     }
 
-    public String resulttostring() {
+    public String resultToString() {
         String descpr = edit.getText().toString();
         if (!descpr.isEmpty())
             resultat.add("- " + descpr);
