@@ -22,6 +22,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import se.miun.dt170.antonsskafferi.R;
@@ -49,6 +50,8 @@ public class BookingDialog extends AlertDialog {
     private TimePicker timePickerView;
     private BookingDialogViewModel bookingDialogViewModel;
     private DialogFragment dialogFragment;
+    private String timeString;
+    private boolean tableIsReserved;
 // https://stackoverflow.com/questions/35599203/disable-specific-dates-of-day-in-android-date-picker
     // can be used to mark specific dates.
 // get all reservations from database check if the date is booked
@@ -157,36 +160,64 @@ public class BookingDialog extends AlertDialog {
                     isInputCorrect = false;
                 }
                 if(!isInputCorrect){return;}
+                String date = dateButton.getText().toString();
+                String time = timeButton.getText().toString();
+                timeString = date  + "T"
+                        + time +":00+01:00";
+                timeString = dateConverter.formatStandard(timeString);
                 final Observer<Reservations> observer = new Observer<Reservations>() {
                     @Override
-                    public void onChanged(Reservations orders) {
-                        Log.i("livedata","got an updt");
+                    public void onChanged(Reservations reservations) {
+                        tableIsReserved = false;
+                        ArrayList<Reservation> reservationList = reservations.getReservations();
+                        reservationList.forEach(reservation -> {
+                            if(Integer.toString(tableId).equals(reservation.getTableId().getTableId())){ //this table
+                                String reservedDate = dateConverter.formatYYYYMMDD(reservation.getReservationDate());
+                                Log.i("reserved",  "THIS IS RES DATE" + reservedDate);
+                                Log.i("reserved",  "THIS IS CURRENT DATE" + date);
+                                if(!reservedDate.equals(date)){ //if the reserved date matches the date entered.
+                                    postReservation(timeString,tableId);
+                                    Log.i("insideMadeRes",  "yay");
+
+
+                                }
+                                else{ //the table is reversed for the given date.
+                                    dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
+                                    dateButton.setText("THIS DATE IS ALREADY RESERVED " + date);
+                                    Log.i("insideELSE",  "OH NO");
+                                }
+                                tableIsReserved = true;
+                                return;
+
+                             } // other table.
+
+                        });
+                        if(!tableIsReserved){
+                            postReservation(timeString,tableId);
+                            Log.i("outsideMadeRes",  "yay");
+                        }
+
                     }
                 };
 
                 bookingDialogViewModel.getAllReservations().observe(dialogFragment,observer);
-                String date = dateButton.getText().toString();
-                String time = timeButton.getText().toString();
 
-                String timeString = date  + "T"
-                        + time +":00+01:00";
-                Log.i("timeString",timeString);
-                timeString = dateConverter.formatStandard(timeString);
-                if(timeString != "") {
-                    Reservation reservation = new Reservation();
-                    RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
-                    reservation.setReservationDate(timeString);
-                    reservation.setReservationName(name.getText().toString());
-                    reservation.setReservationPhone(phoneNumber.getText().toString());
-                    reservation.setTableId(restaurantTable);
-                    postWrapper.postReservation(reservation);
-                    Log.i("BookingButtonClicked", timeString);
-                    dismiss();
-                }
 
             }
         });
         bookingButton.setVisibility(View.VISIBLE);
+    }
+
+    public void postReservation(String timeString, int tableId){
+        timeString = dateConverter.formatStandard(timeString);
+        Reservation reservation = new Reservation();
+        RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
+        reservation.setReservationDate(timeString);
+        reservation.setReservationName(name.getText().toString());
+        reservation.setReservationPhone(phoneNumber.getText().toString());
+        reservation.setTableId(restaurantTable);
+        postWrapper.postReservation(reservation);
+        dismiss();
     }
 }
 

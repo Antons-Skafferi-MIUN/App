@@ -17,11 +17,17 @@ import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.DateConverter;
+import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
+import se.miun.dt170.antonsskafferi.data.remote.ApiService;
+import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.data.repository.TableRepository;
 
 /**
@@ -33,6 +39,9 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     private View fragmentView;
     private TableDialogSharedViewModel sharedViewModel;
     private int numberOfTables;
+    private ApiService mAPIService;
+
+
 
     public static TableOverviewFragment newInstance() {
         return new TableOverviewFragment();
@@ -46,6 +55,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         fragmentView = inflater.inflate(R.layout.table_overview_fragment, container, false);
         ViewGroup parent = fragmentView.findViewById(R.id.TableOverviewLayout);
         numberOfTables = parent.getChildCount();
+        mAPIService = ApiUtils.getAPIService();
 
         // for each child apply a listener to the childs tableButton
         for (int tableIndex = 0; tableIndex < numberOfTables; tableIndex++) {
@@ -53,12 +63,51 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
             table.setup(tableIndex + 1);
             table.setDialogText("Bord " + table.getTableNr());
 
+            checkForOrders(table);
+
+
             Button tempButton = table.findViewById(R.id.tableButton);
             tempButton.setOnClickListener(this);
             //TODO ADD TABLES IN LSIT FOR EASY ACCESS LATER.
         }
         return fragmentView;
     }
+
+    private void checkForOrders(TableView tableToCheck) {
+
+        mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<OrderRows>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Retrofit RxJava", e.toString());
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(OrderRows response) {
+                        response.getOrderRows().forEach(orderRow -> {
+                            String orderTableID = orderRow.getOrderId().getTableId().getTableId();
+
+                            if (Integer.parseInt(orderTableID) == tableToCheck.getTableNr()) {
+                                if (!tableToCheck.getDialogText().contains(" har gäster.")) {
+                                    tableToCheck.addBookedStatus();
+                                    tableToCheck.setDialogText(tableToCheck.getDialogText() + " har gäster.");
+                                }
+
+
+                            }
+                        });
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
+    }
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
