@@ -5,13 +5,10 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -86,16 +83,17 @@ public class BookingDialog extends AlertDialog {
         addTimeButtonListener();
     }
 
-    private void addDatePickerDialog(){
+    private void addDatePickerDialog() {
         //TODO MAKE IT IMPOSSIBLE TO BOOK DATES BAXCK IN TIME.
 
         date = (view, year, month, dayOfMonth) -> {
-            String selectedDate = dateConverter.YYYYMMDDParser(year,month+1,dayOfMonth);
+            String selectedDate = dateConverter.YYYYMMDDParser(year, month + 1, dayOfMonth);
             dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_green));
             dateButton.setText(selectedDate);
         };
     }
-    private void addDateButtonListener(){
+
+    private void addDateButtonListener() {
         dateButton.setOnClickListener(v -> {
             datePickerDialog = new DatePickerDialog(context, date, calender
                     .get(Calendar.YEAR), calender.get(Calendar.MONTH),
@@ -106,7 +104,8 @@ public class BookingDialog extends AlertDialog {
             datePickerDialog.show();
         });
     }
-    private void addTimeButtonListener(){
+
+    private void addTimeButtonListener() {
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +113,7 @@ public class BookingDialog extends AlertDialog {
                 timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        timeButton.setText(dateConverter.HHMMParser(hourOfDay,minute));
+                        timeButton.setText(dateConverter.HHMMParser(hourOfDay, minute));
                         timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_green));
 
                         timePickerView = view;
@@ -128,6 +127,7 @@ public class BookingDialog extends AlertDialog {
             }
         });
     }
+
     public void setBookingButton(String buttonText, int tableId) {
         bookingButton.setText(buttonText);
 
@@ -135,40 +135,37 @@ public class BookingDialog extends AlertDialog {
             @Override
             public void onClick(View v) {
                 boolean isInputCorrect = true;
-                if(TextUtils.isEmpty(phoneNumber.getText().toString())) {
+                if (TextUtils.isEmpty(phoneNumber.getText().toString())) {
                     phoneNumber.setError("Fältet får inte vara tomt");
                     isInputCorrect = false;
                 }
                 //2020-03-06T11:55:40+01:00
-                if(timePickerView == null){
+                if (timePickerView == null) {
                     timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
                     isInputCorrect = false;
                 }
-                if(datePickerDialog == null){
+                if (datePickerDialog == null) {
                     dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
                     isInputCorrect = false;
                 }
-                if(!isInputCorrect){return;}
+                if (!isInputCorrect) {
+                    return;
+                }
 
                 String date = dateButton.getText().toString();
                 String time = timeButton.getText().toString();
 
-                String timeString = date  + "T"
-                        + time +":00+01:00";
-                Log.i("timeString",timeString);
+                String timeString = date + "T"
+                        + time + ":00+01:00";
+                Log.i("timeString", timeString);
                 timeString = dateConverter.formatStandard(timeString);
-                if(timeString != "") {
-                    Reservation reservation = new Reservation();
+                if (!timeString.equals("")) {
                     RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
-                    reservation.setReservationDate(timeString);
-                    reservation.setReservationName(name.getText().toString());
-                    reservation.setReservationPhone(phoneNumber.getText().toString());
-                    reservation.setTableId(restaurantTable);
+                    Reservation reservation = new Reservation(restaurantTable, timeString, phoneNumber.getText().toString(), name.getText().toString());
                     postWrapper.postReservation(reservation);
                     Log.i("BookingButtonClicked", timeString);
                     dismiss();
                 }
-
             }
         });
         bookingButton.setVisibility(View.VISIBLE);
