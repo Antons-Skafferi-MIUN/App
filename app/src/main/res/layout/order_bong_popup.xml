@@ -1,44 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/orderpopup_background"
     android:padding="5dp"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="397dp"
-        android:layout_height="wrap_content"
-        android:hint="Bokstäver"
-        android:textColor="#FFFFFF"/>
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="EXTRA POTATIS"
-        android:textColor="#ffffff"
-        android:id="@+id/extraPotatis"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ALLERGI/GLUTEN"
-        android:textColor="#ffffff"
-        android:id="@+id/allergiGluten"/>
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Bekräfta"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bekräfta"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/confirm"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:id="@+id/resultat"/>
+        <CheckBox
+            android:id="@+id/pommesFrittes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:text="POMMES FRITTES"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toEndOf="@+id/extraPotatis"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+        <CheckBox
+            android:id="@+id/allergiGluten"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:text="ALLERGI/GLUTEN"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toEndOf="@+id/pommesFrittes"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+        <CheckBox
+            android:id="@+id/extraPotatis"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="EXTRA POTATIS"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+        <CheckBox
+            android:id="@+id/stektPotatis"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="STEKT POTATIS"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/extraPotatis" />
+
+        <CheckBox
+            android:id="@+id/extraSalad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="EXTRA SALAD"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stektPotatis" />
+
+        <CheckBox
+            android:id="@+id/ejSos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="57dp"
+            android:text="EJ SÅS"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toEndOf="@+id/extraSalad"
+            app:layout_constraintTop_toBottomOf="@+id/ejLingonsylt" />
+
+        <CheckBox
+            android:id="@+id/ejLingonsylt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="46dp"
+            android:text="EJ LINGONSYLT"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toEndOf="@+id/stektPotatis"
+            app:layout_constraintTop_toBottomOf="@+id/pommesFrittes" />
+
+        <CheckBox
+            android:id="@+id/ejSalt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:text="EJ SALT"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toEndOf="@+id/ejLingonsylt"
+            app:layout_constraintTop_toBottomOf="@+id/allergiGluten" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="397dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#FFFFFF"
+            android:hint="Bokstäver"
+            android:textColor="#000000"
+            android:textSize="22dp"
+            app:layout_constraintBottom_toTopOf="@+id/confirm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/extraSalad" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="306dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="24dp"
+            android:text="Ändra order"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/resultat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

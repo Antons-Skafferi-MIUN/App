@@ -1,8 +1,8 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,10 +81,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private LinearLayout orderBongListLinearLayout;
     private int tableID;
     private String waiterName;
-
-
     List<TextView> textViews = new ArrayList<>();
-    List<CheckBox> checkBoxes = new ArrayList<>();
 
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
@@ -209,8 +206,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         orderBongListLinearLayout.addView(bongItemView, 0);
         TextView textView = (TextView) bongItemView.findViewById(R.id.extraText);
         textViews.add(textView);
-        CheckBox checkBox = (CheckBox) bongItemView.findViewById(R.id.checkBox);
-        checkBoxes.add(checkBox);
         menuItemList.add(menuItemView.getMenuItem());
     }
 
@@ -273,15 +268,16 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
 
     private void sendOrder(View v) {
-        DateConverter dateConverter = new DateConverter();
+        if (menuItemList.size() > 0) {
+            DateConverter dateConverter = new DateConverter();
+            Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
 
-        Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
+            PostWrapper postWrapper = new PostWrapper();
+            postWrapper.postOrder(order, menuItemList);
 
-        PostWrapper postWrapper = new PostWrapper();
-        postWrapper.postOrder(order, menuItemList);
-
-        NavDirections action = OrderOverviewFragmentDirections.actionOrderOverviewFragmentToTableOverviewFragment();
-        Navigation.findNavController(getView()).navigate(action);
+            NavDirections action = OrderOverviewFragmentDirections.actionOrderOverviewFragmentToTableOverviewFragment();
+            Navigation.findNavController(getView()).navigate(action);
+        }
     }
 
     //reverse arrayList items
@@ -297,16 +293,23 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
             if (bongView instanceof BongItemView) {
-                int colorCompаre = -6228832;
-                int backgroundColor = 0;
+                String colorCompаre = "597063"; //orange color
+                String backgroundColor = "";
                 Drawable background = bongView.getBackground();
-                if (background instanceof ColorDrawable) {
-                    backgroundColor = ((ColorDrawable) background).getColor();
-                    Log.d("Color", Integer.toString(backgroundColor));
+                if (background instanceof GradientDrawable) {
+                    GradientDrawable gradientDrawable = (GradientDrawable) background;
+                    try{
+                        String colorState = gradientDrawable.getColor().toString();
+                        int colorStateLength = colorState.length();
+                        backgroundColor = colorState.substring(colorStateLength - 7, colorStateLength - 1);
+                        Log.d("Color", backgroundColor);
+                    }
+                    catch (Exception e){}
                 }
-                if (colorCompаre == backgroundColor){
+                if (colorCompаre.equals(backgroundColor)){
                     try {
                         orderBongListLinearLayout.removeViewAt(i);
+                        menuItemList.remove(((BongItemView) bongView).getMenuItem());
                     }
                     catch (Exception e) { }
                 }
@@ -319,15 +322,23 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
             if (bongView instanceof BongItemView) {
-                int colorCompаre = -6228832;
-                int backgroundColor = 0;
+                String colorCompаre = "597063"; //orange color
+                String backgroundColor = "";
                 Drawable background = bongView.getBackground();
-                if (background instanceof ColorDrawable) {
-                    backgroundColor = ((ColorDrawable) background).getColor();
-                    Log.d("Color", Integer.toString(backgroundColor));
+                if (background instanceof GradientDrawable) {
+                    GradientDrawable gradientDrawable = (GradientDrawable) background;
+                    try{
+                        String colorState = gradientDrawable.getColor().toString();
+                        int colorStateLength = colorState.length();
+                        backgroundColor = colorState.substring(colorStateLength - 7, colorStateLength - 1);
+                        Log.d("Color", backgroundColor);
+                    }
+                    catch (Exception e){}
                 }
-                if (colorCompаre == backgroundColor){
-                    startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(),orderOverviewPopUp.class),999);
+                if (colorCompаre.equals(backgroundColor)){
+                    if (v != null && extra == null){
+                        startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(),orderOverviewPopUp.class),999);
+                    }
                     try {
                         List<TextView> textViewsReverse = reverse(textViews);
                         Log.d("Text", textViewsReverse.get(i).getText().toString());
@@ -337,7 +348,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                     catch (Exception e){}
                 }
             }
-        }
+        } 
     }
 
     @Override
@@ -378,6 +389,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void addOrderRowToBong(OrderRow orderRow) {
         BongItemView bongItemView = new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange());
+        CheckBox checkBox = bongItemView.findViewById(R.id.checkBox);
+        checkBox.setVisibility(View.GONE);
         orderBongListLinearLayout.addView(bongItemView, 0);
     }
 }

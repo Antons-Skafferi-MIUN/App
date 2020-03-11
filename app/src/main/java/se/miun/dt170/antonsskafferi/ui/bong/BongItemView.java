@@ -41,6 +41,12 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private KitchenBongContainerView grandParent;
     private String currentActivity;
 
+    public MenuItem getMenuItem() {
+        return menuItem;
+    }
+
+    private MenuItem menuItem;
+
 
     public BongItemView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -55,6 +61,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         checkBox = findViewById(R.id.checkBox);
         foodNameText = findViewById(R.id.foodNameText);
         extraText = findViewById(R.id.extraText);
+        this.menuItem = menuItem;
 
         foodNameText.setText(menuItem.getName());
         this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_shadow));
@@ -90,18 +97,15 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private void setItemClicked() {
 
         if (!itemClicked) {
-            //Fix the correct backgound later
-            //this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item_selected));
-            this.setBackgroundColor(Color.parseColor("#a0f4a0")); //light green
-            //foodNameText.setTextColor(Color.parseColor("#00cc00")); //green
-            foodNameText.setTextColor(Color.parseColor("#c18a0b")); //green
+            this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item_selected));
+            //this.setBackgroundColor(Color.parseColor("#f6e3b9"));
+            foodNameText.setTextColor(Color.parseColor("#c18a0b")); //orange
             extraText.setTextColor(Color.parseColor("#c18a0b"));
             itemClicked = true;
             bongListView.raiseCheckedItems();
         } else {
-
-            //this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item));
-            this.setBackgroundColor(Color.parseColor("#ffffff"));
+            this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_bong_item));
+            //this.setBackgroundColor(Color.parseColor("#fafafa"));
             foodNameText.setTextColor(Color.parseColor("#808080")); //grey
             extraText.setTextColor(Color.parseColor("#808080"));
             itemClicked = false;
