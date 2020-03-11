@@ -13,7 +13,8 @@ import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 
 public class DeleteWrapper {
     private ApiService mAPIService;
-    public DeleteWrapper(){
+
+    public DeleteWrapper() {
         mAPIService = ApiUtils.getAPIService();
     }
 
