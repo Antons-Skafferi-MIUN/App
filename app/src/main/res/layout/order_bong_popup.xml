@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/orderpopup_background"
-    android:padding="5dp"
-    android:orientation="vertical">
+    android:background="@drawable/orderpopup_bg"
+    android:orientation="vertical"
+    android:padding="5dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <Button
             android:id="@+id/confirm"
             android:layout_width="wrap_content"
@@ -19,6 +21,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
         <CheckBox
             android:id="@+id/allergiGluten"
             android:layout_width="0dp"
@@ -29,6 +32,7 @@
             android:textColor="#ffffff"
             app:layout_constraintStart_toEndOf="@+id/extraPotatis"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
+
         <CheckBox
             android:id="@+id/extraPotatis"
             android:layout_width="0dp"
@@ -39,6 +43,7 @@
             android:textColor="#ffffff"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
+
         <EditText
             android:id="@+id/editText"
             android:layout_width="397dp"
@@ -49,6 +54,7 @@
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/extraPotatis" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="306dp"
@@ -58,6 +64,7 @@
             android:text="ändra order"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/resultat"
             android:layout_width="wrap_content"
