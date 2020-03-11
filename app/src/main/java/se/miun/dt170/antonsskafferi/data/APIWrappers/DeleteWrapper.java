@@ -13,11 +13,13 @@ import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 
 public class DeleteWrapper {
     private ApiService mAPIService;
-    public DeleteWrapper(){
+
+    public DeleteWrapper() {
         mAPIService = ApiUtils.getAPIService();
     }
+
     //DELETE Calls
-    public void deleteReservation(long delReservationId) {
+    public void deleteReservation(String delReservationId) {
         mAPIService.deleteReservation(delReservationId).enqueue(new Callback<Reservation>() {
             @Override
             public void onResponse(Call<Reservation> call, Response<Reservation> response) {
@@ -35,7 +37,7 @@ public class DeleteWrapper {
         });
     }
 
-    public void deleteOrder(long delOrderId) {
+    public void deleteOrder(String delOrderId) {
         mAPIService.deleteOrder(delOrderId).enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Call<Order> call, Response<Order> response) {
@@ -53,7 +55,7 @@ public class DeleteWrapper {
         });
     }
 
-    public void deleteOrderRow(long delOrderRowId) {
+    public void deleteOrderRow(String delOrderRowId) {
         mAPIService.deleteOrderRow(delOrderRowId).enqueue(new Callback<OrderRow>() {
             @Override
             public void onResponse(Call<OrderRow> call, Response<OrderRow> response) {

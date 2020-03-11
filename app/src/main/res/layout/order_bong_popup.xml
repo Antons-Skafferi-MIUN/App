@@ -7,6 +7,7 @@
     android:background="@drawable/orderpopup_bg"
     android:orientation="vertical"
     android:padding="5dp"
+
     android:elevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,32 +15,34 @@
         android:layout_height="match_parent"
         android:elevation="5dp">
 
+
         <Button
             android:id="@+id/confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="4dp"
             android:background="@drawable/ic_btn_ok"
             android:text="OK"
             android:textColor="@color/table_overview_background"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.037"
+            app:layout_constraintHorizontal_bias="0.04"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText"
-            app:layout_constraintVertical_bias="0.221" />
+            app:layout_constraintVertical_bias="0.432" />
+
 
         <CheckBox
-            android:id="@+id/allergiGluten"
+            android:id="@+id/pommesFrittes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="32dp"
-            android:text="ALLERGI/GLUTEN"
-            android:textColor="@color/table_overview_text_dark"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
             android:buttonTint="@color/checkbox_yellowbrown"
+            android:text="POMMES FRITTES"
+            android:textColor="#000000"
             app:layout_constraintStart_toEndOf="@+id/extraPotatis"
             app:layout_constraintTop_toBottomOf="@+id/currentFoodItem" />
 
@@ -48,34 +51,110 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:buttonTint="@color/checkbox_yellowbrown"
             android:text="EXTRA POTATIS"
             android:textColor="@color/table_overview_text_dark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/currentFoodItem" />
 
+        <CheckBox
+            android:id="@+id/stektPotatis"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:buttonTint="@color/checkbox_yellowbrown"
+            android:text="STEKT POTATIS"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/extraPotatis" />
+
+        <CheckBox
+            android:id="@+id/extraSalad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:buttonTint="@color/checkbox_yellowbrown"
+            android:text="EXTRA SALAD"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stektPotatis" />
+
+        <CheckBox
+            android:id="@+id/ejSos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="16dp"
+            android:buttonTint="@color/checkbox_yellowbrown"
+            android:text="EJ SÅS"
+            android:textColor="#000000"
+            app:layout_constraintStart_toEndOf="@+id/extraSalad"
+            app:layout_constraintTop_toBottomOf="@+id/ejLingonsylt" />
+
+
+        <CheckBox
+            android:id="@+id/ejLingonsylt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:buttonTint="@color/checkbox_yellowbrown"
+            android:text="EJ LINGONSYLT"
+            android:textColor="#000000"
+            app:layout_constraintStart_toEndOf="@+id/stektPotatis"
+            app:layout_constraintTop_toBottomOf="@+id/pommesFrittes" />
+
+        <CheckBox
+            android:id="@+id/ejSalt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:buttonTint="@color/checkbox_yellowbrown"
+            android:text="EJ SALT"
+            android:textColor="#000000"
+            app:layout_constraintStart_toEndOf="@+id/ejLingonsylt"
+            app:layout_constraintTop_toBottomOf="@+id/allergiGluten" />
+
+        <CheckBox
+            android:id="@+id/allergiGluten"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:buttonTint="@color/checkbox_yellowbrown"
+            android:text="ALLERGI/GLUTEN"
+            android:textColor="#000000"
+            app:layout_constraintStart_toEndOf="@+id/pommesFrittes"
+            app:layout_constraintTop_toBottomOf="@+id/currentFoodItem" />
+
         <EditText
             android:id="@+id/editText"
             android:layout_width="397dp"
             android:layout_height="wrap_content"
+
             android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/checkbox_yellowbrown"
             android:hint="Extra information"
             android:textColor="@color/table_overview_text_dark"
-            android:backgroundTint="@color/checkbox_yellowbrown"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/extraPotatis" />
+            app:layout_constraintTop_toBottomOf="@+id/extraSalad" />
 
         <TextView
             android:id="@+id/currentFoodItem"
             android:layout_width="306dp"
             android:layout_height="31dp"
+
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:text="Ändra i order"
+            android:text="ÄNDRA I ORDER"
             android:textColor="@android:color/black"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

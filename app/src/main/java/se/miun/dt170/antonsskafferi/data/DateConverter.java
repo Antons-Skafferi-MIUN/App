@@ -3,6 +3,7 @@ package se.miun.dt170.antonsskafferi.data;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.GregorianCalendar;
 import android.icu.util.TimeZone;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -69,6 +70,7 @@ public class DateConverter {
         return formatYYYYMMDD(dateOne).equals(formatYYYYMMDD(dateTwo));
     }
     public String YYYYMMDDParser(int year, int month, int day){
+        Log.i("PARSER",Integer.toString(month));
         String parsedString = Integer.toString(year) + "-";
         if(month < 10){
             parsedString += "0";
