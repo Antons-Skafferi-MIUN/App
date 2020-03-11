@@ -95,7 +95,6 @@ public class TableDialogFragment extends DialogFragment {
 
         tableDialogViewModel = new ViewModelProvider(requireActivity()).
                 get(TableDialogViewModel.class);
-        // TEST
 
         parent = getParentFragment();
         openOrderButton = dialogView.findViewById(R.id.openOrderButton);
@@ -138,7 +137,7 @@ public class TableDialogFragment extends DialogFragment {
         bookingButton.setOnClickListener(v -> {
             table.setTableBooked(!table.isTableBooked());
             if (table.isTableBooked()) {
-                final BookingDialog myDialog = new BookingDialog(context,this);
+                final BookingDialog myDialog = new BookingDialog(context, this);
                 myDialog.setBookingButton("Boka", table.getTableNr());
 
                 //gets called when back button is pressed or pressed outside
@@ -154,9 +153,10 @@ public class TableDialogFragment extends DialogFragment {
             } else {
                 Log.d("Avboka", "Avbokar " + table.getReservationID());
                 deleteWrapper.deleteReservation(table.getReservationID());
+                tableDialogViewModel.getAllReservations();
+                adjustBookingButton();
                 dismiss();
             }
-            adjustBookingButton();
         });
     }
 

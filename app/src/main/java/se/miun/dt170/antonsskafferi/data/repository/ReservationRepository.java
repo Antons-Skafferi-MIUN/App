@@ -14,12 +14,13 @@ import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 
 public class ReservationRepository {
+
     private ApiService mAPIService;
     MutableLiveData<Reservations> allReservations;
 
     public ReservationRepository() {
         mAPIService = ApiUtils.getAPIService();
-        allReservations = new MutableLiveData<Reservations>();
+        allReservations = new MutableLiveData<>();
     }
 
     public MutableLiveData<Reservations> getAllReservations(){
@@ -45,6 +46,4 @@ public class ReservationRepository {
                 });
         return allReservations;
     }
-
-
 }

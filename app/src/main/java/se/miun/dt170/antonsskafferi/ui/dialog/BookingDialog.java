@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -27,7 +26,6 @@ import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
-import se.miun.dt170.antonsskafferi.data.repository.OrderRepository;
 
 public class BookingDialog extends AlertDialog {
     private EditText name;
@@ -45,13 +43,15 @@ public class BookingDialog extends AlertDialog {
     private PostWrapper postWrapper;
     private TimePicker timePickerView;
     private BookingDialogViewModel bookingDialogViewModel;
-    private DialogFragment dialogFragment;
+    private TableDialogFragment dialogFragment;
+    private TableDialogViewModel tableDialogViewModel;
+
 // https://stackoverflow.com/questions/35599203/disable-specific-dates-of-day-in-android-date-picker
     // can be used to mark specific dates.
 // get all reservations from database check if the date is booked
     //if the date is booked
 
-    public BookingDialog(Context context, DialogFragment parent) {
+    public BookingDialog(Context context, TableDialogFragment parent) {
         super(context);
         this.context = context;
         phoneNumber = new EditText(context);
@@ -74,8 +74,9 @@ public class BookingDialog extends AlertDialog {
         dateButton.setText("Klicka för att ange datum");
         name.setHint("Ange kundnamn");
         phoneNumber.setHint("Ange kundens telefonnummer");
-      //  bookingDialogViewModel = new ViewModelProvider(getOwnerActivity()).get(BookingDialogViewModel.class);
-        bookingDialogViewModel = new BookingDialogViewModel();
+        //  bookingDialogViewModel = new ViewModelProvider(getOwnerActivity()).get(BookingDialogViewModel.class);
+        tableDialogViewModel = new ViewModelProvider(getOwnerActivity()).
+                get(TableDialogViewModel.class);
 
         layout.setOrientation(LinearLayout.VERTICAL);
 
@@ -157,15 +158,17 @@ public class BookingDialog extends AlertDialog {
                     isInputCorrect = false;
                 }
 
-                if(!isInputCorrect){return;}
+                if (!isInputCorrect) {
+                    return;
+                }
                 final Observer<Reservations> observer = new Observer<Reservations>() {
                     @Override
                     public void onChanged(Reservations orders) {
-                        Log.i("livedata","got an updt");
+                        Log.i("livedata", "got an updt");
                     }
                 };
 
-                bookingDialogViewModel.getAllReservations().observe(dialogFragment,observer);
+                bookingDialogViewModel.getAllReservations().observe(dialogFragment, observer);
                 String date = dateButton.getText().toString();
                 String time = timeButton.getText().toString();
 
@@ -178,6 +181,8 @@ public class BookingDialog extends AlertDialog {
                     Reservation reservation = new Reservation(restaurantTable, timeString, phoneNumber.getText().toString(), name.getText().toString());
                     postWrapper.postReservation(reservation);
                     Log.i("BookingButtonClicked", timeString);
+                    dialogFragment.adjustBookingButton();
+                    tableDialogViewModel.getAllReservations();
                     dismiss();
                 }
             }
