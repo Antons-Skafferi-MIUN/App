@@ -32,6 +32,7 @@ import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Set;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -135,6 +136,11 @@ public class TableDialogFragment extends DialogFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             tableDialogViewModel.clearCurrentOrderFromDatabase(table.getTableNr());
+                            tableDialogViewModel.getOrdersToRemoveFromKitchen().forEach(orderID -> {
+                                restaurantSharedViewModel.removeOrderFromKitchen(Integer.toString(orderID));
+                            });
+                            tableDialogViewModel.clearOrderSet();
+                            Log.d("OrderSet", Integer.toString(tableDialogViewModel.getOrdersToRemoveFromKitchen().size()));
                         }
                     })
                     .setNegativeButton("Nej", new DialogInterface.OnClickListener() {

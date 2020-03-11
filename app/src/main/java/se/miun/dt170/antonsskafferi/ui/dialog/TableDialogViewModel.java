@@ -1,16 +1,22 @@
 package se.miun.dt170.antonsskafferi.ui.dialog;
 
 import android.util.Log;
+import android.view.ViewDebug;
 
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import se.miun.dt170.antonsskafferi.activity.RestaurantSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
@@ -23,17 +29,24 @@ import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 public class TableDialogViewModel extends ViewModel {
     private ApiService mAPIService;
     private DeleteWrapper deleteWrapper;
+
+    public Set<Integer> getOrdersToRemoveFromKitchen() {
+        return ordersToRemoveFromKitchen;
+    }
+
+    Set<Integer> ordersToRemoveFromKitchen;
+
     Map<Integer, ArrayList<OrderRow> > map;
 
     public TableDialogViewModel(){
         mAPIService = ApiUtils.getAPIService();
         deleteWrapper = new DeleteWrapper();
-        map = new HashMap<Integer, ArrayList<OrderRow>>();
+        ordersToRemoveFromKitchen = new HashSet<>();
     }
 
-    /*public bool checkIfOrdersExist(int tableNr) {
-
-    }*/
+    public void clearOrderSet() {
+        ordersToRemoveFromKitchen.clear();
+    }
 
     public void clearCurrentOrderFromDatabase(int tableNr){
         mAPIService.getOrderRows()
@@ -54,7 +67,7 @@ public class TableDialogViewModel extends ViewModel {
                     public void onNext(OrderRows orderRows) {
                         Log.i("ORDER ROW ", "AT TOP");
                         ArrayList<OrderRow> allOrderRows = orderRows.getOrderRows();
-
+                        //ordersToRemoveFromKitchen = new HashSet<>();
 
                         int orderID = -1;
                         for (OrderRow orderRow : allOrderRows) {
@@ -63,21 +76,20 @@ public class TableDialogViewModel extends ViewModel {
 
                             if (tableThatContainsOrderRow == tableNr) {
                                 orderID = Integer.parseInt(orderRow.getOrderId().getOrderId()); //order ID that belongs to the current order row.
-                                map.put(orderID,null);
+                                ordersToRemoveFromKitchen.add(orderID);
                                 orderRowID = Integer.parseInt(orderRow.getOrderRowId()); // ID of the current orderrow
                                 Log.i("ORDER ID", orderRow.getOrderId().getOrderId());
                                 Log.i("DELETING ORDER ROW", orderRow.getOrderRowId());
                                 deleteWrapper.deleteOrderRow(orderRowID);
                             }
-                            for (Map.Entry<Integer, ArrayList<OrderRow> > entry : map.entrySet()) {
-                                Integer key = entry.getKey();
-                                Log.i("HASHMAP TEST " , key.toString());
+
+                        }
+                        ordersToRemoveFromKitchen.forEach(currentOrderID -> {
+                            if (currentOrderID != -1) {
+                                Log.i("DELETING ORDER","" + currentOrderID);
+                                deleteWrapper.deleteOrder(currentOrderID);
                             }
-                        }
-                        if (orderID != -1) {
-                            Log.i("DELETING ORDER","" + orderID);
-                            deleteWrapper.deleteOrder(orderID);
-                        }
+                        } );
                     }
 
                 });
