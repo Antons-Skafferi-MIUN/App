@@ -140,7 +140,7 @@ public class TableDialogFragment extends DialogFragment {
         bookingButton.setOnClickListener(v -> {
             table.setTableBooked(!table.isTableBooked());
             if (table.isTableBooked()) {
-                final BookingDialog myDialog = new BookingDialog(context);
+                final BookingDialog myDialog = new BookingDialog(context,this);
                 myDialog.setBookingButton("Boka", table.getTableNr());
 
                 myDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
