@@ -381,10 +381,10 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                         Log.d("Text", textViewsReverse.get(i).getText().toString());
                         textViewsReverse.get(i).setText(extra);
                         Log.d("Text", textViewsReverse.get(i).getText().toString());
+                        ((BongItemView) bongView).getMenuItem().setOrderChanged(extra);
                     }
                     catch (Exception e){}
                 }
-                //((BongItemView) bongView).getMenuItem().setOrderChanged(extra);
             }
         } 
     }
