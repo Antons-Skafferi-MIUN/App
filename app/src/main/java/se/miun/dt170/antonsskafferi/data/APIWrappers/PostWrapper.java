@@ -38,9 +38,9 @@ public class PostWrapper {
 
                         if (menuItem.getTypeOfMenuItem().equals("Food")) {
                             //TODO FIX ORDER CHANGE
-                            orderRow = new OrderRow(response.body(), null, new Food(menuItem.getId()), null);
+                            orderRow = new OrderRow(response.body(), null, new Food(menuItem.getId()), menuItem.getOrderChange());
                         } else if (menuItem.getTypeOfMenuItem().equals("Drink")) {
-                            orderRow = new OrderRow(response.body(), new Drink(menuItem.getId()), null, null);
+                            orderRow = new OrderRow(response.body(), new Drink(menuItem.getId()), null, menuItem.getOrderChange());
                         }
 
                         postOrderRow(orderRow);

@@ -347,6 +347,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                     }
                     catch (Exception e){}
                 }
+                //((BongItemView) bongView).getMenuItem().setOrderChanged(extra);
             }
         } 
     }

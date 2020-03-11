@@ -19,6 +19,8 @@ public class Food implements MenuItem {
     @Element(name = "foodCategory", required = false)
     private String foodCategory;
 
+    private String orderChanged = null;
+
     /**
      * Only used for serialization of XML to object for Retrofit!
      */
@@ -94,5 +96,15 @@ public class Food implements MenuItem {
     @Override
     public String getTypeOfMenuItem() {
         return "Food";
+    }
+
+    @Override
+    public String getOrderChange() {
+        return orderChanged;
+    }
+
+    @Override
+    public void setOrderChanged(String orderChanged) {
+        this.orderChanged = orderChanged;
     }
 }

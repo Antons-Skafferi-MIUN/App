@@ -22,6 +22,8 @@ public class Drink implements MenuItem {
     @Element(name = "drinkName", required = false)
     private String drinkName;
 
+    private String orderChanged = null;
+
     /**
      * Only used for serialization of XML to object for Retrofit!
      */
@@ -105,5 +107,15 @@ public class Drink implements MenuItem {
     @Override
     public String getTypeOfMenuItem() {
         return "Drink";
+    }
+
+    @Override
+    public String getOrderChange() {
+        return orderChanged;
+    }
+
+    @Override
+    public void setOrderChanged(String orderChanged) {
+        this.orderChanged = orderChanged;
     }
 }
