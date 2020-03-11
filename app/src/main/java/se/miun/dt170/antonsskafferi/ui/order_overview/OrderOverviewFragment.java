@@ -1,9 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -15,10 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -31,12 +27,7 @@ import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -45,7 +36,6 @@ import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
 import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.ItemRepository;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
-import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 import se.miun.dt170.antonsskafferi.data.model.Order;
@@ -64,7 +54,6 @@ import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.orderO
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
-import se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragmentDirections;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -225,21 +214,20 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         TextView textView = (TextView) bongItemView.findViewById(R.id.extraText);
         textViews.add(textView);
         menuItemList.add(menuItemView.getMenuItem());
-        Log.d(TAG, "addMenuItemToBooooooong: ");
+        Log.d(TAG, "addMenuItemToBong: ");
 
+        //YoYo.with(Techniques.Rubberband).duration(75).repeat(0).playOn(menuItemView);
+        YoYo.with(Techniques.Pulse).duration(75).repeat(0).playOn(menuItemView);
 
-        YoYo.with(Techniques.RubberBand).duration(75).repeat(0).playOn(menuItemView);
-        //YoYo.with(Techniques.ZoomIn).duration(100).repeat(0).playOn(menuItemView);
-
-        /*
+/*
         ObjectAnimator animation = ObjectAnimator.ofFloat(menuItemView, "translationX", 10f);
         ObjectAnimator animation2 = ObjectAnimator.ofFloat(menuItemView, "translationY", -10f);
         ObjectAnimator animation3 = ObjectAnimator.ofFloat(menuItemView, "translationX", -10f);
         ObjectAnimator animation4 = ObjectAnimator.ofFloat(menuItemView, "translationY", 10f);
         animation = ObjectAnimator.ofFloat(menuItemView, "scaleX", 1f, 1.5f);
         animation2 = ObjectAnimator.ofFloat(menuItemView, "scaleY", 1f, 1.5f);
-        animation3 = ObjectAnimator.ofFloat(menuItemView, "scaleX", 1f, 0.5f);
-        animation4 = ObjectAnimator.ofFloat(menuItemView, "scaleY", 1f, 0.5f);
+        animation3 = ObjectAnimator.ofFloat(menuItemView, "scaleX", 1f, -0.5f);
+        animation4 = ObjectAnimator.ofFloat(menuItemView, "scaleY", 1f, -0.5f);
         animation.setDuration(200);
         animation2.setDuration(200);
         animation3.setDuration(200);
@@ -254,7 +242,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         animation4.start();
 
 
-         */
+ */
 
     }
 
