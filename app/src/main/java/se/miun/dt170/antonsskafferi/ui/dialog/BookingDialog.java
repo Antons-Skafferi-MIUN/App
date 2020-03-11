@@ -26,6 +26,7 @@ import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
 import se.miun.dt170.antonsskafferi.data.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
+import se.miun.dt170.antonsskafferi.data.repository.OrderRepository;
 
 public class BookingDialog extends AlertDialog {
     private EditText name;
@@ -42,8 +43,11 @@ public class BookingDialog extends AlertDialog {
     private Button bookingButton;
     private PostWrapper postWrapper;
     private TimePicker timePickerView;
+    private OrderRepository orderRepository;
 // https://stackoverflow.com/questions/35599203/disable-specific-dates-of-day-in-android-date-picker
     // can be used to mark specific dates.
+// get all reservations from database check if the date is booked
+    //if the date is booked
 
     public BookingDialog(Context context) {
         super(context);
@@ -57,6 +61,7 @@ public class BookingDialog extends AlertDialog {
         calender = Calendar.getInstance();
         bookingButton = new Button(context);
         postWrapper = new PostWrapper();
+        orderRepository = new OrderRepository();
     }
 
     @Override
@@ -85,7 +90,7 @@ public class BookingDialog extends AlertDialog {
         //TODO MAKE IT IMPOSSIBLE TO BOOK DATES BAXCK IN TIME.
 
         date = (view, year, month, dayOfMonth) -> {
-            String selectedDate = dateConverter.YYYYMMDDParser(year,month,dayOfMonth);
+            String selectedDate = dateConverter.YYYYMMDDParser(year,month+1,dayOfMonth);
             dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_green));
             dateButton.setText(selectedDate);
         };
@@ -168,6 +173,5 @@ public class BookingDialog extends AlertDialog {
         });
         bookingButton.setVisibility(View.VISIBLE);
     }
-
 }
 
