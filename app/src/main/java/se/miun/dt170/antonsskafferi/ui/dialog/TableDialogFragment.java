@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -155,6 +156,9 @@ public class TableDialogFragment extends DialogFragment {
                         | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
             } else {
                 adjustBookingButton();
+                Log.d("Avboka", "Avbokar " + table.getReservationID());
+                deleteWrapper.deleteReservation(table.getReservationID());
+                dismiss();
             }
         });
     }
