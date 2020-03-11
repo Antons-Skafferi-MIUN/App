@@ -22,6 +22,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import se.miun.dt170.antonsskafferi.R;
@@ -159,8 +160,20 @@ public class BookingDialog extends AlertDialog {
                 if(!isInputCorrect){return;}
                 final Observer<Reservations> observer = new Observer<Reservations>() {
                     @Override
-                    public void onChanged(Reservations orders) {
-                        Log.i("livedata","got an updt");
+                    public void onChanged(Reservations reservations) {
+                        ArrayList<Reservation> reservationList = reservations.getReservations();
+                        reservationList.forEach(reservation -> {
+                            if(Integer.toString(tableId).equals(reservation.getTableId().getTableId())){ //this table
+                                String reservedDate = dateConverter.formatYYYYMMDD(reservation.getReservationDate());
+                                String currentDate = dateConverter.formatYYYYMMDD(dateConverter.getCurrentTime());
+                                Log.i("reserved",  reservedDate);
+                                Log.i("reserved",  currentDate);
+                                if(reservedDate.equals(currentDate)){
+                                    Log.i("bookingDia",  "hey this date is booked");
+
+                                }
+                            }
+                        });
                     }
                 };
 
@@ -172,18 +185,15 @@ public class BookingDialog extends AlertDialog {
                         + time +":00+01:00";
                 Log.i("timeString",timeString);
                 timeString = dateConverter.formatStandard(timeString);
-                if(timeString != "") {
-                    Reservation reservation = new Reservation();
-                    RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
-                    reservation.setReservationDate(timeString);
-                    reservation.setReservationName(name.getText().toString());
-                    reservation.setReservationPhone(phoneNumber.getText().toString());
-                    reservation.setTableId(restaurantTable);
-                    postWrapper.postReservation(reservation);
-                    Log.i("BookingButtonClicked", timeString);
-                    dismiss();
-                }
-
+                Reservation reservation = new Reservation();
+                RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
+                reservation.setReservationDate(timeString);
+                reservation.setReservationName(name.getText().toString());
+                reservation.setReservationPhone(phoneNumber.getText().toString());
+                reservation.setTableId(restaurantTable);
+                postWrapper.postReservation(reservation);
+                Log.i("BookingButtonClicked", timeString);
+                dismiss();
             }
         });
         bookingButton.setVisibility(View.VISIBLE);
