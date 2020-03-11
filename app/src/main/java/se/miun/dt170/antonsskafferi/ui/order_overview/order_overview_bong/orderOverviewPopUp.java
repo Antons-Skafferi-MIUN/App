@@ -38,7 +38,7 @@ public class orderOverviewPopUp extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8),(int)(height*.6));
+        getWindow().setLayout((int)(width*.8),(int)(height*.9));
 
         //checkboxes
         extraPotatis = findViewById(R.id.extraPotatis);

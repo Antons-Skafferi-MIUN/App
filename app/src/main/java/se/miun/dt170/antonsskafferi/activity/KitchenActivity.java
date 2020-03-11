@@ -2,13 +2,19 @@ package se.miun.dt170.antonsskafferi.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.flexbox.FlexboxLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -17,6 +23,7 @@ import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.Order;
+import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
@@ -30,7 +37,8 @@ import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 public class KitchenActivity extends AppCompatActivity {
 
     private FlexboxLayout bongListLayoutContainer;
-    private Map<String, KitchenBongContainerView> kitchenBongContainerViews;
+    private RestaurantSharedViewModel restaurantSharedViewModel;
+    //private Map<String, KitchenBongContainerView> kitchenBongContainerViews;
     private ApiService mAPIService;
 
 
@@ -38,8 +46,12 @@ public class KitchenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kitchen);
+
+        restaurantSharedViewModel = new ViewModelProvider(this).
+                get(RestaurantSharedViewModel.class);
+        //kitchenBongContainerViews = new HashMap<>();
+
         getLifecycle();
-        kitchenBongContainerViews = new HashMap<>();
         mAPIService = ApiUtils.getAPIService();
 
         // Create view variables
@@ -47,6 +59,10 @@ public class KitchenActivity extends AppCompatActivity {
 
         getOrderRows();
     }
+
+    /*public void removeOrderFromActivity(String orderID) {
+        kitchenBongContainerViews.remove(orderID);
+    }*/
 
     public void getOrderRows() {
         mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -64,110 +80,24 @@ public class KitchenActivity extends AppCompatActivity {
                     // Called on every new observed item
                     @Override
                     public void onNext(OrderRows response) {
+                            Map<String, List<OrderRow>> orderRowMap = new HashMap<>();
                         response.getOrderRows().forEach(orderRow -> {
-                            buildOrder(orderRow.getOrderId());
+                            orderRowMap.computeIfAbsent(orderRow.getOrderId().getOrderId(), k -> new ArrayList<>()).add(orderRow);
+                            /*if (!orderRowMap.containsKey(orderRow.getOrderId().getOrderId())) {
+                                orderRowMap.put(orderRow.getOrderId().getOrderId(), new ArrayList<>());
+                            }
+                            orderRowMap.get(orderRow.getOrderId().getOrderId()).add(orderRow);*/
                         });
+                        buildOrders(orderRowMap);
                     }
                 });
     }
 
-    private void buildOrder(Order order) {
-        if (null == kitchenBongContainerViews.putIfAbsent(order.getOrderId(), new KitchenBongContainerView(this, order))) {
-            bongListLayoutContainer.addView(kitchenBongContainerViews.get(order.getOrderId()));
-        }
-    }
-
-    // Temporary location for getting food from database
-    public void getFoods() {
-        mAPIService.getFoods().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Foods>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.i("Complete", "GET food complete");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(Foods response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
-    public void getDrinks() {
-        mAPIService.getDrinks().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Drinks>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(Drinks response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
-    public void getOrders() {
-        mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Orders>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(Orders response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
-    public void getReservations() {
-        mAPIService.getReservations().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Reservations>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(Reservations response) {
-                        showResponse(response.toString());
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
-                    }
-                });
-    }
-
-
-    public void showResponse(String response) {
-        // TODO: Do something with response
-        Log.i("Retrofit", response);
+    private void buildOrders(Map<String, List<OrderRow>> orderRowMap) {
+        Log.d("order", "" + orderRowMap.size());
+        orderRowMap.forEach((order, orderRows) -> {
+            Log.d("kitchenorder", "" + order + " har så här många order rows: " + orderRows.size());
+            bongListLayoutContainer.addView(new KitchenBongContainerView(this, orderRows));
+        });
     }
 }

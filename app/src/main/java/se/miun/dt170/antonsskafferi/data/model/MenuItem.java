@@ -6,4 +6,6 @@ public interface MenuItem {
     String getCategory();
     String getId();
     String getTypeOfMenuItem();
+    String getOrderChange();
+    void setOrderChanged(String orderChanged);
 }

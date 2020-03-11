@@ -43,6 +43,8 @@ public class OrderRepository {
                     @Override
                     public void onError(Throwable e) {
                         Log.i("onError",e.toString());
+                        allOrders.setValue(null);
+
 
                     }
 
@@ -72,6 +74,7 @@ public class OrderRepository {
                     @Override
                     public void onError(Throwable e) {
                         Log.i("onError",e.toString());
+                        allOrderRows.setValue(null);
 
                     }
 

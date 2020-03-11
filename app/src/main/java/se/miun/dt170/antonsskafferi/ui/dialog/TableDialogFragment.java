@@ -24,9 +24,11 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import java.util.Calendar;
+import java.util.Set;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
+import se.miun.dt170.antonsskafferi.activity.RestaurantSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
 import se.miun.dt170.antonsskafferi.data.repository.OrderRepository;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableView;
@@ -42,6 +44,7 @@ public class TableDialogFragment extends DialogFragment {
     private View dialogView;
     private Fragment parent;
     private TableDialogSharedViewModel sharedViewModel;
+    private RestaurantSharedViewModel restaurantSharedViewModel;
     private TableView table;
     private Drawable popupAvailableColor;
     private Drawable popupBookedColor;
@@ -69,7 +72,8 @@ public class TableDialogFragment extends DialogFragment {
         orderRepository = new OrderRepository();
         sharedViewModel = new ViewModelProvider(requireActivity()).
                 get(TableDialogSharedViewModel.class);
-
+        restaurantSharedViewModel = new ViewModelProvider(requireActivity()).
+                get(RestaurantSharedViewModel.class);
         mutableTable = sharedViewModel.getTable();
         table = mutableTable.getValue(); // TEMP FIX
         dialogText = table.getDialogText();
@@ -117,6 +121,11 @@ public class TableDialogFragment extends DialogFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             tableDialogViewModel.clearCurrentOrderFromDatabase(table.getTableNr());
+                            tableDialogViewModel.getOrdersToRemoveFromKitchen().forEach(orderID -> {
+                                restaurantSharedViewModel.removeOrderFromKitchen(orderID);
+                            });
+                            tableDialogViewModel.clearOrderSet();
+                            Log.d("OrderSet", Integer.toString(tableDialogViewModel.getOrdersToRemoveFromKitchen().size()));
                         }
                     })
                     .setNegativeButton("Nej", new DialogInterface.OnClickListener() {
