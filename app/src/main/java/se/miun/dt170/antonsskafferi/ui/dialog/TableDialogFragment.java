@@ -138,7 +138,7 @@ public class TableDialogFragment extends DialogFragment {
         bookingButton.setOnClickListener(v -> {
             table.setTableBooked(!table.isTableBooked());
             if (table.isTableBooked()) {
-                final BookingDialog myDialog = new BookingDialog(context);
+                final BookingDialog myDialog = new BookingDialog(context,this);
                 myDialog.setBookingButton("Boka", table.getTableNr());
 
                 //gets called when back button is pressed or pressed outside
