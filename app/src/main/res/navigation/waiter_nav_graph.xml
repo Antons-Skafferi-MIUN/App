@@ -7,7 +7,8 @@
     <fragment
         android:id="@+id/tableOverviewFragment"
         android:name="se.miun.dt170.antonsskafferi.ui.table_overview.TableOverviewFragment"
-        android:label="TableOverviewFragment">
+        android:label="TableOverviewFragment"
+        tools:layout="@layout/table_overview_fragment">
         <action
             android:id="@+id/action_tableOverviewFragment_to_tableDialogFragment"
             app:destination="@id/tableDialogFragment" />
@@ -15,7 +16,7 @@
     <fragment
         android:id="@+id/orderOverviewFragment"
         android:name="se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment"
-
+        tools:layout="@layout/order_overview_fragment"
         android:label="OrderOverviewFragment">
         <action
             android:id="@+id/action_orderOverviewFragment_to_foodEditDialog"

@@ -37,14 +37,6 @@ public class Drink implements MenuItem {
         this.drinkId = drinkId;
     }
 
-    public Drink(String drinkId, String drinkType, String drinkPrice, String drinkCategory, String drinkName) {
-        this.drinkId = drinkId;
-        this.drinkType = drinkType;
-        this.drinkPrice = drinkPrice;
-        this.drinkCategory = drinkCategory;
-        this.drinkName = drinkName;
-    }
-
     public String getDrinkId() {
         return drinkId;
     }

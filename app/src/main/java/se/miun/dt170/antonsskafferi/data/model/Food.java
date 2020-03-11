@@ -34,14 +34,6 @@ public class Food implements MenuItem {
         this.foodId = foodId;
     }
 
-    //TODO Remove this function when reading from database is implemented
-    public Food(String foodId, String foodPrice, String foodName, String foodCategory) {
-        this.foodId = foodId;
-        this.foodPrice = foodPrice;
-        this.foodName = foodName;
-        this.foodCategory = foodCategory;
-    }
-
     public String getFoodPrice() {
         return foodPrice;
     }

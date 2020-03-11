@@ -312,19 +312,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 }
             }
         }
-//        LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-//        List<CheckBox> checkBoxesReverse = reverse(checkBoxes);
-//        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
-//            View bongView = orderBongListLinearLayout.getChildAt(i);
-//            if (bongView instanceof BongItemView) {
-//                if (checkBoxesReverse.get(i).isChecked()){
-//                    try {
-//                        orderBongListLinearLayout.removeViewAt(i);
-//                    }
-//                    catch (Exception e) { }
-//                }
-//            }
-//        }
     }
 
     private void popupWindow(View v, String extra) {

@@ -66,8 +66,6 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         TableRepository reservations = new TableRepository();
         reservations.getRestaurantTables(this);
 
-        // Log.i("RESERVATIONS IN TABLEOVERVIEWFRAGMENT", reservations.getValue().toString());
-
         mViewModel = ViewModelProviders.of(this).get(TableOverviewViewModel.class);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TableDialogSharedViewModel.class);
     }
