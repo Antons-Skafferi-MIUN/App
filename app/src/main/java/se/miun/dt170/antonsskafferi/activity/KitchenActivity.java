@@ -12,21 +12,15 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.HashMap;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
-import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.Order;
-import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Orders;
-import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
@@ -42,6 +36,7 @@ public class KitchenActivity extends AppCompatActivity {
     //private Map<String, KitchenBongContainerView> kitchenBongContainerViews;
     private ApiService mAPIService;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +45,8 @@ public class KitchenActivity extends AppCompatActivity {
         restaurantSharedViewModel = new ViewModelProvider(this).
                 get(RestaurantSharedViewModel.class);
         //kitchenBongContainerViews = new HashMap<>();
+
+        getLifecycle();
         mAPIService = ApiUtils.getAPIService();
 
         // Create view variables

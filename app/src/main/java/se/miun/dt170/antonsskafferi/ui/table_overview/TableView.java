@@ -20,12 +20,15 @@ public class TableView extends ConstraintLayout {
     private int tableAvailableColor;
     private int tableBookedColor;
     private int tableTextColor;
+    private String dialogText = "";
+    private String reservationID;
+
     public TableView(@NonNull Context context) {
         super(context);
     }
+
     public TableView(@NonNull Context context, AttributeSet attrs) {
         super(context, attrs);
-
     }
 
     public int getTableNr() {
@@ -72,13 +75,14 @@ public class TableView extends ConstraintLayout {
      * Sets the color of a table.
      */
 
-    public void bookTable() {
+    public void addBookedStatus() {
         setButtonColor(getTableBookedColor());
         setTableBooked(true);
     }
 
-    public void removeBooking() {
+    public void removeBookedStatus() {
         setButtonColor(getTableAvailableColor());
+        setDialogText("Bord " + getTableNr());
         setTableBooked(false);
         setArrivalTime("");
     }
@@ -86,7 +90,6 @@ public class TableView extends ConstraintLayout {
     public void setButtonColor(int color) {
         tableButton.setBackgroundColor(color);
     }
-
 
     public boolean isTableBooked() {
         return isTableBooked;
@@ -102,5 +105,21 @@ public class TableView extends ConstraintLayout {
 
     public void setTableButtonText(String buttonText) {
         this.tableButton.setText(buttonText);
+    }
+
+    public String getDialogText() {
+        return dialogText;
+    }
+
+    public void setDialogText(String dialogText) {
+        this.dialogText = dialogText;
+    }
+
+    public String getReservationID() {
+        return reservationID;
+    }
+
+    public void setReservationID(String reservationID) {
+        this.reservationID = reservationID;
     }
 }

@@ -98,7 +98,7 @@ public interface ApiService {
      * @return a confirmation text in response-body
      */
     @DELETE("entities.reservations/{reservationId}")
-    Call<Reservation> deleteReservation(@Path("reservationId") long id);
+    Call<Reservation> deleteReservation(@Path("reservationId") String id);
 
     /**
      * Deletes a specified {@link Order} from the database.
@@ -107,7 +107,7 @@ public interface ApiService {
      * @return a confirmation text in response-body
      */
     @DELETE("entities.orders/{orderId}")
-    Call<Order> deleteOrder(@Path("orderId") long id);
+    Call<Order> deleteOrder(@Path("orderId") String id);
 
     /**
      * Deletes the specified {@link OrderRow} from the database.
@@ -116,5 +116,5 @@ public interface ApiService {
      * @return a confirmation text in response-body
      */
     @DELETE("entities.orderrows/{orderRowId}")
-    Call<OrderRow> deleteOrderRow(@Path("orderRowId") long id);
+    Call<OrderRow> deleteOrderRow(@Path("orderRowId") String id);
 }

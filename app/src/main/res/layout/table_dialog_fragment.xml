@@ -9,15 +9,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="168dp">
+        android:layout_height="wrap_content">
 
 
         <TextView
             android:id="@+id/dialogTextDisplay"
             android:layout_width="0dp"
-            android:layout_height="87dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Bord n"
+            android:padding="25dp"
+            android:text="Bord n "
             android:textColor="#000000"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/cancelButton"
@@ -30,11 +31,10 @@
         <Button
             android:id="@+id/bookingButton"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="81dp"
             android:background="@drawable/green_button_border"
             android:text="Boka"
             android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/openOrderButton"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/cancelButton"
@@ -45,29 +45,25 @@
         <Button
             android:id="@+id/openOrderButton"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="81dp"
             android:background="@drawable/green_button_border"
             android:text="Öppna bord / Ta order"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/bookingButton"
-            app:layout_constraintTop_toTopOf="@+id/bookingButton"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@+id/bookingButton" />
 
         <Button
             android:id="@+id/cancelButton"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="81dp"
             android:background="@drawable/green_button_border"
             android:text="Rensa bord"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/bookingButton"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dialogTextDisplay"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/dialogTextDisplay" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
