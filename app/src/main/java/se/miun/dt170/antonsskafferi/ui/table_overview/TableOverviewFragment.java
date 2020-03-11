@@ -97,6 +97,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         todaysReservations.forEach(reservation -> {
             TableView table = fragmentView.findViewById(R.id.table1 + (Integer.parseInt(reservation.getTableId().getTableId()) - 1));
             table.addBookedStatus();
+            table.setReservationID(reservation.getReservationId());
             table.setDialogText(String.format("Bokat av: %s\nKontakt: %s", reservation.getReservationName(), reservation.getReservationPhone()));
             table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
         });

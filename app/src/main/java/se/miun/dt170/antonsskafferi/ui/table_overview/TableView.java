@@ -21,6 +21,7 @@ public class TableView extends ConstraintLayout {
     private int tableBookedColor;
     private int tableTextColor;
     private String dialogText = "";
+    private String reservationID;
 
     public TableView(@NonNull Context context) {
         super(context);
@@ -112,5 +113,13 @@ public class TableView extends ConstraintLayout {
 
     public void setDialogText(String dialogText) {
         this.dialogText = dialogText;
+    }
+
+    public String getReservationID() {
+        return reservationID;
+    }
+
+    public void setReservationID(String reservationID) {
+        this.reservationID = reservationID;
     }
 }
