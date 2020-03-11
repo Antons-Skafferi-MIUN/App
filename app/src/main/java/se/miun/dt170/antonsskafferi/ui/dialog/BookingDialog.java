@@ -80,8 +80,7 @@ public class BookingDialog extends AlertDialog {
         dateButton.setText("Klicka för att ange datum");
         name.setHint("Ange kundnamn");
         phoneNumber.setHint("Ange kundens telefonnummer");
-      //  bookingDialogViewModel = new ViewModelProvider(getOwnerActivity()).get(BookingDialogViewModel.class);
-        bookingDialogViewModel = new BookingDialogViewModel();
+        bookingDialogViewModel = new ViewModelProvider(dialogFragment).get(BookingDialogViewModel.class);
 
         layout.setOrientation(LinearLayout.VERTICAL);
 
@@ -168,6 +167,10 @@ public class BookingDialog extends AlertDialog {
                 final Observer<Reservations> observer = new Observer<Reservations>() {
                     @Override
                     public void onChanged(Reservations reservations) {
+                        if(reservations == null){
+                            postReservation(timeString,tableId);
+                            return;
+                        }
                         tableIsReserved = false;
                         ArrayList<Reservation> reservationList = reservations.getReservations();
                         reservationList.forEach(reservation -> {
@@ -187,8 +190,6 @@ public class BookingDialog extends AlertDialog {
                                     Log.i("insideELSE",  "OH NO");
                                 }
                                 tableIsReserved = true;
-                                return;
-
                              } // other table.
 
                         });
@@ -200,8 +201,7 @@ public class BookingDialog extends AlertDialog {
                     }
                 };
 
-                bookingDialogViewModel.getAllReservations().observe(dialogFragment,observer);
-
+                bookingDialogViewModel.getAllReservations().observe(dialogFragment, observer);
 
             }
         });
