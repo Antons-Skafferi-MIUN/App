@@ -31,6 +31,10 @@ public class TableDialogViewModel extends ViewModel {
         map = new HashMap<Integer, ArrayList<OrderRow>>();
     }
 
+    /*public bool checkIfOrdersExist(int tableNr) {
+
+    }*/
+
     public void clearCurrentOrderFromDatabase(int tableNr){
         mAPIService.getOrderRows()
                 .subscribeOn(Schedulers.io())

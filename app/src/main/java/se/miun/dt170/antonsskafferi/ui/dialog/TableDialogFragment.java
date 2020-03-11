@@ -38,6 +38,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
+import se.miun.dt170.antonsskafferi.activity.RestaurantSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
@@ -56,6 +57,7 @@ public class TableDialogFragment extends DialogFragment {
     private View dialogView;
     private Fragment parent;
     private TableDialogSharedViewModel sharedViewModel;
+    private RestaurantSharedViewModel restaurantSharedViewModel;
     private TableView table;
     private Drawable popupAvailableColor;
     private Drawable popupBookedColor;
@@ -83,7 +85,8 @@ public class TableDialogFragment extends DialogFragment {
         orderRepository = new OrderRepository();
         sharedViewModel = new ViewModelProvider(requireActivity()).
                 get(TableDialogSharedViewModel.class);
-
+        restaurantSharedViewModel = new ViewModelProvider(requireActivity()).
+                get(RestaurantSharedViewModel.class);
         mutableTable = sharedViewModel.getTable();
         table = mutableTable.getValue(); // TEMP FIX
         dialogText = sharedViewModel.getDialogText();

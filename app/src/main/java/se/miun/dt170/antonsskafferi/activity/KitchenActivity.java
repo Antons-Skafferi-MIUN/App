@@ -2,8 +2,10 @@ package se.miun.dt170.antonsskafferi.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.flexbox.FlexboxLayout;
 
@@ -36,7 +38,8 @@ import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 public class KitchenActivity extends AppCompatActivity {
 
     private FlexboxLayout bongListLayoutContainer;
-    private Map<String, KitchenBongContainerView> kitchenBongContainerViews;
+    private RestaurantSharedViewModel restaurantSharedViewModel;
+    //private Map<String, KitchenBongContainerView> kitchenBongContainerViews;
     private ApiService mAPIService;
 
     @Override
@@ -44,7 +47,9 @@ public class KitchenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kitchen);
 
-        kitchenBongContainerViews = new HashMap<>();
+        restaurantSharedViewModel = new ViewModelProvider(this).
+                get(RestaurantSharedViewModel.class);
+        //kitchenBongContainerViews = new HashMap<>();
         mAPIService = ApiUtils.getAPIService();
 
         // Create view variables
@@ -52,6 +57,10 @@ public class KitchenActivity extends AppCompatActivity {
 
         getOrderRows();
     }
+
+    /*public void removeOrderFromActivity(String orderID) {
+        kitchenBongContainerViews.remove(orderID);
+    }*/
 
     public void getOrderRows() {
         mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -77,8 +86,8 @@ public class KitchenActivity extends AppCompatActivity {
     }
 
     private void buildOrder(Order order) {
-        if (null == kitchenBongContainerViews.putIfAbsent(order.getOrderId(), new KitchenBongContainerView(this, order))) {
-            bongListLayoutContainer.addView(kitchenBongContainerViews.get(order.getOrderId()));
+        if (null == restaurantSharedViewModel.getKitchenBongContainerViews().putIfAbsent(order.getOrderId(), new KitchenBongContainerView(this, order))) {
+            bongListLayoutContainer.addView(restaurantSharedViewModel.getKitchenBongContainerViews().get(order.getOrderId()));
         }
     }
 
