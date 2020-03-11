@@ -23,6 +23,7 @@ public class ReservationRepository {
     }
 
     public MutableLiveData<Reservations> getAllReservations(){
+
         mAPIService.getReservations().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Reservations>() {
                     @Override
@@ -33,8 +34,8 @@ public class ReservationRepository {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.i("onError",e.toString());
-
+                        Log.i("REPO ERROR","FAILED TO GET " + e.toString());
+                        allReservations.setValue(null);
                     }
 
                     @Override
