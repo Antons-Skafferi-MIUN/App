@@ -164,7 +164,6 @@ public class TableDialogFragment extends DialogFragment {
             bookingButton.setBackground(popupAvailableColor); //change to popup
             bookingButton.setText("Boka Bord");
             table.removeBookedStatus();
-            dismiss();
         } else {
             bookingButton.setBackground(popupBookedColor);
             bookingButton.setText("Avboka Bord");
