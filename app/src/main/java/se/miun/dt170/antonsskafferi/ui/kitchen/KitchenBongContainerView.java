@@ -11,6 +11,8 @@ import androidx.cardview.widget.CardView;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
+import java.util.List;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -32,7 +34,7 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
         super(context, attrs);
     }
 
-    public KitchenBongContainerView(Context context, Order order) {
+    public KitchenBongContainerView(Context context, List<OrderRow> orderRows) {
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -41,38 +43,16 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
         mAPIService = ApiUtils.getAPIService();
 
         kitchenBongContainerLinearLayout = findViewById(R.id.kitchenBongContainerLinearLayout);
-        kitchenBongContainerLinearLayout.addView(new KitchenBongHeaderView(getContext(), order));
+        kitchenBongContainerLinearLayout.addView(new KitchenBongHeaderView(getContext(), orderRows.get(0).getOrderId()));
 
-        getOrderRows(order);
+        Log.d("orderrows", "" + orderRows.size());
+        orderRows.forEach(orderRow -> {
+            buildOrderRow(orderRow);
+        });
     }
 
-    public void getOrderRows(Order order) {
-        mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OrderRows>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
-                    }
-
-                    // Called on every new observed item
-                    @Override
-                    public void onNext(OrderRows response) {
-                        response.getOrderRows().forEach(orderRow -> {
-                            buildOrderRow(orderRow, order);
-                        });
-                    }
-                });
-    }
-
-    private void buildOrderRow(OrderRow orderRow, Order thisOrder) {
-        if (orderRow.getOrderId().getOrderId().equals(thisOrder.getOrderId())) {
-            kitchenBongContainerLinearLayout.addView(new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange()));
-            kitchenBongContainerLinearLayout.raiseNumberOfItems();
-        }
+    private void buildOrderRow(OrderRow orderRow) {
+        kitchenBongContainerLinearLayout.addView(new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange()));
+        kitchenBongContainerLinearLayout.raiseNumberOfItems();
     }
 }

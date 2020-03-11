@@ -125,7 +125,7 @@ public class TableDialogFragment extends DialogFragment {
                         public void onClick(DialogInterface dialog, int which) {
                             tableDialogViewModel.clearCurrentOrderFromDatabase(table.getTableNr());
                             tableDialogViewModel.getOrdersToRemoveFromKitchen().forEach(orderID -> {
-                                restaurantSharedViewModel.removeOrderFromKitchen(Integer.toString(orderID));
+                                restaurantSharedViewModel.removeOrderFromKitchen(orderID);
                             });
                             tableDialogViewModel.clearOrderSet();
                             Log.d("OrderSet", Integer.toString(tableDialogViewModel.getOrdersToRemoveFromKitchen().size()));
