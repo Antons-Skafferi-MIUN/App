@@ -25,13 +25,13 @@ public class TableDialogViewModel extends ViewModel {
     private DeleteWrapper deleteWrapper;
     Map<Integer, ArrayList<OrderRow> > map;
 
-    public TableDialogViewModel(){
+    public TableDialogViewModel() {
         mAPIService = ApiUtils.getAPIService();
         deleteWrapper = new DeleteWrapper();
         map = new HashMap<Integer, ArrayList<OrderRow>>();
     }
 
-    public void clearCurrentOrderFromDatabase(int tableNr){
+    public void clearCurrentOrderFromDatabase(int tableNr) {
         mAPIService.getOrderRows()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
