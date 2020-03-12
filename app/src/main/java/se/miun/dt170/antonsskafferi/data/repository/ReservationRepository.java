@@ -30,7 +30,6 @@ public class ReservationRepository {
                     @Override
                     public void onCompleted() {
                         Log.i("func","onComplete");
-
                     }
 
                     @Override
@@ -41,7 +40,7 @@ public class ReservationRepository {
 
                     @Override
                     public void onNext(Reservations reservations) {
-                        Log.i("Repo",reservations.toString());
+                        Log.i("Repo reservation",reservations.toString());
                         allReservations.setValue(reservations);
                     }
                 });
