@@ -42,9 +42,9 @@ public class TableDialogViewModel extends ViewModel {
     }
 
     public MutableLiveData<Reservations> getAllReservations() {
-        if (allReservations == null) {
+//        if (allReservations == null) {
             allReservations = reservationRepository.getAllReservations();
-        }
+//        }
         return allReservations;
     }
 
