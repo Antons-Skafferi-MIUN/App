@@ -1,7 +1,6 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -23,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
@@ -35,7 +35,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
-import se.miun.dt170.antonsskafferi.data.DateConverter;
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
@@ -88,7 +88,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private int tableID;
     private String waiterName;
     List<TextView> textViews = new ArrayList<>();
-    ObjectAnimator objectAnimator;
 
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
@@ -216,34 +215,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         menuItemList.add(menuItemView.getMenuItem());
         Log.d(TAG, "addMenuItemToBong: ");
 
-        //YoYo.with(Techniques.Rubberband).duration(75).repeat(0).playOn(menuItemView);
         YoYo.with(Techniques.Pulse).duration(75).repeat(0).playOn(menuItemView);
-
-/*
-        ObjectAnimator animation = ObjectAnimator.ofFloat(menuItemView, "translationX", 10f);
-        ObjectAnimator animation2 = ObjectAnimator.ofFloat(menuItemView, "translationY", -10f);
-        ObjectAnimator animation3 = ObjectAnimator.ofFloat(menuItemView, "translationX", -10f);
-        ObjectAnimator animation4 = ObjectAnimator.ofFloat(menuItemView, "translationY", 10f);
-        animation = ObjectAnimator.ofFloat(menuItemView, "scaleX", 1f, 1.5f);
-        animation2 = ObjectAnimator.ofFloat(menuItemView, "scaleY", 1f, 1.5f);
-        animation3 = ObjectAnimator.ofFloat(menuItemView, "scaleX", 1f, -0.5f);
-        animation4 = ObjectAnimator.ofFloat(menuItemView, "scaleY", 1f, -0.5f);
-        animation.setDuration(200);
-        animation2.setDuration(200);
-        animation3.setDuration(200);
-        animation4.setDuration(200);
-        animation.setStartDelay(0);
-        animation2.setStartDelay(50);
-        animation3.setDuration(100);
-        animation4.setDuration(150);
-        animation.start();
-        animation2.start();
-        animation3.start();
-        animation4.start();
-
-
- */
-
     }
 
 
