@@ -1,6 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.table_overview;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     private int numberOfTables;
     private TableDialogViewModel tableDialogViewModel;
     private ApiService mAPIService;
+    private CountDownTimer countDownTimer;
 
     public static TableOverviewFragment newInstance() {
         return new TableOverviewFragment();
@@ -110,20 +112,35 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        TableRepository reservations = new TableRepository();
-//        reservations.getRestaurantTables(response -> updateFragment(response));
 
         mViewModel = new ViewModelProvider(this).get(TableOverviewViewModel.class);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TableDialogSharedViewModel.class);
-        tableDialogViewModel = new ViewModelProvider(this).get(TableDialogViewModel.class);
 
-        tableDialogViewModel.getAllReservations().observe(getViewLifecycleOwner(), new Observer<Reservations>() {
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        tableDialogViewModel = new ViewModelProvider(requireActivity()).get(TableDialogViewModel.class);
+
+        // start a timer that ends in 292.5 million years
+        countDownTimer = new CountDownTimer(Long.MAX_VALUE, 2000) {
             @Override
-            public void onChanged(Reservations reservations) {
-                Log.i("Fragment reservation", "reservation changed! " + reservations.toString());
-                updateFragment(reservations);
+            public void onTick(long millisUntilFinished) {
+                tableDialogViewModel.getAllReservations().observe(getViewLifecycleOwner(), new Observer<Reservations>() {
+                    @Override
+                    public void onChanged(Reservations reservations) {
+                        updateFragment(reservations);
+                    }
+                });
             }
-        });
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        countDownTimer.start();
     }
 
     // gets ID for table button.
@@ -144,12 +161,20 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
         // Find today's reservations
         tablesReservations.getReservations().forEach(reservation -> {
+            // Reset tables
+            TableView table = fragmentView.findViewById(R.id.table1 + (Integer.parseInt(reservation.getTableId().getTableId()) - 1));
+            table.removeBookedStatus();
+            table.setReservationID(reservation.getReservationId());
+            table.setDialogText(String.format("Bord %s", table.getTableNr()));
+            table.setArrivalTime(""); //ISO-8601
+
             if (date.compareDates(reservation.getReservationDate(), date.getCurrentTime())) {
                 Log.d("Reservation", String.format("Today's reservation: %s", reservation.toString()));
                 todaysReservations.add(reservation);
             }
         });
 
+        // Add booked status
         todaysReservations.forEach(reservation -> {
             TableView table = fragmentView.findViewById(R.id.table1 + (Integer.parseInt(reservation.getTableId().getTableId()) - 1));
             table.addBookedStatus();
