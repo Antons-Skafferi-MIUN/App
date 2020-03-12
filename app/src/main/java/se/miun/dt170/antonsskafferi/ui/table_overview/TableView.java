@@ -2,6 +2,7 @@ package se.miun.dt170.antonsskafferi.ui.table_overview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -9,7 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.model.OrderRows;
+import se.miun.dt170.antonsskafferi.data.remote.ApiService;
+import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 
 public class TableView extends ConstraintLayout {
     private boolean isTableBooked = false;
@@ -23,6 +30,8 @@ public class TableView extends ConstraintLayout {
     private int tableTextColor;
     private String dialogText = "";
     private String reservationID;
+    private ApiService mAPIService;
+    private boolean returnStatus = false;
 
     public TableView(@NonNull Context context) {
         super(context);
@@ -149,5 +158,36 @@ public class TableView extends ConstraintLayout {
 
     public void setReservationID(String reservationID) {
         this.reservationID = reservationID;
+    }
+
+    public boolean hasOrders() {
+        returnStatus = false;
+        mAPIService = ApiUtils.getAPIService();
+        mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<OrderRows>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Retrofit RxJava", e.toString());
+                    }
+
+                    // Called on every new observed item
+                    @Override
+                    public void onNext(OrderRows response) {
+                        response.getOrderRows().forEach(orderRow -> {
+                            String orderTableID = orderRow.getOrderId().getTableId().getTableId();
+
+                            if (Integer.parseInt(orderTableID) == getTableNr()) {
+                                returnStatus = true;
+                            }
+                        });
+                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
+                    }
+                });
+        return returnStatus;
     }
 }

@@ -137,29 +137,32 @@ public class TableDialogFragment extends DialogFragment {
         adjustOrderButton();
 
         cancelButton.setOnClickListener(v -> {
-            final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
-            confirmationDialog.setTitle("Är du säker på att du vill rensa ordern?")
-                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            tableDialogViewModel.clearCurrentOrderFromDatabase(table.getTableNr());
-                            tableDialogViewModel.getOrdersToRemoveFromKitchen().forEach(orderID -> {
-                                restaurantSharedViewModel.removeOrderFromKitchen(orderID);
-                            });
-                            tableDialogViewModel.clearOrderSet();
-                            table.setTableOpen(true);
-                            cancelButton.setBackground(cancelButtonColor);
-                            cancelButton.setTextColor(CancelButtonTextColor);
-                            Log.d("OrderSet", Integer.toString(tableDialogViewModel.getOrdersToRemoveFromKitchen().size()));
-                        }
-                    })
-                    .setNegativeButton("Nej", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dismiss();
-                        }
-                    })
-                    .show();
+            if (table.hasOrders()) {
+                final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
+                confirmationDialog.setTitle("Är du säker på att du vill rensa ordern?")
+                        .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                tableDialogViewModel.clearCurrentOrderFromDatabase(table.getTableNr());
+                                tableDialogViewModel.getOrdersToRemoveFromKitchen().forEach(orderID -> {
+                                    restaurantSharedViewModel.removeOrderFromKitchen(orderID);
+                                });
+                                tableDialogViewModel.clearOrderSet();
+                                table.setTableOpen(true);
+                                cancelButton.setBackground(cancelButtonColor);
+                                cancelButton.setTextColor(CancelButtonTextColor);
+                                Log.d("OrderSet", Integer.toString(tableDialogViewModel.getOrdersToRemoveFromKitchen().size()));
+                            }
+                        })
+                        .setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dismiss();
+                            }
+                        })
+                        .show();
+            }
+
         });
 
         openOrderButton.setOnClickListener(v -> {
