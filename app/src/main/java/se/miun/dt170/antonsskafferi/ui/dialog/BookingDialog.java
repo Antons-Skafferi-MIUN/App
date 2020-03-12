@@ -5,13 +5,10 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -27,11 +24,10 @@ import java.util.Calendar;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
-import se.miun.dt170.antonsskafferi.data.DateConverter;
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
-import se.miun.dt170.antonsskafferi.data.repository.OrderRepository;
 
 public class BookingDialog extends AlertDialog {
     private EditText name;

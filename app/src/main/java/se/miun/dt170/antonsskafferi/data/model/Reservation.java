@@ -5,6 +5,8 @@ import org.jetbrains.annotations.Nullable;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
+
 @Root(name = "reservations")
 public class Reservation {
 
@@ -33,7 +35,7 @@ public class Reservation {
      * Use this constructor when you're doing a POST request.
      *
      * @param tableId          a {@link RestaurantTable} with only an ID as it's constructor
-     * @param reservationDate  use {@link se.miun.dt170.antonsskafferi.data.DateConverter} getCurrentTime() formatted as ISO-8601
+     * @param reservationDate  use {@link DateConverter} getCurrentTime() formatted as ISO-8601
      * @param reservationPhone customer phone number
      * @param reservationName  customer name
      */
