@@ -1,6 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.table_overview;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,8 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
@@ -22,13 +23,13 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
-import se.miun.dt170.antonsskafferi.data.DateConverter;
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
-import se.miun.dt170.antonsskafferi.data.repository.TableRepository;
+import se.miun.dt170.antonsskafferi.ui.dialog.TableDialogViewModel;
 
 /**
  * This is the fullscreen fragment for showing available tables.
@@ -39,9 +40,9 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     private View fragmentView;
     private TableDialogSharedViewModel sharedViewModel;
     private int numberOfTables;
+    private TableDialogViewModel tableDialogViewModel;
     private ApiService mAPIService;
-
-
+    private CountDownTimer countDownTimer;
 
     public static TableOverviewFragment newInstance() {
         return new TableOverviewFragment();
@@ -95,7 +96,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
                             if (Integer.parseInt(orderTableID) == tableToCheck.getTableNr()) {
                                 if (!tableToCheck.getDialogText().contains(" har gäster.")) {
-                                    tableToCheck.addBookedStatus();
+                                    tableToCheck.addOccupiedStatus();
                                     tableToCheck.setDialogText(tableToCheck.getDialogText() + " har gäster.");
                                 }
 
@@ -108,15 +109,38 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     }
 
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TableRepository reservations = new TableRepository();
-        reservations.getRestaurantTables(this);
 
-        mViewModel = ViewModelProviders.of(this).get(TableOverviewViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(TableOverviewViewModel.class);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TableDialogSharedViewModel.class);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        tableDialogViewModel = new ViewModelProvider(requireActivity()).get(TableDialogViewModel.class);
+
+        // start a timer that ends in 292.5 million years
+        countDownTimer = new CountDownTimer(Long.MAX_VALUE, 2000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tableDialogViewModel.getAllReservations().observe(getViewLifecycleOwner(), new Observer<Reservations>() {
+                    @Override
+                    public void onChanged(Reservations reservations) {
+                        updateFragment(reservations);
+                    }
+                });
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        countDownTimer.start();
     }
 
     // gets ID for table button.
@@ -137,12 +161,20 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
         // Find today's reservations
         tablesReservations.getReservations().forEach(reservation -> {
+            // Reset tables
+            TableView table = fragmentView.findViewById(R.id.table1 + (Integer.parseInt(reservation.getTableId().getTableId()) - 1));
+            table.removeBookedStatus();
+            table.setReservationID(reservation.getReservationId());
+            table.setDialogText(String.format("Bord %s", table.getTableNr()));
+            table.setArrivalTime(""); //ISO-8601
+
             if (date.compareDates(reservation.getReservationDate(), date.getCurrentTime())) {
                 Log.d("Reservation", String.format("Today's reservation: %s", reservation.toString()));
                 todaysReservations.add(reservation);
             }
         });
 
+        // Add booked status
         todaysReservations.forEach(reservation -> {
             TableView table = fragmentView.findViewById(R.id.table1 + (Integer.parseInt(reservation.getTableId().getTableId()) - 1));
             table.addBookedStatus();

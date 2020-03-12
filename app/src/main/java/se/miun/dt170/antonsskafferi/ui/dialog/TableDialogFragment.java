@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +22,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-
 
 import java.util.Calendar;
 import java.util.Set;
@@ -61,6 +59,8 @@ public class TableDialogFragment extends DialogFragment {
     private Context context;
     private MutableLiveData<TableView> mutableTable;
     private TableDialogViewModel tableDialogViewModel;
+    private Drawable activeCancelButtonColor;
+    private int activeCancelButtonTextColor;
 
 
     @Override
@@ -68,8 +68,10 @@ public class TableDialogFragment extends DialogFragment {
         context = this.getContext();
         popupAvailableColor = ContextCompat.getDrawable(context, R.drawable.green_button_border);
         popupBookedColor = ContextCompat.getDrawable(context, R.drawable.red_button_border);
-        cancelButtonColor = ContextCompat.getDrawable(context, R.drawable.white_button_border);
-        CancelButtonTextColor = ContextCompat.getColor(context, R.color.deselected_faded_gray);
+        cancelButtonColor = ContextCompat.getDrawable(context, R.drawable.inactive_clear_button_border);
+        CancelButtonTextColor = ContextCompat.getColor(context, R.color.table_overview_faded_clear_text);
+        activeCancelButtonColor = ContextCompat.getDrawable(context, R.drawable.active_clear_button_border);
+        activeCancelButtonTextColor = ContextCompat.getColor(context, R.color.table_overview_text_dark);
         deleteWrapper = new DeleteWrapper();
         orderRepository = new OrderRepository();
         sharedViewModel = new ViewModelProvider(requireActivity()).
@@ -101,7 +103,6 @@ public class TableDialogFragment extends DialogFragment {
 
         tableDialogViewModel = new ViewModelProvider(requireActivity()).
                 get(TableDialogViewModel.class);
-        // TEST
 
         parent = getParentFragment();
         openOrderButton = dialogView.findViewById(R.id.openOrderButton);
@@ -111,8 +112,15 @@ public class TableDialogFragment extends DialogFragment {
         calender = Calendar.getInstance();
         textDisplay.setText(dialogText);
 
-        cancelButton.setBackground(cancelButtonColor);
-        cancelButton.setTextColor(CancelButtonTextColor);
+        if (table.isTableOpen()) {
+            cancelButton.setBackground(cancelButtonColor);
+            cancelButton.setTextColor(CancelButtonTextColor);
+        }
+        else {
+            cancelButton.setBackground(activeCancelButtonColor);
+            cancelButton.setTextColor(activeCancelButtonTextColor);
+        }
+
 
         adjustBookingButton();
         adjustOrderButton();
@@ -128,6 +136,9 @@ public class TableDialogFragment extends DialogFragment {
                                 restaurantSharedViewModel.removeOrderFromKitchen(orderID);
                             });
                             tableDialogViewModel.clearOrderSet();
+                            table.setTableOpen(true);
+                            cancelButton.setBackground(cancelButtonColor);
+                            cancelButton.setTextColor(CancelButtonTextColor);
                             Log.d("OrderSet", Integer.toString(tableDialogViewModel.getOrdersToRemoveFromKitchen().size()));
                         }
                     })
@@ -149,30 +160,30 @@ public class TableDialogFragment extends DialogFragment {
         bookingButton.setOnClickListener(v -> {
             table.setTableBooked(!table.isTableBooked());
             if (table.isTableBooked()) {
-                final BookingDialog myDialog = new BookingDialog(context,this);
+                final BookingDialog myDialog = new BookingDialog(context, this);
                 myDialog.setBookingButton("Boka", table.getTableNr());
 
-                myDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) { //gets called when back button is pressed or pressed outside
-                        table.setTableBooked(false);
-                        adjustBookingButton();
-                        Log.i("onCancel", "on cancel was pressed");
-                    }
+                //gets called when back button is pressed or pressed outside
+                myDialog.setOnCancelListener(dialog -> {
+                    table.setTableBooked(false);
+                    adjustBookingButton();
+                    Log.i("onCancel", "on cancel was pressed");
                 });
+
                 myDialog.show();
                 myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
             } else {
-                adjustBookingButton();
+                // Avbokning
                 Log.d("Avboka", "Avbokar " + table.getReservationID());
                 deleteWrapper.deleteReservation(table.getReservationID());
+                adjustBookingButton();
                 dismiss();
             }
         });
     }
 
-    private void adjustBookingButton() {
+    public void adjustBookingButton() {
         if (!table.isTableBooked()) { //table is available.
             bookingButton.setBackground(popupAvailableColor); //change to popup
             bookingButton.setText("Boka Bord");
