@@ -215,7 +215,6 @@ public class BookingDialog extends AlertDialog {
         reservation.setReservationPhone(phoneNumber.getText().toString());
         reservation.setTableId(restaurantTable);
         postWrapper.postReservation(reservation);
-        dialogFragment.adjustBookingButton();
         dismiss();
     }
 }

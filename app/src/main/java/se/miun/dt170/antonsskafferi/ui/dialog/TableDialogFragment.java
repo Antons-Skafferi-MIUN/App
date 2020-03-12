@@ -61,6 +61,7 @@ public class TableDialogFragment extends DialogFragment {
     private TableDialogViewModel tableDialogViewModel;
     private Drawable activeCancelButtonColor;
     private int activeCancelButtonTextColor;
+    private Button cancelBookingButton;
 
 
     @Override
@@ -109,6 +110,7 @@ public class TableDialogFragment extends DialogFragment {
         bookingButton = dialogView.findViewById(R.id.bookingButton);
         textDisplay = dialogView.findViewById(R.id.dialogTextDisplay);
         cancelButton = dialogView.findViewById(R.id.cancelButton);
+        cancelBookingButton = dialogView.findViewById(R.id.cancelBookingButton);
         calender = Calendar.getInstance();
         textDisplay.setText(dialogText);
 
@@ -121,8 +123,17 @@ public class TableDialogFragment extends DialogFragment {
             cancelButton.setTextColor(activeCancelButtonTextColor);
         }
 
+        if (table.isTableBooked()) {
+            cancelBookingButton.setBackground(activeCancelButtonColor);
+            cancelBookingButton.setTextColor(activeCancelButtonTextColor);
+        }
+        else {
+            cancelBookingButton.setBackground(cancelButtonColor);
+            cancelBookingButton.setTextColor(CancelButtonTextColor);
+        }
 
-        adjustBookingButton();
+
+        //adjustBookingButton();
         adjustOrderButton();
 
         cancelButton.setOnClickListener(v -> {
@@ -158,42 +169,35 @@ public class TableDialogFragment extends DialogFragment {
         });
 
         bookingButton.setOnClickListener(v -> {
-            table.setTableBooked(!table.isTableBooked());
-            if (table.isTableBooked()) {
                 final BookingDialog myDialog = new BookingDialog(context, this);
                 myDialog.setBookingButton("Boka", table.getTableNr());
 
                 //gets called when back button is pressed or pressed outside
                 myDialog.setOnCancelListener(dialog -> {
                     table.setTableBooked(false);
-                    adjustBookingButton();
                     Log.i("onCancel", "on cancel was pressed");
                 });
 
                 myDialog.show();
                 myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-            } else {
+                table.setTableBooked(true);
+        });
+
+
+        cancelBookingButton.setOnClickListener(v -> {
+            if (table.isTableBooked()) {
                 // Avbokning
                 Log.d("Avboka", "Avbokar " + table.getReservationID());
                 deleteWrapper.deleteReservation(table.getReservationID());
-                adjustBookingButton();
                 dismiss();
+                cancelBookingButton.setBackground(cancelButtonColor);
+                cancelBookingButton.setTextColor(CancelButtonTextColor);
+
             }
         });
     }
 
-    public void adjustBookingButton() {
-        if (!table.isTableBooked()) { //table is available.
-            bookingButton.setBackground(popupAvailableColor); //change to popup
-            bookingButton.setText("Boka Bord");
-            table.removeBookedStatus();
-        } else {
-            bookingButton.setBackground(popupBookedColor);
-            bookingButton.setText("Avboka Bord");
-            table.addBookedStatus();
-        }
-    }
 
     private void adjustOrderButton() {
         openOrderButton.setText("Ta en order");
