@@ -52,6 +52,7 @@ public class TableView extends ConstraintLayout {
         return tableBookedColor;
     }
 
+
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
@@ -108,6 +109,8 @@ public class TableView extends ConstraintLayout {
         tableButton.setBackgroundColor(color);
     }
 
+
+
     public boolean isTableBooked() {
         return isTableBooked;
     }
@@ -118,6 +121,10 @@ public class TableView extends ConstraintLayout {
 
     public void setTableOpen(boolean tableOpen) {
         isTableOpen = tableOpen;
+    }
+
+    public boolean isTableOpen() {
+        return isTableOpen;
     }
 
     public void setArrivalTime(String time) {
