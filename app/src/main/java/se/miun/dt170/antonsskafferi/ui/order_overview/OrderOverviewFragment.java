@@ -340,7 +340,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
             boolean checkbox;
             if (checkbox = itemcheckbox.isChecked()){
                 temp ++;
-                Log.d(TAG, "checkboxNrF:" + temp);
+                Log.d(TAG, "checkboxNr:" + temp);
             }
         }
 
