@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import rx.Subscriber;
@@ -28,17 +29,13 @@ public class TableDialogViewModel extends ViewModel {
     private DeleteWrapper deleteWrapper;
     private ReservationRepository reservationRepository;
     private MutableLiveData<Reservations> allReservations;
-
-    public Set<String> getOrdersToRemoveFromKitchen() {
-        return ordersToRemoveFromKitchen;
-    }
-
-    Set<String> ordersToRemoveFromKitchen;
+    private Set<String> ordersToRemoveFromKitchen;
 
     public TableDialogViewModel() {
         mAPIService = ApiUtils.getAPIService();
         deleteWrapper = new DeleteWrapper();
         reservationRepository = new ReservationRepository();
+        ordersToRemoveFromKitchen = new HashSet<>();
     }
 
     public MutableLiveData<Reservations> getAllReservations() {
@@ -57,6 +54,7 @@ public class TableDialogViewModel extends ViewModel {
     }
 
     public void clearCurrentOrderFromDatabase(int tableNr) {
+
         mAPIService.getOrderRows()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

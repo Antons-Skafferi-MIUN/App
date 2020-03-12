@@ -115,33 +115,34 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
         mViewModel = new ViewModelProvider(this).get(TableOverviewViewModel.class);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TableDialogSharedViewModel.class);
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         tableDialogViewModel = new ViewModelProvider(requireActivity()).get(TableDialogViewModel.class);
 
-        // start a timer that ends in 292.5 million years
-        countDownTimer = new CountDownTimer(Long.MAX_VALUE, 2000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                tableDialogViewModel.getAllReservations().observe(getViewLifecycleOwner(), new Observer<Reservations>() {
-                    @Override
-                    public void onChanged(Reservations reservations) {
-                        updateFragment(reservations);
-                    }
-                });
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        };
-        countDownTimer.start();
     }
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        tableDialogViewModel = new ViewModelProvider(requireActivity()).get(TableDialogViewModel.class);
+//
+//        // start a timer that ends in 292.5 million years
+//        countDownTimer = new CountDownTimer(Long.MAX_VALUE, 2000) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                tableDialogViewModel.getAllReservations().observe(getViewLifecycleOwner(), new Observer<Reservations>() {
+//                    @Override
+//                    public void onChanged(Reservations reservations) {
+//                        updateFragment(reservations);
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//        };
+//        countDownTimer.start();
+//    }
 
     // gets ID for table button.
     @Override
