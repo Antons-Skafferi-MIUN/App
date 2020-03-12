@@ -40,15 +40,18 @@ public class KitchenActivity extends AppCompatActivity {
     private FlexboxLayout bongListLayoutContainer;
     private Map<String, KitchenBongContainerView> kitchenBongContainerViews;
     private ApiService mAPIService;
-    private CountDownTimer cTimer;
-    //public int counter;
+    private CountDownTimer timer;
+    public int counter;
+    private Map<String, List<OrderRow>> orderRowMap;// = new HashMap<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kitchen);
+        counter = 0;
         kitchenBongContainerViews = new HashMap<>();
+        orderRowMap = new HashMap<>();
 
         getLifecycle();
         mAPIService = ApiUtils.getAPIService();
@@ -56,37 +59,26 @@ public class KitchenActivity extends AppCompatActivity {
         // Create view variables
         bongListLayoutContainer = findViewById(R.id.bongListContainer);
 
-        //counter = 0;
 
-        cTimer = null;
-        startTimer();
-
-        getOrderRows();
-    }
-
-    void startTimer() {
-        cTimer = new CountDownTimer(3000, 1000) {
-            private int counter = 0;
+        timer = new CountDownTimer(3000, 1000) {
             public void onTick(long millisUntilFinished) {
-                Log.d("Timer", "" + counter);
-                counter++;
+
+                getOrderRows();
+                long scnds=0;
+                scnds=(millisUntilFinished/1000);
+                Log.d("Ticker", "" + scnds);
             }
+
             public void onFinish() {
-                cTimer.start();
+                this.start();
             }
-        };
-        cTimer.start();
+        }.start();
     }
 
     @Override
     protected void onDestroy() {
-        cancelTimer();
         super.onDestroy();
-    }
-
-    void cancelTimer() {
-        if(cTimer!=null)
-            cTimer.cancel();
+        timer.cancel();
     }
 
     /*public void removeOrderFromActivity(String orderID) {
@@ -109,9 +101,10 @@ public class KitchenActivity extends AppCompatActivity {
                     // Called on every new observed item
                     @Override
                     public void onNext(OrderRows response) {
-                            Map<String, List<OrderRow>> orderRowMap = new HashMap<>();
                         response.getOrderRows().forEach(orderRow -> {
-                            orderRowMap.computeIfAbsent(orderRow.getOrderId().getOrderId(), k -> new ArrayList<>()).add(orderRow);
+                            if (!kitchenBongContainerViews.containsKey(orderRow.getOrderId().getOrderId())) {
+                                orderRowMap.computeIfAbsent(orderRow.getOrderId().getOrderId(), k -> new ArrayList<>()).add(orderRow);
+                            }
                         });
                         buildOrders(orderRowMap);
                     }
@@ -125,5 +118,6 @@ public class KitchenActivity extends AppCompatActivity {
             bongListLayoutContainer.addView(kitchenBongContainerView);
             kitchenBongContainerViews.put(order, kitchenBongContainerView);
         });
+        orderRowMap.clear();
     }
 }
