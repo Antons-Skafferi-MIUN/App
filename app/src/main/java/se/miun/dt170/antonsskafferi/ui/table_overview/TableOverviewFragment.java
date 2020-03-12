@@ -95,7 +95,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
                             if (Integer.parseInt(orderTableID) == tableToCheck.getTableNr()) {
                                 if (!tableToCheck.getDialogText().contains(" har gäster.")) {
-                                    tableToCheck.addBookedStatus();
+                                    tableToCheck.addOccupiedStatus();
                                     tableToCheck.setDialogText(tableToCheck.getDialogText() + " har gäster.");
                                 }
 
