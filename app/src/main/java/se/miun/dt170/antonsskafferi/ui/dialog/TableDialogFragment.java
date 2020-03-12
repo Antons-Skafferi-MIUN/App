@@ -61,6 +61,8 @@ public class TableDialogFragment extends DialogFragment {
     private Context context;
     private MutableLiveData<TableView> mutableTable;
     private TableDialogViewModel tableDialogViewModel;
+    private Drawable activeCancelButtonColor;
+    private int activeCancelButtonTextColor;
 
 
     @Override
@@ -68,8 +70,10 @@ public class TableDialogFragment extends DialogFragment {
         context = this.getContext();
         popupAvailableColor = ContextCompat.getDrawable(context, R.drawable.green_button_border);
         popupBookedColor = ContextCompat.getDrawable(context, R.drawable.red_button_border);
-        cancelButtonColor = ContextCompat.getDrawable(context, R.drawable.white_button_border);
-        CancelButtonTextColor = ContextCompat.getColor(context, R.color.deselected_faded_gray);
+        cancelButtonColor = ContextCompat.getDrawable(context, R.drawable.inactive_clear_button_border);
+        CancelButtonTextColor = ContextCompat.getColor(context, R.color.table_overview_faded_clear_text);
+        activeCancelButtonColor = ContextCompat.getDrawable(context, R.drawable.active_clear_button_border);
+        activeCancelButtonTextColor = ContextCompat.getColor(context, R.color.table_overview_text_dark);
         deleteWrapper = new DeleteWrapper();
         orderRepository = new OrderRepository();
         sharedViewModel = new ViewModelProvider(requireActivity()).
@@ -111,8 +115,15 @@ public class TableDialogFragment extends DialogFragment {
         calender = Calendar.getInstance();
         textDisplay.setText(dialogText);
 
-        cancelButton.setBackground(cancelButtonColor);
-        cancelButton.setTextColor(CancelButtonTextColor);
+        if (table.isTableOpen()) {
+            cancelButton.setBackground(cancelButtonColor);
+            cancelButton.setTextColor(CancelButtonTextColor);
+        }
+        else {
+            cancelButton.setBackground(activeCancelButtonColor);
+            cancelButton.setTextColor(activeCancelButtonTextColor);
+        }
+
 
         adjustBookingButton();
         adjustOrderButton();
@@ -128,6 +139,9 @@ public class TableDialogFragment extends DialogFragment {
                                 restaurantSharedViewModel.removeOrderFromKitchen(orderID);
                             });
                             tableDialogViewModel.clearOrderSet();
+                            table.setTableOpen(true);
+                            cancelButton.setBackground(cancelButtonColor);
+                            cancelButton.setTextColor(CancelButtonTextColor);
                             Log.d("OrderSet", Integer.toString(tableDialogViewModel.getOrdersToRemoveFromKitchen().size()));
                         }
                     })
