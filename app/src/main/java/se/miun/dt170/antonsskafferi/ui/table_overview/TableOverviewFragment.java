@@ -23,7 +23,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
-import se.miun.dt170.antonsskafferi.data.DateConverter;
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
@@ -96,7 +96,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
                             if (Integer.parseInt(orderTableID) == tableToCheck.getTableNr()) {
                                 if (!tableToCheck.getDialogText().contains(" har gäster.")) {
-                                    tableToCheck.addBookedStatus();
+                                    tableToCheck.addOccupiedStatus();
                                     tableToCheck.setDialogText(tableToCheck.getDialogText() + " har gäster.");
                                 }
 

@@ -27,6 +27,10 @@
     <color name="table_overview_yellow">#ffeb39</color>
     <color name="table_overview_red">#ff3939</color>
     <color name="table_overview_green">#33ff7f</color>
+    <color name="table_overview_orange">#FFAA00</color>
+    <color name="table_overview_faded_clear">#DDDDDD</color>
+    <color name="table_overview_faded_clear_text">#BDBDBD</color>
+    <color name="table_overview_active_clear">#00BCD4</color>
 
     <!-- Colors for the menu overview -->
     <color name="popup_red">#cf0404</color>

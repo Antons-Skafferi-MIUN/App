@@ -1,4 +1,4 @@
-package se.miun.dt170.antonsskafferi.data;
+package se.miun.dt170.antonsskafferi.data.utility;
 
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.GregorianCalendar;
