@@ -174,9 +174,9 @@ public class TableDialogFragment extends DialogFragment {
                 myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
             } else {
+                // Avbokning
                 Log.d("Avboka", "Avbokar " + table.getReservationID());
                 deleteWrapper.deleteReservation(table.getReservationID());
-                tableDialogViewModel.updateData();
                 adjustBookingButton();
                 dismiss();
             }

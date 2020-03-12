@@ -45,7 +45,6 @@ public class BookingDialog extends AlertDialog {
     private TimePicker timePickerView;
     private BookingDialogViewModel bookingDialogViewModel;
     private TableDialogFragment dialogFragment;
-    private TableDialogViewModel tableDialogViewModel;
     private String timeString;
     private boolean tableIsReserved;
 
@@ -78,7 +77,6 @@ public class BookingDialog extends AlertDialog {
         name.setHint("Ange kundnamn");
         phoneNumber.setHint("Ange kundens telefonnummer");
         bookingDialogViewModel = new ViewModelProvider(dialogFragment).get(BookingDialogViewModel.class);
-        tableDialogViewModel = new ViewModelProvider(dialogFragment).get(TableDialogViewModel.class);
 
         layout.setOrientation(LinearLayout.VERTICAL);
 
@@ -218,7 +216,6 @@ public class BookingDialog extends AlertDialog {
         reservation.setTableId(restaurantTable);
         postWrapper.postReservation(reservation);
         dialogFragment.adjustBookingButton();
-        tableDialogViewModel.updateData();
         dismiss();
     }
 }
