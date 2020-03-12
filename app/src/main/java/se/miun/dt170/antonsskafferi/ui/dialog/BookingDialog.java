@@ -218,7 +218,7 @@ public class BookingDialog extends AlertDialog {
         reservation.setTableId(restaurantTable);
         postWrapper.postReservation(reservation);
         dialogFragment.adjustBookingButton();
-        tableDialogViewModel.getAllReservations();
+        tableDialogViewModel.updateData();
         dismiss();
     }
 }

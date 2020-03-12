@@ -42,10 +42,14 @@ public class TableDialogViewModel extends ViewModel {
     }
 
     public MutableLiveData<Reservations> getAllReservations() {
-//        if (allReservations == null) {
-        allReservations = reservationRepository.getAllReservations();
-//        }
+        if (allReservations == null) {
+            allReservations = reservationRepository.getAllReservations();
+        }
         return allReservations;
+    }
+
+    public void updateData() {
+        allReservations.setValue(reservationRepository.getAllReservations().getValue());
     }
 
     public void clearOrderSet() {

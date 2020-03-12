@@ -162,7 +162,7 @@ public class TableDialogFragment extends DialogFragment {
             } else {
                 Log.d("Avboka", "Avbokar " + table.getReservationID());
                 deleteWrapper.deleteReservation(table.getReservationID());
-                tableDialogViewModel.getAllReservations();
+                tableDialogViewModel.updateData();
                 adjustBookingButton();
                 dismiss();
             }

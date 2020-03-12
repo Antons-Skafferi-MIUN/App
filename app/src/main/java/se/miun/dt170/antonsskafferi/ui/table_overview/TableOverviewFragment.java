@@ -117,7 +117,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TableDialogSharedViewModel.class);
         tableDialogViewModel = new ViewModelProvider(this).get(TableDialogViewModel.class);
 
-        tableDialogViewModel.getAllReservations().observe(this, new Observer<Reservations>() {
+        tableDialogViewModel.getAllReservations().observe(getViewLifecycleOwner(), new Observer<Reservations>() {
             @Override
             public void onChanged(Reservations reservations) {
                 Log.i("Fragment reservation", "reservation changed! " + reservations.toString());
