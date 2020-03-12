@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
+
 @Root(name = "orders")
 public class Order {
 
@@ -26,7 +28,7 @@ public class Order {
      * Use this constructor when you're doing a POST request.
      *
      * @param tableId   a {@link RestaurantTable} with only an ID as it's constructor
-     * @param orderTime use {@link se.miun.dt170.antonsskafferi.data.DateConverter} getCurrentTime() formatted as ISO-8601
+     * @param orderTime use {@link DateConverter} getCurrentTime() formatted as ISO-8601
      */
     public Order(@NotNull RestaurantTable tableId, @NotNull String orderTime) {
         this.tableId = tableId;

@@ -1,32 +1,33 @@
 package se.miun.dt170.antonsskafferi.ui.dialog;
 
 import android.util.Log;
-import android.view.ViewDebug;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import se.miun.dt170.antonsskafferi.activity.RestaurantSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
+import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
+import se.miun.dt170.antonsskafferi.data.repository.ReservationRepository;
 
 /**
  * Data container for {@link TableDialogFragment}
  */
 public class TableDialogViewModel extends ViewModel {
+
     private ApiService mAPIService;
     private DeleteWrapper deleteWrapper;
+    private ReservationRepository reservationRepository;
+    private MutableLiveData<Reservations> allReservations;
 
     public Set<String> getOrdersToRemoveFromKitchen() {
         return ordersToRemoveFromKitchen;
@@ -37,7 +38,18 @@ public class TableDialogViewModel extends ViewModel {
     public TableDialogViewModel() {
         mAPIService = ApiUtils.getAPIService();
         deleteWrapper = new DeleteWrapper();
-        ordersToRemoveFromKitchen = new HashSet<>();
+        reservationRepository = new ReservationRepository();
+    }
+
+    public MutableLiveData<Reservations> getAllReservations() {
+        if (allReservations == null) {
+            allReservations = reservationRepository.getAllReservations();
+        }
+        return allReservations;
+    }
+
+    public void updateData() {
+        allReservations.setValue(reservationRepository.getAllReservations().getValue());
     }
 
     public void clearOrderSet() {
@@ -86,7 +98,7 @@ public class TableDialogViewModel extends ViewModel {
                                 deleteWrapper.deleteOrder(currentOrderID);
 
                             }
-                        } );
+                        });
                     }
                 });
     }
