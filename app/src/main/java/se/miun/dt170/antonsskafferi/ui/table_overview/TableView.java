@@ -13,12 +13,13 @@ import se.miun.dt170.antonsskafferi.R;
 
 public class TableView extends ConstraintLayout {
     private boolean isTableBooked = false;
-    private boolean isTableOpen = false;
+    private boolean isTableOpen = true;
     private TextView textView;
     private Button tableButton;
     private int tableNr;
     private int tableAvailableColor;
     private int tableBookedColor;
+    private int tableOCcupiedColor;
     private int tableTextColor;
     private String dialogText = "";
     private String reservationID;
@@ -43,6 +44,10 @@ public class TableView extends ConstraintLayout {
         return tableAvailableColor;
     }
 
+    public int getTableOccupiedColor() {
+
+        return tableOCcupiedColor; }
+
     public int getTableBookedColor() {
         return tableBookedColor;
     }
@@ -50,8 +55,9 @@ public class TableView extends ConstraintLayout {
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
-        tableBookedColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_red);
+        tableBookedColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_orange);
         tableAvailableColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_green);
+        tableOCcupiedColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_red);
         tableTextColor = ContextCompat.getColor(this.getContext(), R.color.table_overview_text_dark);
         tableButton = findViewById(R.id.tableButton);
         textView = findViewById(R.id.arrivalTime);
@@ -80,6 +86,17 @@ public class TableView extends ConstraintLayout {
         setTableBooked(true);
     }
 
+    public void addOccupiedStatus() {
+        setButtonColor(getTableOccupiedColor());
+        setTableOpen(false);
+    }
+
+
+    public void removeOccupiedStatus() {
+        setButtonColor(getTableAvailableColor());
+        setTableOpen(true);
+    }
+
     public void removeBookedStatus() {
         setButtonColor(getTableAvailableColor());
         setDialogText("Bord " + getTableNr());
@@ -97,6 +114,10 @@ public class TableView extends ConstraintLayout {
 
     public void setTableBooked(boolean tableBooked) {
         isTableBooked = tableBooked;
+    }
+
+    public void setTableOpen(boolean tableOpen) {
+        isTableOpen = tableOpen;
     }
 
     public void setArrivalTime(String time) {
