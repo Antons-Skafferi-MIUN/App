@@ -121,8 +121,6 @@ public class TableDialogFragment extends DialogFragment {
             cancelButton.setTextColor(activeCancelButtonTextColor);
         }
 
-        if (table.)
-
 
         adjustBookingButton();
         adjustOrderButton();
