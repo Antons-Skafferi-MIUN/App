@@ -216,6 +216,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         Log.d(TAG, "addMenuItemToBong: ");
 
         YoYo.with(Techniques.Pulse).duration(75).repeat(0).playOn(menuItemView);
+
     }
 
 
@@ -302,6 +303,8 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
             if (bongView instanceof BongItemView) {
+
+                //((BongItemView) bongView).getMenuItem().get
                 String colorCompаre = "597063"; //orange color
                 String backgroundColor = "";
                 Drawable background = bongView.getBackground();
@@ -327,38 +330,55 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     }
 
     private void popupWindow(View v, String extra) {
+        int temp = 0;  //temp
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
-        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
+
+        //Count checkboxes
+        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++){
             View bongView = orderBongListLinearLayout.getChildAt(i);
-            if (bongView instanceof BongItemView) {
-                String colorCompаre = "597063"; //orange color
-                String backgroundColor = "";
-                Drawable background = bongView.getBackground();
-                if (background instanceof GradientDrawable) {
-                    GradientDrawable gradientDrawable = (GradientDrawable) background;
-                    try{
-                        String colorState = gradientDrawable.getColor().toString();
-                        int colorStateLength = colorState.length();
-                        backgroundColor = colorState.substring(colorStateLength - 7, colorStateLength - 1);
-                        Log.d("Color", backgroundColor);
+            CheckBox itemcheckbox = bongView.findViewById(R.id.checkBox);
+            boolean checkbox;
+            if (checkbox = itemcheckbox.isChecked()){
+                temp ++;
+                Log.d(TAG, "checkboxNr:" + temp);
+            }
+        }
+
+        //If one checkbox is checked - continue edit item
+        if (temp == 1) {
+            for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
+                View bongView = orderBongListLinearLayout.getChildAt(i);
+                if (bongView instanceof BongItemView) {
+                    String colorCompаre = "597063"; //orange color
+                    String backgroundColor = "";
+                    Drawable background = bongView.getBackground();
+                    if (background instanceof GradientDrawable) {
+                        GradientDrawable gradientDrawable = (GradientDrawable) background;
+                        try {
+                            String colorState = gradientDrawable.getColor().toString();
+                            int colorStateLength = colorState.length();
+                            backgroundColor = colorState.substring(colorStateLength - 7, colorStateLength - 1);
+                            Log.d("Color666", backgroundColor);
+                        } catch (Exception e) {
+                        }
                     }
-                    catch (Exception e){}
-                }
-                if (colorCompаre.equals(backgroundColor)){
-                    if (v != null && extra == null){
-                        startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(),orderOverviewPopUp.class),999);
+                    if (colorCompаre.equals(backgroundColor)) {
+                        if (v != null && extra == null) {
+                            Log.d(TAG, "POPUP ");
+                            startActivityForResult(new Intent(OrderOverviewFragment.this.getContext(), orderOverviewPopUp.class), 999);
+                        }
+                        try {
+                            List<TextView> textViewsReverse = reverse(textViews);
+                            Log.d("Text", textViewsReverse.get(i).getText().toString());
+                            textViewsReverse.get(i).setText(extra);
+                            Log.d("Text", textViewsReverse.get(i).getText().toString());
+                            ((BongItemView) bongView).getMenuItem().setOrderChanged(extra);
+                        } catch (Exception e) {
+                        }
                     }
-                    try {
-                        List<TextView> textViewsReverse = reverse(textViews);
-                        Log.d("Text", textViewsReverse.get(i).getText().toString());
-                        textViewsReverse.get(i).setText(extra);
-                        Log.d("Text", textViewsReverse.get(i).getText().toString());
-                        ((BongItemView) bongView).getMenuItem().setOrderChanged(extra);
-                    }
-                    catch (Exception e){}
                 }
             }
-        } 
+        }
     }
 
     @Override
