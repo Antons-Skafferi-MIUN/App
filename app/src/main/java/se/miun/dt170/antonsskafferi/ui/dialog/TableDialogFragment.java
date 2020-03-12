@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +22,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-
 
 import java.util.Calendar;
 import java.util.Set;
@@ -105,7 +103,6 @@ public class TableDialogFragment extends DialogFragment {
 
         tableDialogViewModel = new ViewModelProvider(requireActivity()).
                 get(TableDialogViewModel.class);
-        // TEST
 
         parent = getParentFragment();
         openOrderButton = dialogView.findViewById(R.id.openOrderButton);
@@ -163,30 +160,30 @@ public class TableDialogFragment extends DialogFragment {
         bookingButton.setOnClickListener(v -> {
             table.setTableBooked(!table.isTableBooked());
             if (table.isTableBooked()) {
-                final BookingDialog myDialog = new BookingDialog(context,this);
+                final BookingDialog myDialog = new BookingDialog(context, this);
                 myDialog.setBookingButton("Boka", table.getTableNr());
 
-                myDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) { //gets called when back button is pressed or pressed outside
-                        table.setTableBooked(false);
-                        adjustBookingButton();
-                        Log.i("onCancel", "on cancel was pressed");
-                    }
+                //gets called when back button is pressed or pressed outside
+                myDialog.setOnCancelListener(dialog -> {
+                    table.setTableBooked(false);
+                    adjustBookingButton();
+                    Log.i("onCancel", "on cancel was pressed");
                 });
+
                 myDialog.show();
                 myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
             } else {
-                adjustBookingButton();
                 Log.d("Avboka", "Avbokar " + table.getReservationID());
                 deleteWrapper.deleteReservation(table.getReservationID());
+                tableDialogViewModel.updateData();
+                adjustBookingButton();
                 dismiss();
             }
         });
     }
 
-    private void adjustBookingButton() {
+    public void adjustBookingButton() {
         if (!table.isTableBooked()) { //table is available.
             bookingButton.setBackground(popupAvailableColor); //change to popup
             bookingButton.setText("Boka Bord");

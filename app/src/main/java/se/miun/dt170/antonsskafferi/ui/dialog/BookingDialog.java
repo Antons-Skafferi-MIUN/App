@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -45,15 +44,17 @@ public class BookingDialog extends AlertDialog {
     private PostWrapper postWrapper;
     private TimePicker timePickerView;
     private BookingDialogViewModel bookingDialogViewModel;
-    private DialogFragment dialogFragment;
+    private TableDialogFragment dialogFragment;
+    private TableDialogViewModel tableDialogViewModel;
     private String timeString;
     private boolean tableIsReserved;
+
 // https://stackoverflow.com/questions/35599203/disable-specific-dates-of-day-in-android-date-picker
     // can be used to mark specific dates.
 // get all reservations from database check if the date is booked
     //if the date is booked
 
-    public BookingDialog(Context context, DialogFragment df) {
+    public BookingDialog(Context context, TableDialogFragment parent) {
         super(context);
         this.context = context;
         phoneNumber = new EditText(context);
@@ -65,7 +66,7 @@ public class BookingDialog extends AlertDialog {
         calender = Calendar.getInstance();
         bookingButton = new Button(context);
         postWrapper = new PostWrapper();
-        dialogFragment = df;
+        dialogFragment = parent;
 
     }
 
@@ -77,6 +78,7 @@ public class BookingDialog extends AlertDialog {
         name.setHint("Ange kundnamn");
         phoneNumber.setHint("Ange kundens telefonnummer");
         bookingDialogViewModel = new ViewModelProvider(dialogFragment).get(BookingDialogViewModel.class);
+        tableDialogViewModel = new ViewModelProvider(dialogFragment).get(TableDialogViewModel.class);
 
         layout.setOrientation(LinearLayout.VERTICAL);
 
@@ -92,16 +94,17 @@ public class BookingDialog extends AlertDialog {
         addTimeButtonListener();
     }
 
-    private void addDatePickerDialog(){
+    private void addDatePickerDialog() {
         //TODO MAKE IT IMPOSSIBLE TO BOOK DATES BAXCK IN TIME.
 
         date = (view, year, month, dayOfMonth) -> {
-            String selectedDate = dateConverter.YYYYMMDDParser(year,month+1,dayOfMonth);
+            String selectedDate = dateConverter.YYYYMMDDParser(year, month + 1, dayOfMonth);
             dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_green));
             dateButton.setText(selectedDate);
         };
     }
-    private void addDateButtonListener(){
+
+    private void addDateButtonListener() {
         dateButton.setOnClickListener(v -> {
             datePickerDialog = new DatePickerDialog(context, date, calender
                     .get(Calendar.YEAR), calender.get(Calendar.MONTH),
@@ -112,7 +115,8 @@ public class BookingDialog extends AlertDialog {
             datePickerDialog.show();
         });
     }
-    private void addTimeButtonListener(){
+
+    private void addTimeButtonListener() {
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +124,7 @@ public class BookingDialog extends AlertDialog {
                 timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        timeButton.setText(dateConverter.HHMMParser(hourOfDay,minute));
+                        timeButton.setText(dateConverter.HHMMParser(hourOfDay, minute));
                         timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_green));
 
                         timePickerView = view;
@@ -134,6 +138,7 @@ public class BookingDialog extends AlertDialog {
             }
         });
     }
+
     public void setBookingButton(String buttonText, int tableId) {
         bookingButton.setText(buttonText);
 
@@ -141,70 +146,69 @@ public class BookingDialog extends AlertDialog {
             @Override
             public void onClick(View v) {
                 boolean isInputCorrect = true;
-                if(TextUtils.isEmpty(phoneNumber.getText().toString())) {
+                if (TextUtils.isEmpty(phoneNumber.getText().toString())) {
                     phoneNumber.setError("Fältet får inte vara tomt");
                     isInputCorrect = false;
                 }
                 //2020-03-06T11:55:40+01:00
-                if(timePickerView == null){
+                if (timePickerView == null) {
                     timeButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
                     isInputCorrect = false;
                 }
-                if(datePickerDialog == null){
+                if (datePickerDialog == null) {
                     dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
                     isInputCorrect = false;
                 }
-                if(!isInputCorrect){return;}
+
+                if (!isInputCorrect) {
+                    return;
+                }
                 String date = dateButton.getText().toString();
                 String time = timeButton.getText().toString();
-                timeString = date  + "T"
-                        + time +":00+01:00";
+                timeString = date + "T"
+                        + time + ":00+01:00";
                 timeString = dateConverter.formatStandard(timeString);
                 final Observer<Reservations> observer = new Observer<Reservations>() {
                     @Override
                     public void onChanged(Reservations reservations) {
-                        if(reservations == null){
-                            postReservation(timeString,tableId);
+                        if (reservations == null) {
+                            postReservation(timeString, tableId);
                             return;
                         }
                         tableIsReserved = false;
                         ArrayList<Reservation> reservationList = reservations.getReservations();
                         reservationList.forEach(reservation -> {
-                            if(Integer.toString(tableId).equals(reservation.getTableId().getTableId())){ //this table
+                            if (Integer.toString(tableId).equals(reservation.getTableId().getTableId())) { //this table
                                 String reservedDate = dateConverter.formatYYYYMMDD(reservation.getReservationDate());
-                                Log.i("reserved",  "THIS IS RES DATE" + reservedDate);
-                                Log.i("reserved",  "THIS IS CURRENT DATE" + date);
-                                if(!reservedDate.equals(date)){ //if the reserved date matches the date entered.
-                                    postReservation(timeString,tableId);
-                                    Log.i("insideMadeRes",  "yay");
+                                Log.i("reserved", "THIS IS RES DATE" + reservedDate);
+                                Log.i("reserved", "THIS IS CURRENT DATE" + date);
+                                if (!reservedDate.equals(date)) { //if the reserved date matches the date entered.
+                                    postReservation(timeString, tableId);
+                                    Log.i("insideMadeRes", "yay");
 
 
-                                }
-                                else{ //the table is reversed for the given date.
+                                } else { //the table is reversed for the given date.
                                     dateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.popup_red));
                                     dateButton.setText("THIS DATE IS ALREADY RESERVED " + date);
-                                    Log.i("insideELSE",  "OH NO");
+                                    Log.i("insideELSE", "OH NO");
                                 }
                                 tableIsReserved = true;
-                             } // other table.
+                            } // other table.
 
                         });
-                        if(!tableIsReserved){
-                            postReservation(timeString,tableId);
-                            Log.i("outsideMadeRes",  "yay");
+                        if (!tableIsReserved) {
+                            postReservation(timeString, tableId);
+                            Log.i("outsideMadeRes", "yay");
                         }
-
                     }
                 };
-
                 bookingDialogViewModel.getAllReservations().observe(dialogFragment, observer);
-
             }
         });
         bookingButton.setVisibility(View.VISIBLE);
     }
 
-    public void postReservation(String timeString, int tableId){
+    public void postReservation(String timeString, int tableId) {
         timeString = dateConverter.formatStandard(timeString);
         Reservation reservation = new Reservation();
         RestaurantTable restaurantTable = new RestaurantTable(Integer.toString(tableId));
@@ -213,6 +217,8 @@ public class BookingDialog extends AlertDialog {
         reservation.setReservationPhone(phoneNumber.getText().toString());
         reservation.setTableId(restaurantTable);
         postWrapper.postReservation(reservation);
+        dialogFragment.adjustBookingButton();
+        tableDialogViewModel.updateData();
         dismiss();
     }
 }

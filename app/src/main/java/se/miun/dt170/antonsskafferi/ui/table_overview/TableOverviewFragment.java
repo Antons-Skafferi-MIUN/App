@@ -10,8 +10,8 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
@@ -28,7 +28,7 @@ import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
-import se.miun.dt170.antonsskafferi.data.repository.TableRepository;
+import se.miun.dt170.antonsskafferi.ui.dialog.TableDialogViewModel;
 
 /**
  * This is the fullscreen fragment for showing available tables.
@@ -39,9 +39,8 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     private View fragmentView;
     private TableDialogSharedViewModel sharedViewModel;
     private int numberOfTables;
+    private TableDialogViewModel tableDialogViewModel;
     private ApiService mAPIService;
-
-
 
     public static TableOverviewFragment newInstance() {
         return new TableOverviewFragment();
@@ -108,15 +107,23 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     }
 
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TableRepository reservations = new TableRepository();
-        reservations.getRestaurantTables(this);
+//        TableRepository reservations = new TableRepository();
+//        reservations.getRestaurantTables(response -> updateFragment(response));
 
-        mViewModel = ViewModelProviders.of(this).get(TableOverviewViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(TableOverviewViewModel.class);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(TableDialogSharedViewModel.class);
+        tableDialogViewModel = new ViewModelProvider(this).get(TableDialogViewModel.class);
+
+        tableDialogViewModel.getAllReservations().observe(getViewLifecycleOwner(), new Observer<Reservations>() {
+            @Override
+            public void onChanged(Reservations reservations) {
+                Log.i("Fragment reservation", "reservation changed! " + reservations.toString());
+                updateFragment(reservations);
+            }
+        });
     }
 
     // gets ID for table button.
