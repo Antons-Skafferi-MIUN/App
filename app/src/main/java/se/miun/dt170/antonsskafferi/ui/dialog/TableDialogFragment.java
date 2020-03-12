@@ -140,6 +140,8 @@ public class TableDialogFragment extends DialogFragment {
                             });
                             tableDialogViewModel.clearOrderSet();
                             table.setTableOpen(true);
+                            cancelButton.setBackground(cancelButtonColor);
+                            cancelButton.setTextColor(CancelButtonTextColor);
                             Log.d("OrderSet", Integer.toString(tableDialogViewModel.getOrdersToRemoveFromKitchen().size()));
                         }
                     })
