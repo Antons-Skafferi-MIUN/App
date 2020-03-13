@@ -211,17 +211,27 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private void addMenuItemToBong(MenuItemView menuItemView) {
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
 
-        //Add incremental id on MenuItems instead
-        menuItemView.getMenuItem().setIdChanged(777);  //Test
-
         BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getMenuItem(), null);
         orderBongListLinearLayout.addView(bongItemView, 0);
         TextView textView = (TextView) bongItemView.findViewById(R.id.extraText);
         textViews.add(textView);
 
-        menuItemList.add(menuItemView.getMenuItem());
-
-        Log.d(TAG, "addMenuItemToBong: " + " menuItemViev id =" + menuItemView.getMenuItem().getIdChanged());
+        //Add item to menuItemList //TO DO, check if id exists if true increment ID and then ADD to menuItemList
+        if (menuItemList.contains(menuItemView.getMenuItem().getId())) {
+            //Add incremental id on MenuItems instead by checkin if ID exist in menuItemList  //OBS FULHACKTEST!!!!!!
+            String id = menuItemView.getMenuItem().getId();
+            int i = Integer.parseInt(id);
+            i++;
+            i = i + 10;
+            id = String.valueOf(i);
+            menuItemView.getMenuItem().setId(id);  //Test
+            menuItemList.add(menuItemView.getMenuItem());
+        }
+        else{
+            Log.d(TAG, "addMenuItemToBong FAILED SAME ID EXISTS!!: ");
+            menuItemList.add(menuItemView.getMenuItem());
+        }
+        Log.d(TAG, "addMenuItemToBong: " + "id= " + menuItemView.getMenuItem().getId());
 
         YoYo.with(Techniques.Pulse).duration(75).repeat(0).playOn(menuItemView);
 

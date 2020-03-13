@@ -23,6 +23,7 @@ public class Drink implements MenuItem {
     private String drinkName;
 
     private String orderChanged = null;
+    private String id = null;
 
     /**
      * Only used for serialization of XML to object for Retrofit!
@@ -114,16 +115,24 @@ public class Drink implements MenuItem {
         return orderChanged;
     }
 
+    //NEW
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public void setOrderChanged(String orderChanged) {
         this.orderChanged = orderChanged;
     }
 
+    //NEW
     @Override
     public void setIdChanged(int idChanged) {
 
     }
 
+    //NEW
     @Override
     public int getIdChanged() {
         return 0;

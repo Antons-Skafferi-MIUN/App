@@ -40,10 +40,15 @@ public class PostWrapper {
                     menuItems.forEach(menuItem -> {
                         OrderRow orderRow = null;
                         //menuItem.setIdChanged(increment);
+                        //menuItem.setId("dfffff");
+
                         Log.d("ORDERROW_ITEMS", menuItem.getId() + "-" + menuItem.getName() + "- " + menuItem.getOrderChange() + " - "  + menuItem.getIdChanged());
+
+
 
                         if (menuItem.getTypeOfMenuItem().equals("Food")) {
                             //TODO FIX ORDER CHANGE
+                            //orderRow = new OrderRow(response.body(), null, new Food(menuItem.getId()), menuItem.getOrderChange());
                             orderRow = new OrderRow(response.body(), null, new Food(menuItem.getId()), menuItem.getOrderChange());
                         } else if (menuItem.getTypeOfMenuItem().equals("Drink")) {
                             orderRow = new OrderRow(response.body(), new Drink(menuItem.getId()), null, menuItem.getOrderChange());

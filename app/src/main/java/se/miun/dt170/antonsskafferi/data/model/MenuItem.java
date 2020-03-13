@@ -7,6 +7,7 @@ public interface MenuItem {
     String getId();
     String getTypeOfMenuItem();
     String getOrderChange();
+    void setId(String id);
     void setOrderChanged(String orderChanged);
     void setIdChanged(int idChanged);
     int getIdChanged();

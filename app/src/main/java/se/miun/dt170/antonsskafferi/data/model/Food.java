@@ -105,16 +105,24 @@ public class Food implements MenuItem {
         return orderChanged;
     }
 
+    //NEW!!
+    @Override
+    public void setId(String id) {
+        this.foodId = id;
+    }
+
     @Override
     public void setOrderChanged(String orderChanged) {
         this.orderChanged = orderChanged;
     }
 
+    //NEW!!!
     @Override
     public void setIdChanged(int idChanged) {
         this.idChanged = idChanged;
     }
 
+    //NEW!!!
     @Override
     public int getIdChanged() {
         return idChanged;
