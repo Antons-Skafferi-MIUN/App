@@ -2,6 +2,10 @@ package se.miun.dt170.antonsskafferi.data.APIWrappers;
 
 import android.util.Log;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -12,10 +16,13 @@ import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 
 public class DeleteWrapper {
+
     private ApiService mAPIService;
+    private Lock lock;
 
     public DeleteWrapper() {
         mAPIService = ApiUtils.getAPIService();
+//        lock = new ReentrantReadWriteLock();
     }
 
     //DELETE Calls
@@ -38,12 +45,15 @@ public class DeleteWrapper {
     }
 
     public void deleteOrder(String delOrderId) {
+        Log.i("Retrofit DELETE", "order delete.");
         mAPIService.deleteOrder(delOrderId).enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Call<Order> call, Response<Order> response) {
                 if (response.isSuccessful()) {
                     // TODO: Show success message
-                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                    Log.i("Retrofit DELETE", "order delete submitted to API.");
+                } else {
+                    Log.e("Retrofit DELETE", response.errorBody().toString());
                 }
             }
 
@@ -56,12 +66,13 @@ public class DeleteWrapper {
     }
 
     public void deleteOrderRow(String delOrderRowId) {
+        Log.i("Retrofit DELETE", "orderRow delete.");
         mAPIService.deleteOrderRow(delOrderRowId).enqueue(new Callback<OrderRow>() {
             @Override
             public void onResponse(Call<OrderRow> call, Response<OrderRow> response) {
                 if (response.isSuccessful()) {
                     // TODO: Show success message
-                    Log.i("Retrofit DELETE", "delete submitted to API.");
+                    Log.i("Retrofit DELETE", "orderRow delete submitted to API.");
                 }
             }
 

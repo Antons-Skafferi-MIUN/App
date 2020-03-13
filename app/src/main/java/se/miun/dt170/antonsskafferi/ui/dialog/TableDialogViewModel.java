@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,7 +41,7 @@ public class TableDialogViewModel extends ViewModel {
 
     public MutableLiveData<Reservations> getAllReservations() {
 //        if (allReservations == null) {
-            allReservations = reservationRepository.getAllReservations();
+        allReservations = reservationRepository.getAllReservations();
 //        }
         return allReservations;
     }
@@ -75,7 +76,6 @@ public class TableDialogViewModel extends ViewModel {
                         ArrayList<OrderRow> allOrderRows = orderRows.getOrderRows();
                         String orderID = "-1";
 
-
                         for (OrderRow orderRow : allOrderRows) {
                             int tableThatContainsOrderRow = Integer.parseInt(orderRow.getOrderId().getTableId().getTableId());
 
@@ -87,14 +87,13 @@ public class TableDialogViewModel extends ViewModel {
                                 Log.i("DELETING ORDER ROW", orderRow.getOrderRowId());
                                 deleteWrapper.deleteOrderRow(orderRowID);
                             }
-
                         }
 
+                        // TODO: Wait for delete order row before calling deleteOrder()
                         ordersToRemoveFromKitchen.forEach(currentOrderID -> {
                             if (!currentOrderID.equals("-1")) {
                                 Log.i("DELETING ORDER", "" + currentOrderID);
                                 deleteWrapper.deleteOrder(currentOrderID);
-
                             }
                         });
                     }
