@@ -119,30 +119,40 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
 
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        tableDialogViewModel = new ViewModelProvider(requireActivity()).get(TableDialogViewModel.class);
-//
-//        // start a timer that ends in 292.5 million years
-//        countDownTimer = new CountDownTimer(Long.MAX_VALUE, 2000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                tableDialogViewModel.getAllReservations().observe(getViewLifecycleOwner(), new Observer<Reservations>() {
-//                    @Override
-//                    public void onChanged(Reservations reservations) {
-//                        updateFragment(reservations);
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//        };
-//        countDownTimer.start();
-//    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        tableDialogViewModel = new ViewModelProvider(requireActivity()).get(TableDialogViewModel.class);
+        Log.d("timer", "starting timer");
+
+        // start a timer that ends in 292.5 million years
+        countDownTimer = new CountDownTimer(Long.MAX_VALUE, 2000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tableDialogViewModel.getAllReservations().observe(getViewLifecycleOwner(), new Observer<Reservations>() {
+                    @Override
+                    public void onChanged(Reservations reservations) {
+                        updateFragment(reservations);
+                    }
+                });
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        countDownTimer.start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("timer", "stopping timer");
+        countDownTimer.cancel();
+    }
+
 
     // gets ID for table button.
     @Override
