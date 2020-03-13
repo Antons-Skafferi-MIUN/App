@@ -11,6 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,6 +38,7 @@ public class TableView extends ConstraintLayout {
     private String reservationID;
     private ApiService mAPIService;
     private boolean hasOrders = false;
+    private Map<Integer, Reservation> reservationMap;
 
     public TableView(@NonNull Context context) {
         super(context);
@@ -193,46 +196,56 @@ public class TableView extends ConstraintLayout {
     }
 
     private void updateDisplay(ArrayList<Reservation> reservations) {
+        Log.d("updateDisplay", "Inne i funktionen");
         DateConverter date = new DateConverter();
+        reservationMap = new HashMap<>();
 
         reservations.forEach(reservation -> {
+            reservationMap.put(Integer.parseInt(reservation.getTableId().getTableId()), reservation);
+        });
+
+
             // Is both occupied and reserved -> RED
-            if (Integer.parseInt(reservation.getTableId().getTableId()) == tableNr && hasOrders) {
+            if (reservationMap.containsKey(tableNr) && hasOrders) {
+                Log.d("updateDisplay", tableNr + " has order and is reserverd");
                 addOccupiedStatus();
                 addBookedStatus();
                 setButtonColor(getTableOccupiedColor());
 
-                setReservationID(reservation.getReservationId());
-                setDialogText(String.format("Bokat av: %s\nKontakt: %s\nHar gäster", reservation.getReservationName(), reservation.getReservationPhone()));
-                setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+                setReservationID(reservationMap.get(tableNr).getReservationId());
+                setDialogText(String.format("Bokat av: %s\nKontakt: %s\nHar gäster", reservationMap.get(tableNr).getReservationName(), reservationMap.get(tableNr).getReservationPhone()));
+                setArrivalTime(date.formatHHMM(reservationMap.get(tableNr).getReservationDate())); //ISO-8601
             }
             // Has order -> RED
             else if (hasOrders) {
+                Log.d("updateDisplay", tableNr + " has order");
                 addOccupiedStatus();
                 setButtonColor(getTableOccupiedColor());
 
-                setReservationID(reservation.getReservationId());
+                setReservationID(null);
                 setDialogText(String.format("Bord %s har gäster", getTableNr()));
                 setArrivalTime("");
             }
             // Has reservation -> ORANGE
-            else if (Integer.parseInt(reservation.getTableId().getTableId()) == tableNr) {
+            else if (reservationMap.containsKey(tableNr)) {
+                Log.d("updateDisplay", tableNr + " is reserverd");
                 addBookedStatus();
                 setButtonColor(getTableBookedColor());
 
-                setReservationID(reservation.getReservationId());
-                setDialogText(String.format("Bokat av: %s\nKontakt: %s\n", reservation.getReservationName(), reservation.getReservationPhone()));
-                setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+                setReservationID(reservationMap.get(tableNr).getReservationId());
+                setDialogText(String.format("Bokat av: %s\nKontakt: %s\n", reservationMap.get(tableNr).getReservationName(), reservationMap.get(tableNr).getReservationPhone()));
+                setArrivalTime(date.formatHHMM(reservationMap.get(tableNr).getReservationDate())); //ISO-8601
             }
             // else -> GREEN
             else {
+                Log.d("updateDisplay", tableNr + " is available");
                 setButtonColor(getTableAvailableColor());
 
-                setReservationID(reservation.getReservationId());
-                setDialogText(String.format("Bord %s har gäster", getTableNr()));
+                setReservationID(null);
+                setDialogText(String.format("Bord %s", getTableNr()));
                 setArrivalTime("");
             }
-        });
+
     }
 
     public boolean hasOrders() {
