@@ -23,6 +23,7 @@ public class OrderRow {
     @Element(name = "orderChange", required = false)
     private String orderChange;
 
+
     /**
      * Only used for serialization of XML to object for Retrofit!
      */
@@ -38,6 +39,7 @@ public class OrderRow {
      * @param orderChange a string of changes to the order
      */
     public OrderRow(@NotNull Order orderId, @Nullable Drink drinkId, @Nullable Food foodId, @Nullable String orderChange) {
+
         this.orderId = orderId;
         this.drinkId = drinkId;
         this.foodId = foodId;
@@ -86,6 +88,7 @@ public class OrderRow {
 
     @Override
     public String toString() {
+
         return "ClassPojo [drinkId = " + drinkId + ", orderId = " + orderId + ", foodId = " + foodId + ", orderRowId = " + orderRowId + ", orderRowId = " + orderChange + "]";
     }
 }

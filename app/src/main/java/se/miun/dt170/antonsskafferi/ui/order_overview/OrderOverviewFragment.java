@@ -1,6 +1,7 @@
 package se.miun.dt170.antonsskafferi.ui.order_overview;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -206,14 +207,21 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         }
     }
 
+
     private void addMenuItemToBong(MenuItemView menuItemView) {
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
+
+        //Add incremental id on MenuItems instead
+        menuItemView.getMenuItem().setIdChanged(777);  //Test
+
         BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getMenuItem(), null);
         orderBongListLinearLayout.addView(bongItemView, 0);
         TextView textView = (TextView) bongItemView.findViewById(R.id.extraText);
         textViews.add(textView);
+
         menuItemList.add(menuItemView.getMenuItem());
-        Log.d(TAG, "addMenuItemToBong: ");
+
+        Log.d(TAG, "addMenuItemToBong: " + " menuItemViev id =" + menuItemView.getMenuItem().getIdChanged());
 
         YoYo.with(Techniques.Pulse).duration(75).repeat(0).playOn(menuItemView);
 
@@ -379,6 +387,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 }
             }
         }
+        else{
+            Toast.makeText(getActivity(), "ENDAST EN MARKERAD ORDER KAN EDITERAS!", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -418,6 +429,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     }
 
     private void addOrderRowToBong(OrderRow orderRow) {
+        Log.d(TAG, "addOrderRowToBoooong: ");
         BongItemView bongItemView = new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange());
         CheckBox checkBox = bongItemView.findViewById(R.id.checkBox);
         checkBox.setVisibility(View.GONE);

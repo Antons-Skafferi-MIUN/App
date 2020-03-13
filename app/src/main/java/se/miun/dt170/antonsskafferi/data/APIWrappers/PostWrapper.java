@@ -17,11 +17,14 @@ import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class PostWrapper {
     private ApiService mAPIService;
     public PostWrapper(){
         mAPIService = ApiUtils.getAPIService();
     }
+    //public int increment = 1;
 
     public void postOrder(Order order, List<MenuItem> menuItems) {
         mAPIService.postOrder(order).enqueue(new Callback<Order>() {
@@ -33,8 +36,11 @@ public class PostWrapper {
                     Log.i("Retrofit POST", "order post submitted to API.");
 
                     // Post a new OrderRow using the new OrderID
+
                     menuItems.forEach(menuItem -> {
                         OrderRow orderRow = null;
+                        //menuItem.setIdChanged(increment);
+                        Log.d("ORDERROW_ITEMS", menuItem.getId() + "-" + menuItem.getName() + "- " + menuItem.getOrderChange() + " - "  + menuItem.getIdChanged());
 
                         if (menuItem.getTypeOfMenuItem().equals("Food")) {
                             //TODO FIX ORDER CHANGE
@@ -44,6 +50,8 @@ public class PostWrapper {
                         }
 
                         postOrderRow(orderRow);
+                       //increment++;
+
                     });
                 }
             }

@@ -21,6 +21,8 @@ public class Food implements MenuItem {
 
     private String orderChanged = null;
 
+    private int idChanged = 0;
+
     /**
      * Only used for serialization of XML to object for Retrofit!
      */
@@ -106,5 +108,15 @@ public class Food implements MenuItem {
     @Override
     public void setOrderChanged(String orderChanged) {
         this.orderChanged = orderChanged;
+    }
+
+    @Override
+    public void setIdChanged(int idChanged) {
+        this.idChanged = idChanged;
+    }
+
+    @Override
+    public int getIdChanged() {
+        return idChanged;
     }
 }

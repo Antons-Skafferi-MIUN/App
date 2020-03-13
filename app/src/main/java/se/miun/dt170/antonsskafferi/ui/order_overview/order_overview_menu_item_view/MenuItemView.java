@@ -27,7 +27,6 @@ public class MenuItemView extends CardView {
         inflater.inflate(R.layout.menu_item_view, this, true);
 
         this.menuItem = menuItem;
-
         TextView menuItemNameTextView = this.findViewById(R.id.menuItemName);
         menuItemNameTextView.setText(menuItem.getName());
 

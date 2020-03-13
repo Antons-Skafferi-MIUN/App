@@ -118,4 +118,14 @@ public class Drink implements MenuItem {
     public void setOrderChanged(String orderChanged) {
         this.orderChanged = orderChanged;
     }
+
+    @Override
+    public void setIdChanged(int idChanged) {
+
+    }
+
+    @Override
+    public int getIdChanged() {
+        return 0;
+    }
 }

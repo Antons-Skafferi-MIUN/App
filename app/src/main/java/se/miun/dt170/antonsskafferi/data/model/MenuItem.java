@@ -8,4 +8,6 @@ public interface MenuItem {
     String getTypeOfMenuItem();
     String getOrderChange();
     void setOrderChanged(String orderChanged);
+    void setIdChanged(int idChanged);
+    int getIdChanged();
 }
