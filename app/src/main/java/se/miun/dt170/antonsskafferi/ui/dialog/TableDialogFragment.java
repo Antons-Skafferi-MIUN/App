@@ -137,7 +137,7 @@ public class TableDialogFragment extends DialogFragment {
         adjustOrderButton();
 
         cancelButton.setOnClickListener(v -> {
-            if (true) { //temp fix set should use table.hasOrder
+            if (table.hasOrders()) {
                 final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
                 confirmationDialog.setTitle("Är du säker på att du vill rensa ordern?")
                         .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
@@ -149,6 +149,7 @@ public class TableDialogFragment extends DialogFragment {
                                 table.setTableOpen(true);
                                 cancelButton.setBackground(cancelButtonColor);
                                 cancelButton.setTextColor(CancelButtonTextColor);
+
                             }
                         })
                         .setNegativeButton("Nej", new DialogInterface.OnClickListener() {

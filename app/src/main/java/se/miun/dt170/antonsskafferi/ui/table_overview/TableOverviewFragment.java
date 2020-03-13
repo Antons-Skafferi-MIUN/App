@@ -168,6 +168,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
             table.setReservationID(reservation.getReservationId());
             table.setDialogText(String.format("Bord %s", table.getTableNr()));
             table.setArrivalTime(""); //ISO-8601
+            table.checkForOrders(); // Update the table's variable hasOrders to true or false
 
             if (date.compareDates(reservation.getReservationDate(), date.getCurrentTime())) {
                 Log.d("Reservation", String.format("Today's reservation: %s", reservation.toString()));

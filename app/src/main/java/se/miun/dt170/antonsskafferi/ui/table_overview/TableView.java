@@ -31,7 +31,7 @@ public class TableView extends ConstraintLayout {
     private String dialogText = "";
     private String reservationID;
     private ApiService mAPIService;
-    private boolean returnStatus = false;
+    private boolean hasOrders = false;
 
     public TableView(@NonNull Context context) {
         super(context);
@@ -74,6 +74,7 @@ public class TableView extends ConstraintLayout {
         textView.setTextColor(tableTextColor);
         setButtonColor(tableAvailableColor);
         setArrivalTime("");
+        checkForOrders();
     }
 
 
@@ -160,8 +161,7 @@ public class TableView extends ConstraintLayout {
         this.reservationID = reservationID;
     }
 
-    public boolean hasOrders() {
-        returnStatus = false;
+    public void checkForOrders() {
         mAPIService = ApiUtils.getAPIService();
         mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<OrderRows>() {
@@ -182,12 +182,15 @@ public class TableView extends ConstraintLayout {
                             String orderTableID = orderRow.getOrderId().getTableId().getTableId();
 
                             if (Integer.parseInt(orderTableID) == getTableNr()) {
-                                returnStatus = true;
+                                hasOrders = true;
                             }
                         });
                         Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
                     }
                 });
-        return returnStatus;
+    }
+
+    public boolean hasOrders() {
+        return hasOrders;
     }
 }
