@@ -10,13 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import java.util.ArrayList;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.model.OrderRows;
+import se.miun.dt170.antonsskafferi.data.model.Orders;
+import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 
 public class TableView extends ConstraintLayout {
     private boolean isTableBooked = false;
@@ -55,7 +59,8 @@ public class TableView extends ConstraintLayout {
 
     public int getTableOccupiedColor() {
 
-        return tableOCcupiedColor; }
+        return tableOCcupiedColor;
+    }
 
     public int getTableBookedColor() {
         return tableBookedColor;
@@ -74,7 +79,6 @@ public class TableView extends ConstraintLayout {
         textView.setTextColor(tableTextColor);
         setButtonColor(tableAvailableColor);
         setArrivalTime("");
-        checkForOrders();
     }
 
 
@@ -93,12 +97,10 @@ public class TableView extends ConstraintLayout {
      */
 
     public void addBookedStatus() {
-        setButtonColor(getTableBookedColor());
         setTableBooked(true);
     }
 
     public void addOccupiedStatus() {
-        setButtonColor(getTableOccupiedColor());
         setTableOpen(false);
     }
 
@@ -118,7 +120,6 @@ public class TableView extends ConstraintLayout {
     public void setButtonColor(int color) {
         tableButton.setBackgroundColor(color);
     }
-
 
 
     public boolean isTableBooked() {
@@ -161,13 +162,15 @@ public class TableView extends ConstraintLayout {
         this.reservationID = reservationID;
     }
 
-    public void checkForOrders() {
+    public void checkForOrders(ArrayList<Reservation> reservations) {
         mAPIService = ApiUtils.getAPIService();
-        mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<OrderRows>() {
+        hasOrders = false;
+
+        mAPIService.getOrders().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Orders>() {
                     @Override
                     public void onCompleted() {
-
+                        updateDisplay(reservations);
                     }
 
                     @Override
@@ -177,17 +180,59 @@ public class TableView extends ConstraintLayout {
 
                     // Called on every new observed item
                     @Override
-                    public void onNext(OrderRows response) {
-                        response.getOrderRows().forEach(orderRow -> {
-                            String orderTableID = orderRow.getOrderId().getTableId().getTableId();
+                    public void onNext(Orders response) {
+                        response.getOrders().forEach(order -> {
 
+                            String orderTableID = order.getTableId().getTableId();
                             if (Integer.parseInt(orderTableID) == getTableNr()) {
                                 hasOrders = true;
                             }
                         });
-                        Log.i("Retrofit RxJava", "get submitted to API." + response.toString());
                     }
                 });
+    }
+
+    private void updateDisplay(ArrayList<Reservation> reservations) {
+        DateConverter date = new DateConverter();
+
+        reservations.forEach(reservation -> {
+            // Is both occupied and reserved -> RED
+            if (Integer.parseInt(reservation.getTableId().getTableId()) == tableNr && hasOrders) {
+                addOccupiedStatus();
+                addBookedStatus();
+                setButtonColor(getTableOccupiedColor());
+
+                setReservationID(reservation.getReservationId());
+                setDialogText(String.format("Bokat av: %s\nKontakt: %s\nHar gäster", reservation.getReservationName(), reservation.getReservationPhone()));
+                setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+            }
+            // Has order -> RED
+            else if (hasOrders) {
+                addOccupiedStatus();
+                setButtonColor(getTableOccupiedColor());
+
+                setReservationID(reservation.getReservationId());
+                setDialogText(String.format("Bord %s har gäster", getTableNr()));
+                setArrivalTime("");
+            }
+            // Has reservation -> ORANGE
+            else if (Integer.parseInt(reservation.getTableId().getTableId()) == tableNr) {
+                addBookedStatus();
+                setButtonColor(getTableBookedColor());
+
+                setReservationID(reservation.getReservationId());
+                setDialogText(String.format("Bokat av: %s\nKontakt: %s\n", reservation.getReservationName(), reservation.getReservationPhone()));
+                setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
+            }
+            // else -> GREEN
+            else {
+                setButtonColor(getTableAvailableColor());
+
+                setReservationID(reservation.getReservationId());
+                setDialogText(String.format("Bord %s har gäster", getTableNr()));
+                setArrivalTime("");
+            }
+        });
     }
 
     public boolean hasOrders() {

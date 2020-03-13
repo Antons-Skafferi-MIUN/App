@@ -23,12 +23,12 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
-import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.ui.dialog.TableDialogViewModel;
 
 /**
@@ -164,35 +164,11 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     }
 
     public void updateFragment(Reservations tablesReservations) {
-        //TODO LOOP THROUGH ALL RESERVATIONS AND SET THE TABLES FOR CURRENT DATE.
-        // TODO ADD NAME AND PHONE TO TABLE AND MAKE IT MUTABLE
-        DateConverter date = new DateConverter();
-        ArrayList<Reservation> todaysReservations = new ArrayList<>();
-        Log.d("Reservation Repo", "" + tablesReservations.getReservations().size());
-
-        // Find today's reservations
-        tablesReservations.getReservations().forEach(reservation -> {
-            // Reset tables
-            TableView table = fragmentView.findViewById(R.id.table1 + (Integer.parseInt(reservation.getTableId().getTableId()) - 1));
-            table.removeBookedStatus();
-            table.setReservationID(reservation.getReservationId());
-            table.setDialogText(String.format("Bord %s", table.getTableNr()));
-            table.setArrivalTime(""); //ISO-8601
-            table.checkForOrders(); // Update the table's variable hasOrders to true or false
-
-            if (date.compareDates(reservation.getReservationDate(), date.getCurrentTime())) {
-                Log.d("Reservation", String.format("Today's reservation: %s", reservation.toString()));
-                todaysReservations.add(reservation);
+        if(tablesReservations != null) {
+            for (int tableIndex = 0; tableIndex < numberOfTables; tableIndex++) {
+                TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
+                table.checkForOrders(tablesReservations.getReservations());
             }
-        });
-
-        // Add booked status
-        todaysReservations.forEach(reservation -> {
-            TableView table = fragmentView.findViewById(R.id.table1 + (Integer.parseInt(reservation.getTableId().getTableId()) - 1));
-            table.addBookedStatus();
-            table.setReservationID(reservation.getReservationId());
-            table.setDialogText(String.format("Bokat av: %s\nKontakt: %s", reservation.getReservationName(), reservation.getReservationPhone()));
-            table.setArrivalTime(date.formatHHMM(reservation.getReservationDate())); //ISO-8601
-        });
+        }
     }
 }
