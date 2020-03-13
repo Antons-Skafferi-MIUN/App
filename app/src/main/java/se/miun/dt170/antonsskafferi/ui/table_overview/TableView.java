@@ -201,51 +201,52 @@ public class TableView extends ConstraintLayout {
         reservationMap = new HashMap<>();
 
         reservations.forEach(reservation -> {
-            reservationMap.put(Integer.parseInt(reservation.getTableId().getTableId()), reservation);
+            if (date.compareDates(reservation.getReservationDate(), date.getCurrentTime())) {
+                Log.d("Reservation", String.format("Today's reservation: %s", reservation.toString()));
+                reservationMap.put(Integer.parseInt(reservation.getTableId().getTableId()), reservation);
+            }
         });
 
+        // Is both occupied and reserved -> RED
+        if (reservationMap.containsKey(tableNr) && hasOrders) {
+            Log.d("updateDisplay", tableNr + " has order and is reserverd");
+            addOccupiedStatus();
+            addBookedStatus();
+            setButtonColor(getTableOccupiedColor());
 
-            // Is both occupied and reserved -> RED
-            if (reservationMap.containsKey(tableNr) && hasOrders) {
-                Log.d("updateDisplay", tableNr + " has order and is reserverd");
-                addOccupiedStatus();
-                addBookedStatus();
-                setButtonColor(getTableOccupiedColor());
+            setReservationID(reservationMap.get(tableNr).getReservationId());
+            setDialogText(String.format("Bokat av: %s\nKontakt: %s\nHar gäster", reservationMap.get(tableNr).getReservationName(), reservationMap.get(tableNr).getReservationPhone()));
+            setArrivalTime(date.formatHHMM(reservationMap.get(tableNr).getReservationDate())); //ISO-8601
+        }
+        // Has order -> RED
+        else if (hasOrders) {
+            Log.d("updateDisplay", tableNr + " has order");
+            addOccupiedStatus();
+            setButtonColor(getTableOccupiedColor());
 
-                setReservationID(reservationMap.get(tableNr).getReservationId());
-                setDialogText(String.format("Bokat av: %s\nKontakt: %s\nHar gäster", reservationMap.get(tableNr).getReservationName(), reservationMap.get(tableNr).getReservationPhone()));
-                setArrivalTime(date.formatHHMM(reservationMap.get(tableNr).getReservationDate())); //ISO-8601
-            }
-            // Has order -> RED
-            else if (hasOrders) {
-                Log.d("updateDisplay", tableNr + " has order");
-                addOccupiedStatus();
-                setButtonColor(getTableOccupiedColor());
+            setReservationID(null);
+            setDialogText(String.format("Bord %s har gäster", getTableNr()));
+            setArrivalTime("");
+        }
+        // Has reservation -> ORANGE
+        else if (reservationMap.containsKey(tableNr)) {
+            Log.d("updateDisplay", tableNr + " is reserverd");
+            addBookedStatus();
+            setButtonColor(getTableBookedColor());
 
-                setReservationID(null);
-                setDialogText(String.format("Bord %s har gäster", getTableNr()));
-                setArrivalTime("");
-            }
-            // Has reservation -> ORANGE
-            else if (reservationMap.containsKey(tableNr)) {
-                Log.d("updateDisplay", tableNr + " is reserverd");
-                addBookedStatus();
-                setButtonColor(getTableBookedColor());
+            setReservationID(reservationMap.get(tableNr).getReservationId());
+            setDialogText(String.format("Bokat av: %s\nKontakt: %s\n", reservationMap.get(tableNr).getReservationName(), reservationMap.get(tableNr).getReservationPhone()));
+            setArrivalTime(date.formatHHMM(reservationMap.get(tableNr).getReservationDate())); //ISO-8601
+        }
+        // else -> GREEN
+        else {
+            Log.d("updateDisplay", tableNr + " is available");
+            setButtonColor(getTableAvailableColor());
 
-                setReservationID(reservationMap.get(tableNr).getReservationId());
-                setDialogText(String.format("Bokat av: %s\nKontakt: %s\n", reservationMap.get(tableNr).getReservationName(), reservationMap.get(tableNr).getReservationPhone()));
-                setArrivalTime(date.formatHHMM(reservationMap.get(tableNr).getReservationDate())); //ISO-8601
-            }
-            // else -> GREEN
-            else {
-                Log.d("updateDisplay", tableNr + " is available");
-                setButtonColor(getTableAvailableColor());
-
-                setReservationID(null);
-                setDialogText(String.format("Bord %s", getTableNr()));
-                setArrivalTime("");
-            }
-
+            setReservationID(null);
+            setDialogText(String.format("Bord %s", getTableNr()));
+            setArrivalTime("");
+        }
     }
 
     public boolean hasOrders() {
