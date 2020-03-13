@@ -1,10 +1,15 @@
 package se.miun.dt170.antonsskafferi.activity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,7 +25,9 @@ import java.util.Set;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import se.miun.dt170.antonsskafferi.MainActivity;
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.Order;
@@ -38,7 +45,8 @@ import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 public class KitchenActivity extends AppCompatActivity {
 
     private FlexboxLayout bongListLayoutContainer;
-    private Map<String, KitchenBongContainerView> kitchenBongContainerViews;
+    //private HashMap<String, KitchenBongContainerView> kitchenBongContainerViews;
+    static private RestaurantSharedViewModel restaurantSharedViewModel;
     private ApiService mAPIService;
     private CountDownTimer timer;
     public int counter;
@@ -49,9 +57,12 @@ public class KitchenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kitchen);
-        counter = 0;
-        kitchenBongContainerViews = new HashMap<>();
+
         orderRowMap = new HashMap<>();
+
+        restaurantSharedViewModel = new ViewModelProvider(this).
+                get(RestaurantSharedViewModel.class);
+
 
         getLifecycle();
         mAPIService = ApiUtils.getAPIService();
@@ -62,7 +73,6 @@ public class KitchenActivity extends AppCompatActivity {
 
         timer = new CountDownTimer(3000, 1000) {
             public void onTick(long millisUntilFinished) {
-
                 getOrderRows();
                 long scnds=0;
                 scnds=(millisUntilFinished/1000);
@@ -74,6 +84,7 @@ public class KitchenActivity extends AppCompatActivity {
             }
         }.start();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -102,7 +113,8 @@ public class KitchenActivity extends AppCompatActivity {
                     @Override
                     public void onNext(OrderRows response) {
                         response.getOrderRows().forEach(orderRow -> {
-                            if (!kitchenBongContainerViews.containsKey(orderRow.getOrderId().getOrderId())) {
+                            if (!restaurantSharedViewModel.getKitchenBongContainerViews().containsKey(orderRow.getOrderId().getOrderId())) {
+
                                 orderRowMap.computeIfAbsent(orderRow.getOrderId().getOrderId(), k -> new ArrayList<>()).add(orderRow);
                             }
                         });
@@ -116,7 +128,7 @@ public class KitchenActivity extends AppCompatActivity {
         orderRowMap.forEach((order, orderRows) -> {
             KitchenBongContainerView kitchenBongContainerView = new KitchenBongContainerView(this, orderRows);
             bongListLayoutContainer.addView(kitchenBongContainerView);
-            kitchenBongContainerViews.put(order, kitchenBongContainerView);
+            restaurantSharedViewModel.getKitchenBongContainerViews().put(order, kitchenBongContainerView);
         });
         orderRowMap.clear();
     }

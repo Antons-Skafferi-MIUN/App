@@ -10,8 +10,10 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import se.miun.dt170.antonsskafferi.activity.KitchenActivity;
+import se.miun.dt170.antonsskafferi.activity.RestaurantSharedViewModel;
 import se.miun.dt170.antonsskafferi.activity.WaiterActivity;
 
 /**
@@ -24,6 +26,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CheckBox kitchenCheckBox;
     private Button enterButton;
     private EditText inputEditText;
+
+    public RestaurantSharedViewModel getRestaurantSharedViewModel() {
+        return restaurantSharedViewModel;
+    }
+
+    private RestaurantSharedViewModel restaurantSharedViewModel;
+
+    public ViewModelProvider getViewModelProvider() {
+        return viewModelProvider;
+    }
+
+    ViewModelProvider viewModelProvider;
+
 
     private int deselected;
     private int selected;
@@ -47,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         kitchenCheckBox.setOnClickListener(this);
         enterButton.setOnClickListener(this);
 
+        viewModelProvider = new ViewModelProvider(this);
+
+        restaurantSharedViewModel = viewModelProvider.
+                get(RestaurantSharedViewModel.class);
     }
 
     @Override
@@ -95,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 } else if (kitchenCheckBox.isChecked()) {
                     kitchenCheckBox.setTextColor(selected);
+                    Intent kitchenActivity = new Intent(self, KitchenActivity.class);
                     startActivity(new Intent(self, KitchenActivity.class));
                 }
                 break;

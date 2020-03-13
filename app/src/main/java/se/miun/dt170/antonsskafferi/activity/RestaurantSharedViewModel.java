@@ -12,12 +12,17 @@ import java.util.Set;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 
 public class RestaurantSharedViewModel extends ViewModel {
+    /*public RestaurantSharedViewModel() {
+        kitchenBongContainerViews = new HashMap<>();
+    }*/
+
     public Map<String, KitchenBongContainerView> getKitchenBongContainerViews() {
         Log.d("Kitchensize", Integer.toString(kitchenBongContainerViews.size()));
         return kitchenBongContainerViews;
     }
 
-    private Map<String, KitchenBongContainerView> kitchenBongContainerViews = new HashMap<>();
+    private static Map<String, KitchenBongContainerView> kitchenBongContainerViews = new HashMap<>();;
+
 
     public void removeOrderFromKitchen(String orderID) {
         kitchenBongContainerViews.remove(orderID);

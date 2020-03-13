@@ -46,7 +46,6 @@ public class TableDialogFragment extends DialogFragment {
     private View dialogView;
     private Fragment parent;
     private TableDialogSharedViewModel sharedViewModel;
-    private RestaurantSharedViewModel restaurantSharedViewModel;
     private TableView table;
     private Drawable popupAvailableColor;
     private Drawable popupBookedColor;
@@ -78,8 +77,6 @@ public class TableDialogFragment extends DialogFragment {
         orderRepository = new OrderRepository();
         sharedViewModel = new ViewModelProvider(requireActivity()).
                 get(TableDialogSharedViewModel.class);
-        restaurantSharedViewModel = new ViewModelProvider(requireActivity()).
-                get(RestaurantSharedViewModel.class);
         mutableTable = sharedViewModel.getTable();
         table = mutableTable.getValue(); // TEMP FIX
         dialogText = table.getDialogText();
@@ -135,9 +132,6 @@ public class TableDialogFragment extends DialogFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             tableDialogViewModel.clearCurrentOrderFromDatabase(table.getTableNr());
-                            tableDialogViewModel.getOrdersToRemoveFromKitchen().forEach(orderID -> {
-                                restaurantSharedViewModel.removeOrderFromKitchen(orderID);
-                            });
                             tableDialogViewModel.clearOrderSet();
                             table.setTableOpen(true);
                             cancelButton.setBackground(cancelButtonColor);
