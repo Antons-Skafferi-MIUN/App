@@ -5,16 +5,13 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.locks.Lock;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
-import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
@@ -73,29 +70,17 @@ public class TableDialogViewModel extends ViewModel {
                     @Override
                     public void onNext(OrderRows orderRows) {
                         Log.i("ORDER ROW ", "AT TOP");
-                        ArrayList<OrderRow> allOrderRows = orderRows.getOrderRows();
-                        String orderID = "-1";
+                        Set<String> orderRowsForDeleting = new HashSet<>();
 
-                        for (OrderRow orderRow : allOrderRows) {
+                        orderRows.getOrderRows().forEach(orderRow -> {
+
                             int tableThatContainsOrderRow = Integer.parseInt(orderRow.getOrderId().getTableId().getTableId());
-
                             if (tableThatContainsOrderRow == tableNr) {
-                                orderID = orderRow.getOrderId().getOrderId(); //order ID that belongs to the current order row.
-                                ordersToRemoveFromKitchen.add(orderID);
-                                String orderRowID = orderRow.getOrderRowId(); // ID of the current orderrow
-                                Log.i("ORDER ID", orderRow.getOrderId().getOrderId());
-                                Log.i("DELETING ORDER ROW", orderRow.getOrderRowId());
-                                deleteWrapper.deleteOrderRow(orderRowID);
-                            }
-                        }
-
-                        // TODO: Wait for delete order row before calling deleteOrder()
-                        ordersToRemoveFromKitchen.forEach(currentOrderID -> {
-                            if (!currentOrderID.equals("-1")) {
-                                Log.i("DELETING ORDER", "" + currentOrderID);
-                                deleteWrapper.deleteOrder(currentOrderID);
+                                orderRowsForDeleting.add(orderRow.getOrderRowId());
+                                ordersToRemoveFromKitchen.add(orderRow.getOrderId().getOrderId());
                             }
                         });
+                        deleteWrapper.deleteAllOrderRows(orderRowsForDeleting, ordersToRemoveFromKitchen);
                     }
                 });
     }
