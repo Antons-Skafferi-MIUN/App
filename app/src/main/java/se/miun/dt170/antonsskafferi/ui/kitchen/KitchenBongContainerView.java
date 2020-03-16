@@ -43,7 +43,7 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
     public KitchenBongContainerView(Context context, List<OrderRow> orderRows, String orderID) {
         super(context);
 
-        kitchenActivity = (KitchenActivity) context;
+        //kitchenActivity = (KitchenActivity) context;
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.kitchen_bong_container_view, this, true);
@@ -60,19 +60,18 @@ public class KitchenBongContainerView extends CardView implements LifecycleObser
         kitchenBongContainerLinearLayout = findViewById(R.id.kitchenBongContainerLinearLayout);
         kitchenBongContainerLinearLayout.addView(new KitchenBongHeaderView(getContext(), orderRows.get(0).getOrderId()));
 
-        Log.d("orderrows", "" + orderRows.size());
         orderRows.forEach(orderRow -> {
             buildOrderRow(orderRow);
         });
     }
 
     private void buildOrderRow(OrderRow orderRow) {
-        kitchenBongContainerLinearLayout.addView(new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange()));
-        kitchenBongContainerLinearLayout.raiseNumberOfItems();
+            kitchenBongContainerLinearLayout.addView(new BongItemView(getContext(), orderRow.getFoodId(), orderRow.getOrderChange()));
+            kitchenBongContainerLinearLayout.raiseNumberOfItems();
     }
 
     public void updateOrderStatus() {
-        kitchenActivity.removeOrderFromKitchen(orderID);
+        //kitchenActivity.removeOrderFromKitchen(orderID);
         //restaurantSharedViewModel.removeOrderFromKitchen(orderID);
     }
 }

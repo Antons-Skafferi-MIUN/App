@@ -11,6 +11,7 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -37,6 +38,7 @@ import se.miun.dt170.antonsskafferi.data.model.Orders;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
+import se.miun.dt170.antonsskafferi.ui.dialog.TableDialogViewModel;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 
 /**
@@ -59,27 +61,44 @@ public class KitchenActivity extends AppCompatActivity {
         orderRowMap = new HashMap<>();
 
         restaurantSharedViewModel = new ViewModelProvider(this).
-              get(RestaurantSharedViewModel.class);
+                get(RestaurantSharedViewModel.class);
 
         mAPIService = ApiUtils.getAPIService();
 
         // Create view variables
         bongListLayoutContainer = findViewById(R.id.bongListContainer);
 
-        timer = new CountDownTimer(3000, 1000) {
+        /*timer = new CountDownTimer(20000, 5000) {
             public void onTick(long millisUntilFinished) {
                 getOrderRows();
-                long scnds = 0;
-                scnds = (millisUntilFinished / 1000);
-                Log.d("Ticker", "" + scnds);
             }
 
             public void onFinish() {
                 this.start();
             }
-        }.start();
+        }.start();*/
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("timer", "starting timer");
+
+        // start a timer that ends in 292.5 million years
+        timer = new CountDownTimer(Long.MAX_VALUE, 2000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                getOrderRows();
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        timer.start();
+    }
 
     @Override
     protected void onStop() {
@@ -107,10 +126,13 @@ public class KitchenActivity extends AppCompatActivity {
                     // Called on every new observed item
                     @Override
                     public void onNext(OrderRows response) {
+                        orderRowMap = new HashMap<>();
                         response.getOrderRows().forEach(orderRow -> {
                             Order order = orderRow.getOrderId();
-                            if (!restaurantSharedViewModel.getKitchenBongContainerViews().containsKey(order.getOrderId())) {
-                                orderRowMap.computeIfAbsent(orderRow.getOrderId().getOrderId(), k -> new ArrayList<>()).add(orderRow);
+                            if (!restaurantSharedViewModel.getKitchenBongContainerViews().containsKey(orderRow.getOrderId().getOrderId())) {
+                                if (orderRow.getFoodId() != null) {
+                                    orderRowMap.computeIfAbsent(orderRow.getOrderId().getOrderId(), k -> new ArrayList<>()).add(orderRow);
+                                }
                             }
                         });
                         buildOrders(orderRowMap);
@@ -123,12 +145,12 @@ public class KitchenActivity extends AppCompatActivity {
             KitchenBongContainerView kitchenBongContainerView = new KitchenBongContainerView(this, orderRows, orderID);
             bongListLayoutContainer.addView(kitchenBongContainerView);
             restaurantSharedViewModel.getKitchenBongContainerViews().put(orderID, kitchenBongContainerView);
-            Log.d("containersize", "" + restaurantSharedViewModel.getKitchenBongContainerViews().size());
+            //orderRowMap.remove(orderID);
         });
-        orderRowMap.clear();
+        //orderRowMap.clear();
     }
 
-    public void removeOrderFromKitchen(String orderID) {
+    /*public void removeOrderFromKitchen(String orderID) {
         restaurantSharedViewModel.removeOrderFromKitchen(orderID);
-    }
+    }*/
 }
