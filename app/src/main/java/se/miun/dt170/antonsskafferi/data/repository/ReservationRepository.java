@@ -14,12 +14,13 @@ import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 
 public class ReservationRepository {
+
     private ApiService mAPIService;
     MutableLiveData<Reservations> allReservations;
 
     public ReservationRepository() {
         mAPIService = ApiUtils.getAPIService();
-        allReservations = new MutableLiveData<Reservations>();
+        allReservations = new MutableLiveData<>();
     }
 
     public MutableLiveData<Reservations> getAllReservations(){
@@ -29,7 +30,6 @@ public class ReservationRepository {
                     @Override
                     public void onCompleted() {
                         Log.i("func","onComplete");
-
                     }
 
                     @Override
@@ -40,12 +40,10 @@ public class ReservationRepository {
 
                     @Override
                     public void onNext(Reservations reservations) {
-                        Log.i("Repo",reservations.toString());
+                        Log.i("Repo reservation",reservations.toString());
                         allReservations.setValue(reservations);
                     }
                 });
         return allReservations;
     }
-
-
 }

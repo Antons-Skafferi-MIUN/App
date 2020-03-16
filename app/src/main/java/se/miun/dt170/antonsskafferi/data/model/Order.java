@@ -18,7 +18,9 @@ public class Order {
     @Element(name = "orderTime")
     private String orderTime;
 
-    @Element(name = "orderIsDone")
+
+    @Element(name = "orderIsDone", required = false)
+
     private String orderIsDone;
 
     /**
@@ -63,12 +65,17 @@ public class Order {
         this.tableId = tableId;
     }
 
-    public String getOrderIsDone() { return orderIsDone; }
 
-    public void setOrderIsDone(String orderIsDone) { this.orderIsDone = orderIsDone; }
+    public String getOrderIsDone() {
+        return orderIsDone;
+    }
+
+    public void setOrderIsDone(String orderIsDone) {
+        this.orderIsDone = orderIsDone;
+    }
 
     @Override
     public String toString() {
-        return "ClassPojo [orderTime = " + orderTime + ", orderId = " + orderId + ", tableId = " + tableId + "]";
+        return "ClassPojo [orderTime = " + orderTime + ", orderId = " + orderId + ", tableId = " + tableId + ", orderIsDone = " + orderIsDone + "]";
     }
 }
