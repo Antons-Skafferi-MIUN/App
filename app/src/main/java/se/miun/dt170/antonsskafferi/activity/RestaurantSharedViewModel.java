@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 
 public class RestaurantSharedViewModel extends ViewModel {
@@ -21,7 +22,7 @@ public class RestaurantSharedViewModel extends ViewModel {
         return kitchenBongContainerViews;
     }
 
-    private static Map<String, KitchenBongContainerView> kitchenBongContainerViews = new HashMap<>();;
+    private Map<String, KitchenBongContainerView> kitchenBongContainerViews = new HashMap<>();
 
 
     public void removeOrderFromKitchen(String orderID) {

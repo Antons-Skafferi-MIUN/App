@@ -6,6 +6,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
 import rx.Single;
@@ -117,4 +118,16 @@ public interface ApiService {
      */
     @DELETE("entities.orderrows/{orderRowId}")
     Call<OrderRow> deleteOrderRow(@Path("orderRowId") String id);
+
+    //PUT METHODS
+
+    /**
+     * Updates an existing order {@link Order} in the database.
+     *
+     * @param id the id of the order to update
+     * @param order the order to update
+     * @return
+     */
+    @PUT("entities.orders/{orderId}")
+    Call<Order> putOrder(@Path("orderId") String id, @Body Order order);
 }

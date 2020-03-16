@@ -27,19 +27,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button enterButton;
     private EditText inputEditText;
 
-    public RestaurantSharedViewModel getRestaurantSharedViewModel() {
-        return restaurantSharedViewModel;
-    }
-
-    private RestaurantSharedViewModel restaurantSharedViewModel;
-
-    public ViewModelProvider getViewModelProvider() {
-        return viewModelProvider;
-    }
-
-    ViewModelProvider viewModelProvider;
-
-
     private int deselected;
     private int selected;
 
@@ -61,11 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         waiterCheckBox.setOnClickListener(this);
         kitchenCheckBox.setOnClickListener(this);
         enterButton.setOnClickListener(this);
-
-        viewModelProvider = new ViewModelProvider(this);
-
-        restaurantSharedViewModel = viewModelProvider.
-                get(RestaurantSharedViewModel.class);
     }
 
     @Override
@@ -114,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 } else if (kitchenCheckBox.isChecked()) {
                     kitchenCheckBox.setTextColor(selected);
-                    Intent kitchenActivity = new Intent(self, KitchenActivity.class);
                     startActivity(new Intent(self, KitchenActivity.class));
                 }
                 break;

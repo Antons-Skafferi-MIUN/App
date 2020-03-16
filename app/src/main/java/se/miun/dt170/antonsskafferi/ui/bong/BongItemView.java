@@ -26,6 +26,7 @@ import java.util.List;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
+import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView;
 
@@ -46,6 +47,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     }
 
     private MenuItem menuItem;
+    private Order order;
 
 
     public BongItemView(Context context, AttributeSet attributeSet) {
@@ -123,6 +125,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         if (bongListView.getNumberOfItems() == bongListView.getCheckedItems()) {
             grandParent = (KitchenBongContainerView) bongListView.getParent();
             grandParent.setVisibility(View.GONE);
+            grandParent.updateOrderStatus();
         }
     }
 }

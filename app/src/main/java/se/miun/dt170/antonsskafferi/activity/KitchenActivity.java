@@ -45,11 +45,9 @@ import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 public class KitchenActivity extends AppCompatActivity {
 
     private FlexboxLayout bongListLayoutContainer;
-    //private HashMap<String, KitchenBongContainerView> kitchenBongContainerViews;
-    static private RestaurantSharedViewModel restaurantSharedViewModel;
+    private RestaurantSharedViewModel restaurantSharedViewModel;
     private ApiService mAPIService;
     private CountDownTimer timer;
-    public int counter;
     private Map<String, List<OrderRow>> orderRowMap;// = new HashMap<>();
 
 
@@ -61,21 +59,18 @@ public class KitchenActivity extends AppCompatActivity {
         orderRowMap = new HashMap<>();
 
         restaurantSharedViewModel = new ViewModelProvider(this).
-                get(RestaurantSharedViewModel.class);
+              get(RestaurantSharedViewModel.class);
 
-
-        getLifecycle();
         mAPIService = ApiUtils.getAPIService();
 
         // Create view variables
         bongListLayoutContainer = findViewById(R.id.bongListContainer);
 
-
         timer = new CountDownTimer(3000, 1000) {
             public void onTick(long millisUntilFinished) {
                 getOrderRows();
-                long scnds=0;
-                scnds=(millisUntilFinished/1000);
+                long scnds = 0;
+                scnds = (millisUntilFinished / 1000);
                 Log.d("Ticker", "" + scnds);
             }
 
@@ -87,8 +82,8 @@ public class KitchenActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         timer.cancel();
     }
 
@@ -106,15 +101,15 @@ public class KitchenActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("Retrofit RxJava", e.toString());
+                        Log.e("Retrofit KITCHEN", e.toString());
                     }
 
                     // Called on every new observed item
                     @Override
                     public void onNext(OrderRows response) {
                         response.getOrderRows().forEach(orderRow -> {
-                            if (!restaurantSharedViewModel.getKitchenBongContainerViews().containsKey(orderRow.getOrderId().getOrderId())) {
-
+                            Order order = orderRow.getOrderId();
+                            if (!restaurantSharedViewModel.getKitchenBongContainerViews().containsKey(order.getOrderId())) {
                                 orderRowMap.computeIfAbsent(orderRow.getOrderId().getOrderId(), k -> new ArrayList<>()).add(orderRow);
                             }
                         });
@@ -124,12 +119,16 @@ public class KitchenActivity extends AppCompatActivity {
     }
 
     private void buildOrders(Map<String, List<OrderRow>> orderRowMap) {
-        Log.d("order", "" + orderRowMap.size());
-        orderRowMap.forEach((order, orderRows) -> {
-            KitchenBongContainerView kitchenBongContainerView = new KitchenBongContainerView(this, orderRows);
+        orderRowMap.forEach((orderID, orderRows) -> {
+            KitchenBongContainerView kitchenBongContainerView = new KitchenBongContainerView(this, orderRows, orderID);
             bongListLayoutContainer.addView(kitchenBongContainerView);
-            restaurantSharedViewModel.getKitchenBongContainerViews().put(order, kitchenBongContainerView);
+            restaurantSharedViewModel.getKitchenBongContainerViews().put(orderID, kitchenBongContainerView);
+            Log.d("containersize", "" + restaurantSharedViewModel.getKitchenBongContainerViews().size());
         });
         orderRowMap.clear();
+    }
+
+    public void removeOrderFromKitchen(String orderID) {
+        restaurantSharedViewModel.removeOrderFromKitchen(orderID);
     }
 }

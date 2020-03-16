@@ -18,6 +18,9 @@ public class Order {
     @Element(name = "orderTime")
     private String orderTime;
 
+    @Element(name = "orderIsDone")
+    private String orderIsDone;
+
     /**
      * Only used for serialization of XML to object for Retrofit!
      */
@@ -33,6 +36,7 @@ public class Order {
     public Order(@NotNull RestaurantTable tableId, @NotNull String orderTime) {
         this.tableId = tableId;
         this.orderTime = orderTime;
+        this.orderIsDone = "false";
     }
 
     public String getOrderTime() {
@@ -58,6 +62,10 @@ public class Order {
     public void setTableId(RestaurantTable tableId) {
         this.tableId = tableId;
     }
+
+    public String getOrderIsDone() { return orderIsDone; }
+
+    public void setOrderIsDone(String orderIsDone) { this.orderIsDone = orderIsDone; }
 
     @Override
     public String toString() {
