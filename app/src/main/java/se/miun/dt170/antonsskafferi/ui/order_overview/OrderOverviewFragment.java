@@ -94,6 +94,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private String waiterName;
     List<TextView> textViews = new ArrayList<>();
     public int counter = 10;
+
     //Used for copy with serialization
     ByteArrayOutputStream bos = new ByteArrayOutputStream();
     ObjectOutputStream oos;
@@ -231,8 +232,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     private void addMenuItemToBong(MenuItemView menuItemView) throws IOException {
 
-
-
         counter++;
         Log.d(TAG, "COUNTER " + counter);
         String idnr = String.valueOf(counter);
@@ -245,7 +244,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         textViews.add(textView);
 
 
+
         //https://www.techiedelight.com/copy-objects-in-java/
+        /*
         MenuItemView object = new MenuItemView(getContext(),menuItemView.getMenuItem(),idnr);
         object.getMenuItem().setId(idnr);
 
@@ -254,15 +255,16 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-
+         */
         menuItemView.getMenuItem().setId(idnr);
         menuItemView.getMenuItem().setIdChanged(counter);
         //Serialize
-        //oos.writeObject(menuu);
-        //oos.flush();
+        oos.writeObject(menuItemView);
+        oos.flush();
 
         //menuItemList.add(menuItemView.getMenuItem());
-        menuItemList.add(object.getMenuItem());
+        //menuItemList.add(object.getMenuItem());
+        menuItemList.add(bongItemView.getMenuItem());
 
 
         Log.d(TAG, "addMenuItemToBong: " + "id= " + menuItemView.getMenuItem().getId() + "-" + menuItemView.getMenuItem().getIdChanged() + "listsize:" + String.valueOf(menuItemList.size()));
