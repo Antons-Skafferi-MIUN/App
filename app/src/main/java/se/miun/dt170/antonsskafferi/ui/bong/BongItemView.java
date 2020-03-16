@@ -66,6 +66,8 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         foodNameText.setText(menuItem.getName());
         this.setBackground(ContextCompat.getDrawable(this.getContext(), R.drawable.bg_shadow));
 
+
+
         // Populate extra text
         if (orderChange != null) {
 

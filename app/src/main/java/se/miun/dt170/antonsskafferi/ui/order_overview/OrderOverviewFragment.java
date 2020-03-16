@@ -27,6 +27,9 @@ import androidx.navigation.Navigation;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +50,7 @@ import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
+import se.miun.dt170.antonsskafferi.ui.dialog.TableDialogFragmentDirections;
 import se.miun.dt170.antonsskafferi.ui.order_overview.menu_category_view.MenuCategoryView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongContainerView;
@@ -89,6 +93,19 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private int tableID;
     private String waiterName;
     List<TextView> textViews = new ArrayList<>();
+    public int counter = 10;
+    //Used for copy with serialization
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    ObjectOutputStream oos;
+
+    {
+        try {
+            oos = new ObjectOutputStream(bos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    ///
 
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
@@ -178,7 +195,11 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menuItemView:
-                addMenuItemToBong((MenuItemView) v);
+                try {
+                    addMenuItemToBong((MenuItemView) v);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.laCarteButton:
                 Toast.makeText(getActivity(), "A LA CARTE", Toast.LENGTH_SHORT).show();
@@ -197,7 +218,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 break;
             //Add cases for edit/remove/send and add to bong
             case R.id.editButton:
-                Toast.makeText(getActivity(), "EDIT", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "EDIT", Toast.LENGTH_SHORT).show();
                 popupWindow(v, null);
                 break;
             case R.id.deleteButton:
@@ -208,7 +229,14 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     }
 
 
-    private void addMenuItemToBong(MenuItemView menuItemView) {
+    private void addMenuItemToBong(MenuItemView menuItemView) throws IOException {
+
+
+
+        counter++;
+        Log.d(TAG, "COUNTER " + counter);
+        String idnr = String.valueOf(counter);
+
         orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
 
         BongItemView bongItemView = new BongItemView(getContext(), menuItemView.getMenuItem(), null);
@@ -216,23 +244,37 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         TextView textView = (TextView) bongItemView.findViewById(R.id.extraText);
         textViews.add(textView);
 
-        //Add item to menuItemList //TO DO, check if id exists if true increment ID and then ADD to menuItemList
-        if (menuItemList.contains(menuItemView.getMenuItem().getId())) {
-            //Add incremental id on MenuItems instead by checkin if ID exist in menuItemList  //OBS FULHACKTEST!!!!!!
-            String id = menuItemView.getMenuItem().getId();
-            int i = Integer.parseInt(id);
-            i++;
-            i = i + 10;
-            id = String.valueOf(i);
-            menuItemView.getMenuItem().setId(id);  //Test
-            menuItemList.add(menuItemView.getMenuItem());
-        }
-        else{
-            Log.d(TAG, "addMenuItemToBong FAILED SAME ID EXISTS!!: ");
-            menuItemList.add(menuItemView.getMenuItem());
-        }
-        Log.d(TAG, "addMenuItemToBong: " + "id= " + menuItemView.getMenuItem().getId());
 
+        //https://www.techiedelight.com/copy-objects-in-java/
+        MenuItemView object = new MenuItemView(getContext(),menuItemView.getMenuItem(),idnr);
+        object.getMenuItem().setId(idnr);
+
+        try {
+            MenuItemView clone  = object.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        menuItemView.getMenuItem().setId(idnr);
+        menuItemView.getMenuItem().setIdChanged(counter);
+        //Serialize
+        //oos.writeObject(menuu);
+        //oos.flush();
+
+        //menuItemList.add(menuItemView.getMenuItem());
+        menuItemList.add(object.getMenuItem());
+
+
+        Log.d(TAG, "addMenuItemToBong: " + "id= " + menuItemView.getMenuItem().getId() + "-" + menuItemView.getMenuItem().getIdChanged() + "listsize:" + String.valueOf(menuItemList.size()));
+
+        Log.d(TAG, "----------------------------");
+        menuItemList.forEach(menuIt -> {
+
+
+            Log.d(TAG, "LOOOOOP " + menuIt.getId() + "-" + menuIt.getIdChanged());
+
+        });
+        Log.d(TAG, "----------------------------");
         YoYo.with(Techniques.Pulse).duration(75).repeat(0).playOn(menuItemView);
 
     }
@@ -296,6 +338,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
 
     private void sendOrder(View v) {
+
+        Log.d("SENDORDER", String.valueOf(menuItemList.size()));
+
         if (menuItemList.size() > 0) {
             DateConverter dateConverter = new DateConverter();
             Order order = new Order(new RestaurantTable(Integer.toString(tableID)), dateConverter.getCurrentTime());
