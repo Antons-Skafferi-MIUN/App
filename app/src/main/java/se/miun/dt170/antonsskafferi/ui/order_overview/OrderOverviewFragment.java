@@ -257,9 +257,9 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         }
          */
         menuItemView.getMenuItem().setId(idnr);
-        menuItemView.getMenuItem().setIdChanged(counter);
+        //menuItemView.getMenuItem().setIdChanged(counter);
         //Serialize
-        oos.writeObject(menuItemView);
+        oos.writeObject(bongItemView.getMenuItem());
         oos.flush();
 
         //menuItemList.add(menuItemView.getMenuItem());
