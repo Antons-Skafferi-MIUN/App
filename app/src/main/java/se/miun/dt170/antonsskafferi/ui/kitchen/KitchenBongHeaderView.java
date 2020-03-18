@@ -64,7 +64,7 @@ public class KitchenBongHeaderView extends ConstraintLayout implements View.OnCl
                 bongListView = (BongListView) this.getParent();
                 grandParent = (KitchenBongContainerView) bongListView.getParent();
                 grandParent.setVisibility(View.GONE);
-                grandParent.updateOrderStatus();
+                //grandParent.updateOrderStatus();
                 break;
 
         }

@@ -68,15 +68,6 @@ public class KitchenActivity extends AppCompatActivity {
         // Create view variables
         bongListLayoutContainer = findViewById(R.id.bongListContainer);
 
-        /*timer = new CountDownTimer(20000, 5000) {
-            public void onTick(long millisUntilFinished) {
-                getOrderRows();
-            }
-
-            public void onFinish() {
-                this.start();
-            }
-        }.start();*/
     }
 
 
@@ -105,10 +96,6 @@ public class KitchenActivity extends AppCompatActivity {
         super.onStop();
         timer.cancel();
     }
-
-    /*public void removeOrderFromActivity(String orderID) {
-        kitchenBongContainerViews.remove(orderID);
-    }*/
 
     public void getOrderRows() {
         mAPIService.getOrderRows().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

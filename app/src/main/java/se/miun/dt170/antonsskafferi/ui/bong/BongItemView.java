@@ -116,7 +116,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         if (bongListView.getNumberOfItems() == bongListView.getCheckedItems()) {
             grandParent = (KitchenBongContainerView) bongListView.getParent();
             grandParent.setVisibility(View.GONE);
-            grandParent.updateOrderStatus();
+            //grandParent.updateOrderStatus();
         }
     }
 }
