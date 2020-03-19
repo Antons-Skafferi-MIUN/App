@@ -10,10 +10,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
 
 import se.miun.dt170.antonsskafferi.activity.KitchenActivity;
-import se.miun.dt170.antonsskafferi.activity.RestaurantSharedViewModel;
 import se.miun.dt170.antonsskafferi.activity.WaiterActivity;
 
 /**

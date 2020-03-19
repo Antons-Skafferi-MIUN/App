@@ -24,11 +24,9 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import java.util.Calendar;
-import java.util.Set;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
-import se.miun.dt170.antonsskafferi.activity.RestaurantSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
 import se.miun.dt170.antonsskafferi.data.repository.OrderRepository;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableView;
@@ -114,8 +112,7 @@ public class TableDialogFragment extends DialogFragment {
         if (table.isTableOpen()) {
             cancelButton.setBackground(cancelButtonColor);
             cancelButton.setTextColor(CancelButtonTextColor);
-        }
-        else {
+        } else {
             cancelButton.setBackground(activeCancelButtonColor);
             cancelButton.setTextColor(activeCancelButtonTextColor);
         }
@@ -123,8 +120,7 @@ public class TableDialogFragment extends DialogFragment {
         if (table.isTableBooked()) {
             cancelBookingButton.setBackground(activeCancelButtonColor);
             cancelBookingButton.setTextColor(activeCancelButtonTextColor);
-        }
-        else {
+        } else {
             cancelBookingButton.setBackground(cancelButtonColor);
             cancelBookingButton.setTextColor(CancelButtonTextColor);
         }
@@ -189,19 +185,19 @@ public class TableDialogFragment extends DialogFragment {
         });
 
         bookingButton.setOnClickListener(v -> {
-                final BookingDialog myDialog = new BookingDialog(context, this);
-                myDialog.setBookingButton("Boka", table.getTableNr());
+            final BookingDialog myDialog = new BookingDialog(context, this);
+            myDialog.setBookingButton("Boka", table.getTableNr());
 
-                //gets called when back button is pressed or pressed outside
-                myDialog.setOnCancelListener(dialog -> {
-                    table.setTableBooked(false);
-                    Log.i("onCancel", "on cancel was pressed");
-                });
+            //gets called when back button is pressed or pressed outside
+            myDialog.setOnCancelListener(dialog -> {
+                table.setTableBooked(false);
+                Log.i("onCancel", "on cancel was pressed");
+            });
 
-                myDialog.show();
-                myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-                table.setTableBooked(true);
+            myDialog.show();
+            myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                    | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+            table.setTableBooked(true);
         });
 
 

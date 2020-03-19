@@ -1,44 +1,28 @@
 package se.miun.dt170.antonsskafferi.activity;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.PersistableBundle;
 import android.util.Log;
-import android.util.Pair;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import se.miun.dt170.antonsskafferi.MainActivity;
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
-import se.miun.dt170.antonsskafferi.data.model.Drinks;
-import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
-import se.miun.dt170.antonsskafferi.data.model.Orders;
-import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
-import se.miun.dt170.antonsskafferi.ui.dialog.TableDialogViewModel;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 
 /**

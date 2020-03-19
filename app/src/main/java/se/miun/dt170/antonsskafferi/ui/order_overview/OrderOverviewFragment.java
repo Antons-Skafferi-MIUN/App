@@ -15,13 +15,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -35,7 +35,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
-import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
@@ -45,6 +44,7 @@ import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.ui.bong.BongItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.menu_category_view.MenuCategoryView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongButtonsView;
@@ -55,6 +55,7 @@ import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.orderO
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_container.MenuContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_menu_item_view.MenuItemView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_navbar.NavbarView;
+
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
@@ -67,6 +68,9 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
  */
 public class OrderOverviewFragment extends Fragment implements View.OnClickListener {
 
+    ArrayList<String> categorylist;
+    List<MenuItem> menuItemList;
+    List<TextView> textViews = new ArrayList<>();
     private OrderOverviewViewModel mViewModel;
     private Button laCarteButton;
     private Button drinkButton;
@@ -81,16 +85,20 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
     private OrderBongListView orderBongListView;
     private OrderBongButtonsView orderBongButtonsView;
     private ApiService mAPIService;
-    ArrayList<String> categorylist;
-    List<MenuItem> menuItemList;
     private OrderBongHeaderView orderBongHeaderView;
     private LinearLayout orderBongListLinearLayout;
     private int tableID;
     private String waiterName;
-    List<TextView> textViews = new ArrayList<>();
 
     public static OrderOverviewFragment newInstance() {
         return new OrderOverviewFragment();
+    }
+
+    //reverse arrayList items
+    static <T> List<T> reverse(final List<T> list) {
+        final List<T> result = new ArrayList<>(list);
+        Collections.reverse(result);
+        return result;
     }
 
     @Override
@@ -165,7 +173,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         getOrderRows();
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -219,7 +226,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     }
 
-
     // Temporary location for getting food from database
     public void getFoods() {
         mAPIService.getFoods().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -250,7 +256,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     }
 
-
     public void getDrinks() {
         mAPIService.getDrinks().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Drinks>() {
@@ -276,7 +281,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 });
     }
 
-
     private void sendOrder(View v) {
         if (menuItemList.size() > 0) {
             DateConverter dateConverter = new DateConverter();
@@ -288,13 +292,6 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
             NavDirections action = OrderOverviewFragmentDirections.actionOrderOverviewFragmentToTableOverviewFragment();
             Navigation.findNavController(getView()).navigate(action);
         }
-    }
-
-    //reverse arrayList items
-    static <T> List<T> reverse(final List<T> list) {
-        final List<T> result = new ArrayList<>(list);
-        Collections.reverse(result);
-        return result;
     }
 
     //remove clicked item from bong list - one at time
@@ -310,20 +307,20 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
                 Drawable background = bongView.getBackground();
                 if (background instanceof GradientDrawable) {
                     GradientDrawable gradientDrawable = (GradientDrawable) background;
-                    try{
+                    try {
                         String colorState = gradientDrawable.getColor().toString();
                         int colorStateLength = colorState.length();
                         backgroundColor = colorState.substring(colorStateLength - 7, colorStateLength - 1);
                         Log.d("Color", backgroundColor);
+                    } catch (Exception e) {
                     }
-                    catch (Exception e){}
                 }
-                if (colorCompаre.equals(backgroundColor)){
+                if (colorCompаre.equals(backgroundColor)) {
                     try {
                         orderBongListLinearLayout.removeViewAt(i);
                         menuItemList.remove(((BongItemView) bongView).getMenuItem());
+                    } catch (Exception e) {
                     }
-                    catch (Exception e) { }
                 }
             }
         }
@@ -334,12 +331,12 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
         LinearLayout orderBongListLinearLayout = orderBongListView.findViewById(R.id.orderBongListLinearLayout);
 
         //Count checkboxes
-        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++){
+        for (int i = 0; i < orderBongListLinearLayout.getChildCount(); i++) {
             View bongView = orderBongListLinearLayout.getChildAt(i);
             CheckBox itemcheckbox = bongView.findViewById(R.id.checkBox);
             boolean checkbox;
-            if (checkbox = itemcheckbox.isChecked()){
-                temp ++;
+            if (checkbox = itemcheckbox.isChecked()) {
+                temp++;
                 Log.d(TAG, "checkboxNr:" + temp);
             }
         }
@@ -383,7 +380,7 @@ public class OrderOverviewFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 999 && resultCode == orderOverviewPopUp.RESULT_OK){
+        if (requestCode == 999 && resultCode == orderOverviewPopUp.RESULT_OK) {
             String extraText = data.getStringExtra("EXTRA");
             popupWindow(null, extraText);
         }

@@ -133,12 +133,12 @@ public class TableView extends ConstraintLayout {
         isTableBooked = tableBooked;
     }
 
-    public void setTableOpen(boolean tableOpen) {
-        isTableOpen = tableOpen;
-    }
-
     public boolean isTableOpen() {
         return isTableOpen;
+    }
+
+    public void setTableOpen(boolean tableOpen) {
+        isTableOpen = tableOpen;
     }
 
     public void setArrivalTime(String time) {

@@ -5,11 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.ViewModel;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 
 public class RestaurantSharedViewModel extends ViewModel {

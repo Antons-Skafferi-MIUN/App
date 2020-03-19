@@ -17,10 +17,8 @@ public class Order {
 
     @Element(name = "orderTime")
     private String orderTime;
-
-
+    
     @Element(name = "orderIsDone", required = false)
-
     private String orderIsDone;
 
     /**

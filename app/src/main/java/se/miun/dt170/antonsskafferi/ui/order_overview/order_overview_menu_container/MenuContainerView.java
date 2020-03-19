@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.model.Drink;
-import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 import se.miun.dt170.antonsskafferi.ui.order_overview.menu_category_view.MenuCategoryView;
 
@@ -17,22 +16,21 @@ public class MenuContainerView extends ScrollView {
 
     private String foodCategory;
     private String drinkCategory;
-    private ArrayList<String>categoryList = new ArrayList<String>();
-    private ArrayList<String>categoryDrinkList = new ArrayList<String>();
-    private ArrayList<MenuItem>internalFoodList;
-    private ArrayList<Drink>internalDrinkList;
+    private ArrayList<String> categoryList = new ArrayList<String>();
+    private ArrayList<String> categoryDrinkList = new ArrayList<String>();
+    private ArrayList<MenuItem> internalFoodList;
+    private ArrayList<Drink> internalDrinkList;
 
     public MenuContainerView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }
 
 
-    public void addCategory(String categoryName, ArrayList<MenuItem>internalItemList) {
+    public void addCategory(String categoryName, ArrayList<MenuItem> internalItemList) {
         MenuCategoryView menuCategoryView = new MenuCategoryView(getContext(), categoryName, internalItemList);
         LinearLayout menuContainerLayout = this.findViewById(R.id.menuContainerLayout);
         menuContainerLayout.addView(menuCategoryView);
     }
-
 
 
     public void createMenuCategories(ArrayList<MenuItem> internalItemList) {
@@ -103,7 +101,6 @@ public class MenuContainerView extends ScrollView {
 //            addDrinkCategory(category, internalDrinkList);
 //        }
 //    }
-
 
 
 }

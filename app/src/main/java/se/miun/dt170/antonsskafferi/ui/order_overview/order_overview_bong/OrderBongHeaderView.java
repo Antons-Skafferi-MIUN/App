@@ -2,11 +2,8 @@ package se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import se.miun.dt170.antonsskafferi.R;
 
 public class OrderBongHeaderView extends ConstraintLayout {
     /*public OrderBongHeaderView(Context context) {

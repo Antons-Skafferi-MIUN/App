@@ -3,7 +3,6 @@ package se.miun.dt170.antonsskafferi.ui.kitchen;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -12,10 +11,10 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import se.miun.dt170.antonsskafferi.R;
+import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
-import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.ui.bong.BongListView;
 
 public class KitchenBongHeaderView extends ConstraintLayout implements View.OnClickListener {

@@ -16,8 +16,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.model.Drink;
-import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
@@ -32,18 +30,12 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private OrderBongListView orderBongListView;
     private KitchenBongContainerView grandParent;
     private String currentActivity;
-
-    public MenuItem getMenuItem() {
-        return menuItem;
-    }
-
     private MenuItem menuItem;
     private Order order;
-
-
     public BongItemView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }
+
 
     public BongItemView(@NonNull Context context, MenuItem menuItem, @Nullable String orderChange) {
         super(context);
@@ -67,7 +59,9 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         checkBox.setOnClickListener(this);
     }
 
-
+    public MenuItem getMenuItem() {
+        return menuItem;
+    }
 
     @Override
     public void onClick(View view) {
@@ -75,11 +69,10 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
             try {
                 //BongListView bongListView = (BongListView) view.getParent().getParent().getParent();
                 setItemClicked();
+            } catch (Exception e) {
             }
-            catch (Exception e) { }
 
-        }
-        else if (view.getId() == R.id.foodCheck) {
+        } else if (view.getId() == R.id.foodCheck) {
             Toast.makeText(getContext(), "foodcheck", Toast.LENGTH_SHORT).show();
             bongListView = (BongListView) this.getParent();
             grandParent = (KitchenBongContainerView) bongListView.getParent();
