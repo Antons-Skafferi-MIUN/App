@@ -25,7 +25,6 @@ public class orderOverviewPopUp extends Activity {
     private EditText edit;
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +37,7 @@ public class orderOverviewPopUp extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8),(int)(height*.9));
+        getWindow().setLayout((int) (width * .8), (int) (height * .9));
 
         //checkboxes
         extraPotatis = findViewById(R.id.extraPotatis);
@@ -61,7 +60,7 @@ public class orderOverviewPopUp extends Activity {
         extraPotatis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(extraPotatis.isChecked())
+                if (extraPotatis.isChecked())
                     resultat.add("- Extra potatis");
                 else
                     resultat.remove("- Extra potatis");
@@ -71,7 +70,7 @@ public class orderOverviewPopUp extends Activity {
         extraSalad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(extraSalad.isChecked())
+                if (extraSalad.isChecked())
                     resultat.add("- Extra salad");
                 else
                     resultat.remove("- Extra salad");
@@ -81,7 +80,7 @@ public class orderOverviewPopUp extends Activity {
         stektPotatis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(stektPotatis.isChecked())
+                if (stektPotatis.isChecked())
                     resultat.add("- Stekt potatis");
                 else
                     resultat.remove("- Stekt potatis");
@@ -91,7 +90,7 @@ public class orderOverviewPopUp extends Activity {
         pommesFrittes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pommesFrittes.isChecked())
+                if (pommesFrittes.isChecked())
                     resultat.add("- Pommes frittes");
                 else
                     resultat.remove("- Pommes frittes");
@@ -99,10 +98,10 @@ public class orderOverviewPopUp extends Activity {
         });
 
         allergiGluten.setOnClickListener(new View.OnClickListener() {
-        @Override
-           public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 if (allergiGluten.isChecked())
-                   resultat.add("- Allergi/Gluten");
+                    resultat.add("- Allergi/Gluten");
                 else
                     resultat.remove("- Allergi/Gluten");
             }
@@ -111,7 +110,7 @@ public class orderOverviewPopUp extends Activity {
         ejSos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ejSos.isChecked())
+                if (ejSos.isChecked())
                     resultat.add("- Ej sås");
                 else
                     resultat.remove("- Ej sås");
@@ -121,7 +120,7 @@ public class orderOverviewPopUp extends Activity {
         ejLingonsylt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ejLingonsylt.isChecked())
+                if (ejLingonsylt.isChecked())
                     resultat.add("- Ej lingonsylt");
                 else
                     resultat.remove("- Ej lingonsylt");
@@ -131,7 +130,7 @@ public class orderOverviewPopUp extends Activity {
         ejSalt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ejSalt.isChecked())
+                if (ejSalt.isChecked())
                     resultat.add("- Ej salt");
                 else
                     resultat.remove("- Ej salt");
@@ -148,7 +147,7 @@ public class orderOverviewPopUp extends Activity {
 
                 Intent i = new Intent();
                 i.putExtra("EXTRA", extraTextFinal);
-                setResult(RESULT_OK,i);
+                setResult(RESULT_OK, i);
                 finish();
             }
         });
@@ -159,7 +158,7 @@ public class orderOverviewPopUp extends Activity {
         if (!descpr.isEmpty())
             resultat.add("- " + descpr);
         StringBuilder stringBuilder = new StringBuilder();
-        for(String s: resultat)
+        for (String s : resultat)
             stringBuilder.append(s).append("\n");
         String extraText;
         extraText = stringBuilder.toString();

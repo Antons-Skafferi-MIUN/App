@@ -1,35 +1,25 @@
 package se.miun.dt170.antonsskafferi.ui.bong;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewParent;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
-import java.util.List;
-
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
+import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.ui.kitchen.KitchenBongContainerView;
 import se.miun.dt170.antonsskafferi.ui.order_overview.order_overview_bong.OrderBongListView;
-
-import static android.content.Context.ACTIVITY_SERVICE;
 
 public class BongItemView extends ConstraintLayout implements View.OnClickListener {
     private boolean itemClicked = false;
@@ -40,17 +30,12 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
     private OrderBongListView orderBongListView;
     private KitchenBongContainerView grandParent;
     private String currentActivity;
-
-    public MenuItem getMenuItem() {
-        return menuItem;
-    }
-
     private MenuItem menuItem;
-
-
+    private Order order;
     public BongItemView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }
+
 
     public BongItemView(@NonNull Context context, MenuItem menuItem, @Nullable String orderChange) {
         super(context);
@@ -74,7 +59,9 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         checkBox.setOnClickListener(this);
     }
 
-
+    public MenuItem getMenuItem() {
+        return menuItem;
+    }
 
     @Override
     public void onClick(View view) {
@@ -82,15 +69,15 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
             try {
                 //BongListView bongListView = (BongListView) view.getParent().getParent().getParent();
                 setItemClicked();
+            } catch (Exception e) {
             }
-            catch (Exception e) { }
 
-        }
-        else if (view.getId() == R.id.foodCheck) {
+        } else if (view.getId() == R.id.foodCheck) {
             Toast.makeText(getContext(), "foodcheck", Toast.LENGTH_SHORT).show();
             bongListView = (BongListView) this.getParent();
             grandParent = (KitchenBongContainerView) bongListView.getParent();
             grandParent.setVisibility(View.GONE);
+            Log.d("buttonpressed", "here");
         }
     }
 
@@ -122,6 +109,7 @@ public class BongItemView extends ConstraintLayout implements View.OnClickListen
         if (bongListView.getNumberOfItems() == bongListView.getCheckedItems()) {
             grandParent = (KitchenBongContainerView) bongListView.getParent();
             grandParent.setVisibility(View.GONE);
+            //grandParent.updateOrderStatus();
         }
     }
 }

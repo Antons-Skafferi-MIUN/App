@@ -17,7 +17,7 @@ public class Order {
 
     @Element(name = "orderTime")
     private String orderTime;
-
+    
     @Element(name = "orderIsDone", required = false)
     private String orderIsDone;
 
@@ -62,6 +62,7 @@ public class Order {
     public void setTableId(RestaurantTable tableId) {
         this.tableId = tableId;
     }
+
 
     public String getOrderIsDone() {
         return orderIsDone;

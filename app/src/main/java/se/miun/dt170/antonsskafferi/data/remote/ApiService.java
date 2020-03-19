@@ -6,9 +6,9 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
-import rx.Single;
 import se.miun.dt170.antonsskafferi.data.model.Drinks;
 import se.miun.dt170.antonsskafferi.data.model.Foods;
 import se.miun.dt170.antonsskafferi.data.model.Order;
@@ -59,6 +59,7 @@ public interface ApiService {
 
 
     // POST METHODS
+
     /**
      * Posts a {@link Reservation} to the database.
      *
@@ -91,6 +92,7 @@ public interface ApiService {
     Call<Order> postOrder(@Body Order order);
 
     // DELETE METHODS
+
     /**
      * Deletes the specified {@link Reservation} from the database.
      *
@@ -117,4 +119,16 @@ public interface ApiService {
      */
     @DELETE("entities.orderrows/{orderRowId}")
     Call<OrderRow> deleteOrderRow(@Path("orderRowId") String id);
+
+    //PUT METHODS
+
+    /**
+     * Updates an existing order {@link Order} in the database.
+     *
+     * @param id    the id of the order to update
+     * @param order the order to update
+     * @return
+     */
+    @PUT("entities.orders/{orderId}")
+    Call<Order> putOrder(@Path("orderId") String id, @Body Order order);
 }

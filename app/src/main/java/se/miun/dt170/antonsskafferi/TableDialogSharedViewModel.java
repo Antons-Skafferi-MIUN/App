@@ -15,6 +15,9 @@ public class TableDialogSharedViewModel extends ViewModel {
         return table;
     }
 
+    public void setTable(TableView table) {
+        this.table.setValue(table);
+    }
 
     public String getDialogText() {
         return dialogText;
@@ -22,10 +25,6 @@ public class TableDialogSharedViewModel extends ViewModel {
 
     public void setDialogText(String dialogText) {
         this.dialogText = dialogText;
-    }
-
-    public void setTable(TableView table) {
-        this.table.setValue(table);
     }
 
 }

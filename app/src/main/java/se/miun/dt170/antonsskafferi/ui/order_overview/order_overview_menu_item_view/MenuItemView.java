@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.model.Drink;
-import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 
 public class MenuItemView extends CardView {

@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         waiterCheckBox.setOnClickListener(this);
         kitchenCheckBox.setOnClickListener(this);
         enterButton.setOnClickListener(this);
-
     }
 
     @Override

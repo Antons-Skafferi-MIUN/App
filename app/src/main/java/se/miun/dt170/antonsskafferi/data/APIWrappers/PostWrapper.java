@@ -12,14 +12,14 @@ import se.miun.dt170.antonsskafferi.data.model.Food;
 import se.miun.dt170.antonsskafferi.data.model.MenuItem;
 import se.miun.dt170.antonsskafferi.data.model.Order;
 import se.miun.dt170.antonsskafferi.data.model.OrderRow;
-import se.miun.dt170.antonsskafferi.data.model.OrderRows;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
 
 public class PostWrapper {
     private ApiService mAPIService;
-    public PostWrapper(){
+
+    public PostWrapper() {
         mAPIService = ApiUtils.getAPIService();
     }
 
@@ -77,8 +77,6 @@ public class PostWrapper {
     }
 
 
-
-
     public void postReservation(Reservation reservation) {
 
         mAPIService.postReservation(reservation).enqueue(new Callback<Reservation>() {
@@ -91,6 +89,7 @@ public class PostWrapper {
                     Log.i("Retrofit POST", "reservation post submitted to API.");
                 }
             }
+
             @Override
             public void onFailure(Call<Reservation> call, Throwable t) {
                 Log.e("Retrofit POST", "Unable to submit post to API." + t.toString());

@@ -23,10 +23,10 @@ import java.util.Calendar;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.PostWrapper;
-import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.model.RestaurantTable;
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 
 public class BookingDialog extends AlertDialog {
     private EditText name;

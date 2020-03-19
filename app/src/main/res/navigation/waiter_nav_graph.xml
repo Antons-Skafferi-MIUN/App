@@ -16,15 +16,15 @@
     <fragment
         android:id="@+id/orderOverviewFragment"
         android:name="se.miun.dt170.antonsskafferi.ui.order_overview.OrderOverviewFragment"
-        tools:layout="@layout/order_overview_fragment"
-        android:label="OrderOverviewFragment">
+        android:label="OrderOverviewFragment"
+        tools:layout="@layout/order_overview_fragment">
         <action
             android:id="@+id/action_orderOverviewFragment_to_foodEditDialog"
             app:destination="@id/foodEditDialog" />
         <argument
             android:name="tableID"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_orderOverviewFragment_to_tableOverviewFragment"
             app:destination="@id/tableOverviewFragment"

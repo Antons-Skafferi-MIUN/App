@@ -11,8 +11,10 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import se.miun.dt170.antonsskafferi.R;
-import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.data.model.Order;
+import se.miun.dt170.antonsskafferi.data.remote.ApiService;
+import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
+import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.ui.bong.BongListView;
 
 public class KitchenBongHeaderView extends ConstraintLayout implements View.OnClickListener {
@@ -24,6 +26,8 @@ public class KitchenBongHeaderView extends ConstraintLayout implements View.OnCl
     private boolean headerClicked = false;
     private BongListView bongListView;
     private KitchenBongContainerView grandParent;
+    private ApiService mAPIService;
+    private Order order;
 
     public KitchenBongHeaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -45,6 +49,10 @@ public class KitchenBongHeaderView extends ConstraintLayout implements View.OnCl
         orderTime.setText(dateConverter.formatHHMM(order.getOrderTime()));
 
         bongHeaderCheckbox.setOnClickListener(this);
+
+        this.order = order;
+
+        mAPIService = ApiUtils.getAPIService();
     }
 
     @Override
@@ -55,6 +63,7 @@ public class KitchenBongHeaderView extends ConstraintLayout implements View.OnCl
                 bongListView = (BongListView) this.getParent();
                 grandParent = (KitchenBongContainerView) bongListView.getParent();
                 grandParent.setVisibility(View.GONE);
+                //grandParent.updateOrderStatus();
                 break;
 
         }

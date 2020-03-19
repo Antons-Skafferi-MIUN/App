@@ -16,19 +16,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
-import java.util.ArrayList;
-
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.model.OrderRows;
-import se.miun.dt170.antonsskafferi.data.model.Reservation;
 import se.miun.dt170.antonsskafferi.data.model.Reservations;
 import se.miun.dt170.antonsskafferi.data.remote.ApiService;
 import se.miun.dt170.antonsskafferi.data.remote.ApiUtils;
-import se.miun.dt170.antonsskafferi.data.utility.DateConverter;
 import se.miun.dt170.antonsskafferi.ui.dialog.TableDialogViewModel;
 
 /**
@@ -164,7 +160,7 @@ public class TableOverviewFragment extends Fragment implements Button.OnClickLis
     }
 
     public void updateFragment(Reservations tablesReservations) {
-        if(tablesReservations != null) {
+        if (tablesReservations != null) {
             for (int tableIndex = 0; tableIndex < numberOfTables; tableIndex++) {
                 TableView table = fragmentView.findViewById(R.id.table1 + tableIndex);
                 table.checkForOrders(tablesReservations.getReservations());

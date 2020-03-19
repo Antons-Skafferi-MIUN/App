@@ -24,11 +24,9 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import java.util.Calendar;
-import java.util.Set;
 
 import se.miun.dt170.antonsskafferi.R;
 import se.miun.dt170.antonsskafferi.TableDialogSharedViewModel;
-import se.miun.dt170.antonsskafferi.activity.RestaurantSharedViewModel;
 import se.miun.dt170.antonsskafferi.data.APIWrappers.DeleteWrapper;
 import se.miun.dt170.antonsskafferi.data.repository.OrderRepository;
 import se.miun.dt170.antonsskafferi.ui.table_overview.TableView;
@@ -44,7 +42,6 @@ public class TableDialogFragment extends DialogFragment {
     private View dialogView;
     private Fragment parent;
     private TableDialogSharedViewModel sharedViewModel;
-    private RestaurantSharedViewModel restaurantSharedViewModel;
     private TableView table;
     private Drawable popupAvailableColor;
     private Drawable popupBookedColor;
@@ -77,8 +74,6 @@ public class TableDialogFragment extends DialogFragment {
         orderRepository = new OrderRepository();
         sharedViewModel = new ViewModelProvider(requireActivity()).
                 get(TableDialogSharedViewModel.class);
-        restaurantSharedViewModel = new ViewModelProvider(requireActivity()).
-                get(RestaurantSharedViewModel.class);
         mutableTable = sharedViewModel.getTable();
         table = mutableTable.getValue(); // TEMP FIX
         dialogText = table.getDialogText();
@@ -117,8 +112,7 @@ public class TableDialogFragment extends DialogFragment {
         if (table.isTableOpen()) {
             cancelButton.setBackground(cancelButtonColor);
             cancelButton.setTextColor(CancelButtonTextColor);
-        }
-        else {
+        } else {
             cancelButton.setBackground(activeCancelButtonColor);
             cancelButton.setTextColor(activeCancelButtonTextColor);
         }
@@ -126,8 +120,7 @@ public class TableDialogFragment extends DialogFragment {
         if (table.isTableBooked()) {
             cancelBookingButton.setBackground(activeCancelButtonColor);
             cancelBookingButton.setTextColor(activeCancelButtonTextColor);
-        }
-        else {
+        } else {
             cancelBookingButton.setBackground(cancelButtonColor);
             cancelBookingButton.setTextColor(CancelButtonTextColor);
         }
@@ -137,6 +130,28 @@ public class TableDialogFragment extends DialogFragment {
         adjustOrderButton();
 
         cancelButton.setOnClickListener(v -> {
+/*<<<<<<< HEAD
+            final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
+            confirmationDialog.setTitle("Är du säker på att du vill rensa ordern?")
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            tableDialogViewModel.clearCurrentOrderFromDatabase(table.getTableNr());
+                            tableDialogViewModel.clearOrderSet();
+                            table.setTableOpen(true);
+                            cancelButton.setBackground(cancelButtonColor);
+                            cancelButton.setTextColor(CancelButtonTextColor);
+                            Log.d("OrderSet", Integer.toString(tableDialogViewModel.getOrdersToRemoveFromKitchen().size()));
+                        }
+                    })
+                    .setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dismiss();
+                        }
+                    })
+                    .show();
+=======*/
             if (table.hasOrders()) {
                 final AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(context);
                 confirmationDialog.setTitle("Är du säker på att du vill rensa ordern?")
@@ -170,19 +185,19 @@ public class TableDialogFragment extends DialogFragment {
         });
 
         bookingButton.setOnClickListener(v -> {
-                final BookingDialog myDialog = new BookingDialog(context, this);
-                myDialog.setBookingButton("Boka", table.getTableNr());
+            final BookingDialog myDialog = new BookingDialog(context, this);
+            myDialog.setBookingButton("Boka", table.getTableNr());
 
-                //gets called when back button is pressed or pressed outside
-                myDialog.setOnCancelListener(dialog -> {
-                    table.setTableBooked(false);
-                    Log.i("onCancel", "on cancel was pressed");
-                });
+            //gets called when back button is pressed or pressed outside
+            myDialog.setOnCancelListener(dialog -> {
+                table.setTableBooked(false);
+                Log.i("onCancel", "on cancel was pressed");
+            });
 
-                myDialog.show();
-                myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                        | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-                table.setTableBooked(true);
+            myDialog.show();
+            myDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                    | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+            table.setTableBooked(true);
         });
 
 
